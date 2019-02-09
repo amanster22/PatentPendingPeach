@@ -1,5 +1,5 @@
-## Welcome!
+## Confidential
 ///////////////////////////////////////////////////
-Patent pending
+###Patent pending
 FTC Code
 V1.0
