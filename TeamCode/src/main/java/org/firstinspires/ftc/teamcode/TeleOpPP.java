@@ -54,6 +54,10 @@ public class TeleOpPP extends LinearOpMode
         waitForStart();
 
         while (opModeIsActive()) {
+            if(gamepad1.right_trigger) {
+                motorLeft.setPower(0.6);
+                motorRight.setPower(0.6);
+            }
             //values for gamepad range from -1 to 1
             motorLeft.setPower(-gamepad1.left_stick_y);
             motorRight.setPower(-gamepad1.right_stick_y);

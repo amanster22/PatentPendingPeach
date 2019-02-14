@@ -42,7 +42,7 @@ public class aPP7 extends LinearOpMode {
 
 
     //////////////////////
-    private static final String VUFORIA_KEY = "AXzW9CD/////AAAAGTPAtr9HRUXZmowtd9p0AUwuXiBVONS/c5x1q8OvjMrQ8/XJGxEp0TP9Kl8PvqSzeXOWIvVa3AeB6MyAQboyW/Pgd/c4a4U/VBs1ouUsVBkEdbaq1iY7RR0cjYr3eLwEt6tmI37Ugbwrd5gmxYvOBQkGqzpbg2U2bVLycc5PkOixu7PqPqaINGZYSlvUzEMAenLOCxZFpsayuCPRbWz6Z9UJfLeAbfAPmmDYoKNXRFll8/jp5Ie7iAhSQgfFggWwyiqMRCFA3GPTsOJS4H1tSiGlMjVzbJnkusPKXfJ0dK3OH9u7ox9ESpi91T0MemXw3nn+/6QRvjGtgFH+wMDuQX7ta89+yW+wqdXX9ZQu8BzY";
+    private static final String VUFORIA_KEY = "AdDXLt3/////AAABmZbiIZDoMksbg6nqJc3deqEd+M9xq3k2f+FgTzaPiAad7oT1lr/YPo2zIOgo/ufXH9xFZ3n3HhO2pMJ96x1NZfM6C4Y+hSgk5bXAxomE7lI571xHlpGumFh8jns+8NA/llYnvjRl6GBpBLIj0+qltMMkRWNja+JpTOQQIGPXGNR/QER7VNQ2i6spWHnzkqNaQLfwJ24qcRhfKTN83yWiaYUGppkWQy34vdJ2XHW8LpuztSBY4EnI9U1tkN+TEHc9nFPPHS6sfi184UQEVQ8HPrFfJni1YJrxe8//+XisQkgFBZkB/SR7UdcVrUqB+dGk4epjHXlMmSn3XHM7AX747Nh+4+T9eXbXc6s0Qu4vKzcY";
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
 
