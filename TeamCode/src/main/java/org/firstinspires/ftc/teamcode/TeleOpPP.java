@@ -74,23 +74,12 @@ public class TeleOpPP extends LinearOpMode
             motorRight.setPower(gamepad1.left_stick_y);
             motorLeft.setPower(gamepad1.right_stick_y);
 
-            //motorLeft.setPower(gamepad2.right_trigger);
-            //motorRight.setPower(gamepad2.right_trigger);
+
 
             motorLeft.setPower(-gamepad2.right_stick_y);
             motorRight.setPower(-gamepad2.left_stick_y);
 
 
-
-       /*     if (gamepad1.a) {
-                //servo has values from 0-100 degrees. Hence 0.8 is 80 degrees
-                servoLeft.setPosition(0.8);
-
-                servoRight.setPosition(-0.8);
-
-
-            }
-*/
 
             if (gamepad1.x)
                 motorArm.setPower(ARM_UP_POWER);
