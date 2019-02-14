@@ -54,19 +54,31 @@ public class TeleOpPP extends LinearOpMode
         waitForStart();
 
         while (opModeIsActive()) {
+///////////////////////////////////////////////////
+            // Show joystick information as some other illustrative data
+            telemetry.addLine("left joystick | ")
+                    .addData("x", gamepad1.left_stick_x)
+                    .addData("y", gamepad1.left_stick_y);
+            telemetry.addLine("right joystick | ")
+                    .addData("x", gamepad1.right_stick_x)
+                    .addData("y", gamepad1.right_stick_y);
 
-                motorLeft.setPower(0.6);
-                motorRight.setPower(0.6);
+            /**
+             * Transmit the telemetry to the driver station, subject to throttling.
+             * @see Telemetry#getMsTransmissionInterval()
+             */
+            telemetry.update();
+            ///////////////////////////////////
 
             //values for gamepad range from -1 to 1
-            motorLeft.setPower(gamepad1.left_stick_y);
-            motorRight.setPower(gamepad1.right_stick_y);
+            motorRight.setPower(gamepad1.left_stick_y);
+            motorLeft.setPower(gamepad1.right_stick_y);
 
-            motorLeft.setPower(gamepad2.right_trigger);
-            motorRight.setPower(gamepad2.right_trigger);
+            //motorLeft.setPower(gamepad2.right_trigger);
+            //motorRight.setPower(gamepad2.right_trigger);
 
             motorLeft.setPower(-gamepad2.right_stick_y);
-            motorRight.setPower(gamepad2.left_stick_y);
+            motorRight.setPower(-gamepad2.left_stick_y);
 
 
 
