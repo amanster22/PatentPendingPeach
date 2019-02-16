@@ -25,6 +25,8 @@ public class TFTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+    private static final VuforiaLocalizer.CameraDirection CAMERA_DIRECTION = CameraDirection.FRONT;
+
     private ElapsedTime runtime = new ElapsedTime();
     //clear motor objects
     private DcMotor motorLeft;
@@ -32,8 +34,7 @@ public class TFTest extends LinearOpMode {
 
     private DcMotor motorArm;
     private DcMotor motorLatch;
-    private Servo servoLeft;
-    private Servo servoRight;
+
 
    /////////////////////////////////////
     private static final String VUFORIA_KEY = "AdDXLt3/////AAABmZbiIZDoMksbg6nqJc3deqEd+M9xq3k2f+FgTzaPiAad7oT1lr/YPo2zIOgo/ufXH9xFZ3n3HhO2pMJ96x1NZfM6C4Y+hSgk5bXAxomE7lI571xHlpGumFh8jns+8NA/llYnvjRl6GBpBLIj0+qltMMkRWNja+JpTOQQIGPXGNR/QER7VNQ2i6spWHnzkqNaQLfwJ24qcRhfKTN83yWiaYUGppkWQy34vdJ2XHW8LpuztSBY4EnI9U1tkN+TEHc9nFPPHS6sfi184UQEVQ8HPrFfJni1YJrxe8//+XisQkgFBZkB/SR7UdcVrUqB+dGk4epjHXlMmSn3XHM7AX747Nh+4+T9eXbXc6s0Qu4vKzcY";
@@ -52,6 +53,19 @@ public class TFTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+
+        motorLeft = hardwareMap.dcMotor.get("mLeft");
+        motorRight = hardwareMap.dcMotor.get("mRight");
+
+        motorLatch = hardwareMap.dcMotor.get("mRetract");
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+
+        motorArm = hardwareMap.dcMotor.get("mArm");
+
+        telemetry.addData("PP:", "Ready");    //
+        telemetry.update();
+
+
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -66,13 +80,13 @@ public class TFTest extends LinearOpMode {
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
         waitForStart();
-
+        runtime.reset();
         if (opModeIsActive()) {
             /** Activate Tensor Flow Object Detection. */
             if (tfod != null) {
                 tfod.activate();
             }
-
+            unlatching();
             while (opModeIsActive()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -93,9 +107,12 @@ public class TFTest extends LinearOpMode {
                                     silverMineral2X = (int) recognition.getLeft();
                                 }
                             }
+
                             if (goldMineralX != -1 && silverMineral1X != -1 ) {
                                 if (goldMineralX < silverMineral1X ) {
                                     telemetry.addData("Gold Mineral Position", "Left");
+                                    runLeft();
+
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
                                 }
@@ -125,7 +142,7 @@ public class TFTest extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
+        parameters.cameraDirection = CameraDirection.FRONT;
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -143,4 +160,79 @@ public class TFTest extends LinearOpMode {
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
     }
+
+
+
+    private void runLeft()
+    {
+
+/*
+        sleep(1500);
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorLeft.setPower(0.3);
+        motorRight.setPower(0.3);
+        runtime.reset();
+        //Push Forward
+        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
+            telemetry.addData("Path", "Step 3: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        //small turn
+        sleep(2000);
+        motorRight.setPower(0.15);
+        motorLeft.setPower(-0.15);
+        runtime.reset();
+        //Turn to release the latch
+        while (opModeIsActive() && (runtime.seconds() < 0.01)) {
+            telemetry.addData("Path", "Step 2: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        */
+    }
+
+    private void runMiddle()
+    {
+
+    }
+
+    private void runRight()
+    {
+
+    }
+
+
+
+
+    private void unlatching()
+    {
+
+        motorLatch.setPower(-0.8);
+        while (opModeIsActive() && (runtime.seconds() < 3.5)) {
+            telemetry.addData("Path", "Step 1: Unlatching", runtime.seconds());
+            telemetry.update();
+        }
+        motorLatch.setPower(0);
+
+        sleep(1000);
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorLeft.setPower(0.3);
+        motorRight.setPower(0.3);
+        runtime.reset();
+        //Push Forward
+        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
+            telemetry.addData("Path", "Step2 small turn", runtime.seconds());
+            telemetry.update();
+        }
+
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+
+    }
+
+
+
+
 }

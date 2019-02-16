@@ -91,7 +91,7 @@ public class aPP6B extends LinearOpMode {
         }
         motorLatch.setPower(0);
 
-        sleep(1500);
+        sleep(500);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setPower(0.3);
         motorRight.setPower(0.3);
