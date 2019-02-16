@@ -115,6 +115,7 @@ public class TFTest extends LinearOpMode {
 
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
+                                    runMiddle();
                                 }
                                 }
                                 else
@@ -195,7 +196,16 @@ public class TFTest extends LinearOpMode {
 
     private void runMiddle()
     {
-
+        sleep(1000);
+        motorRight.setPower(-0.5);
+        motorLeft.setPower(-0.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
+            telemetry.addData("Path", "Middle: Running %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
     }
 
     private void runRight()
@@ -235,7 +245,7 @@ public class TFTest extends LinearOpMode {
         motorLeft.setPower(-0.3);
         runtime.reset();
         //Turn to release the latch
-        while (opModeIsActive() && (runtime.seconds() < 0.51)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.8)) {
             telemetry.addData("Path", "Step 3: Turn %2.5f", runtime.seconds());
             telemetry.update();
         }
@@ -246,7 +256,7 @@ public class TFTest extends LinearOpMode {
         motorLeft.setPower(-0.3);
         motorRight.setPower(-0.3);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.4)) {
             telemetry.addData("Path", "Step 4: Turn %2.5f", runtime.seconds());
             telemetry.update();
         }
@@ -257,7 +267,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(-0.3);
         motorLeft.setPower(0.3);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.4)) {
             telemetry.addData("Path", "Step 4: Turnback %2.5f", runtime.seconds());
             telemetry.update();
         }
