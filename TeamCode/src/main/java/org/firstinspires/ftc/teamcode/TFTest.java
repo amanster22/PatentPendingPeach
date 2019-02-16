@@ -211,7 +211,7 @@ public class TFTest extends LinearOpMode {
 
         motorLatch.setPower(-0.8);
         while (opModeIsActive() && (runtime.seconds() < 3.5)) {
-            telemetry.addData("Path", "Step 1: Unlatching", runtime.seconds());
+            telemetry.addData("Path", "Step 1: Unlatching %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLatch.setPower(0);
@@ -222,14 +222,48 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0.3);
         runtime.reset();
         //Push Forward
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
-            telemetry.addData("Path", "Step2 small turn", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
+            telemetry.addData("Path", "Step 2: Small Turn %2.5f", runtime.seconds());
             telemetry.update();
         }
 
         motorLeft.setPower(0);
         motorRight.setPower(0);
+        //small turn
+        sleep(1000);
+        motorRight.setPower(0.3);
+        motorLeft.setPower(-0.3);
+        runtime.reset();
+        //Turn to release the latch
+        while (opModeIsActive() && (runtime.seconds() < 0.51)) {
+            telemetry.addData("Path", "Step 3: Turn %2.5f", runtime.seconds());
+            telemetry.update();
+        }
 
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        sleep(700);
+        motorLeft.setPower(-0.3);
+        motorRight.setPower(-0.3);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
+            telemetry.addData("Path", "Step 4: Turn %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+
+        sleep(100);
+        motorRight.setPower(-0.3);
+        motorLeft.setPower(0.3);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
+            telemetry.addData("Path", "Step 4: Turnback %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        runtime.reset();
     }
 
 
