@@ -27,19 +27,20 @@ public class aPP6B extends LinearOpMode {
     private DcMotor motorRight;
 
     private DcMotor motorArm;
-    private DcMotor motorRetract;
+    private DcMotor motorLatch;
     private Servo servoLeft;
     private Servo servoRight;
-    double clawOffset = 0;                       // Servo mid position
-    final double CLAW_SPEED = 0.02;                   // sets rate to move servo
+    /////////////////////
+    //double clawOffset = 0;                       // Servo mid position
+    //final double CLAW_SPEED = 0.02;                   // sets rate to move servo
 
-    final double MID_SERVO = 0.5;
-    static final double FORWARD_SPEED = 0.6;
-    static final double TURN_SPEED = 0.5;
+   // final double MID_SERVO = 0.5;
+    //static final double FORWARD_SPEED = 0.6;
+    //static final double TURN_SPEED = 0.5;
     //origional 0.45 and -0.45
-    final double ARM_UP_POWER = 0.45;
+    //final double ARM_UP_POWER = 0.45;
     // final double ARM_DOWN_POWER = -0.45;
-    final double ARM_DOWN_POWER = -0.45;
+    //final double ARM_DOWN_POWER = -0.45;
     //define color sensor variable
     ColorSensor sensorColor;
 
@@ -48,7 +49,7 @@ public class aPP6B extends LinearOpMode {
         motorLeft = hardwareMap.dcMotor.get("mLeft");
         motorRight = hardwareMap.dcMotor.get("mRight");
 
-        motorRetract = hardwareMap.dcMotor.get("mRetract");
+        motorLatch = hardwareMap.dcMotor.get("mRetract");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
 
         motorArm = hardwareMap.dcMotor.get("mArm");
@@ -61,14 +62,14 @@ public class aPP6B extends LinearOpMode {
 
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
-        float hsvValues[] = {0F, 0F, 0F};
+       // float hsvValues[] = {0F, 0F, 0F};
 
         // values is a reference to the hsvValues array.
-        final float values[] = hsvValues;
+       // final float values[] = hsvValues;
 
         // sometimes it helps to multiply the raw RGB values with a scale factor
         // to amplify/attentuate the measured values.
-        final double SCALE_FACTOR = 255;
+        //final double SCALE_FACTOR = 255;
 
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
@@ -83,12 +84,12 @@ public class aPP6B extends LinearOpMode {
         runtime.reset();
 
 //Lower Robot
-        motorRetract.setPower(-0.3);
+        motorLatch.setPower(-0.3);
         while (opModeIsActive() && (runtime.seconds() < 2.6)) {
             telemetry.addData("Path", "Step 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-        motorRetract.setPower(0);
+        motorLatch.setPower(0);
 
         sleep(1500);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -130,13 +131,13 @@ public class aPP6B extends LinearOpMode {
 //        motorLeft.setPower(0);
 //        motorRight.setPower(0);
 //
-//        motorRetract.setPower(0.3);
+//        motorLatch.setPower(0.3);
 //        runtime.reset();
 //        while (opModeIsActive() && (runtime.seconds() < 2)) {
 //            telemetry.addData("Path", "Step 1: %2.5f S Elapsed", runtime.seconds());
 //            telemetry.update();
 //        }
-//        motorRetract.setPower(0);
+//        motorLatch.setPower(0);
 //
 //        sleep(1500);
 //
