@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -62,7 +62,7 @@ public class TFTest extends LinearOpMode {
 
         motorArm = hardwareMap.dcMotor.get("mArm");
 
-        telemetry.addData("PP:", "Ready");    //
+        telemetry.addData("PP:", "Ready, Hi Aman, Zekun, Charlie, PK, and Spencer. Lets do this!");    //
         telemetry.update();
 
 
