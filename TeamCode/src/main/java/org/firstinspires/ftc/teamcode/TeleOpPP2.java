@@ -96,7 +96,8 @@ public class TeleOpPP2 extends LinearOpMode
             if (gamepad1.dpad_up)
             {
                 motorExtend.setPower(0.6);
-                motorAbjure.setPower(-0.6);}
+                motorAbjure.setPower(-0.6);
+            }
             else if(gamepad1.dpad_down) {
                 motorExtend.setPower(-0.6);
                 motorAbjure.setPower(0.6);
