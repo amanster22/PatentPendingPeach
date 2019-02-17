@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,6 +16,7 @@ trigger-Float=【0，1】
 sticks-Float=[-1,1]
 a,b,x,y-Boolean= True or False
  */
+@Disabled
 @TeleOp(name = "Patent Pending")
 public class TeleOpPP extends LinearOpMode
 {

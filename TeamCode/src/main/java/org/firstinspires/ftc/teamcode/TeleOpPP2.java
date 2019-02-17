@@ -24,6 +24,8 @@ public class TeleOpPP2 extends LinearOpMode
 
     private DcMotor motorArm;
     private DcMotor motorRetract;
+    private DcMotor motorExtend;
+    private DcMotor motorAbjure;
 
     private Servo servoLeft;
     private Servo servoRight;
@@ -47,6 +49,9 @@ public class TeleOpPP2 extends LinearOpMode
         motorRetract=hardwareMap.dcMotor.get("mRetract");
         servoLeft = hardwareMap.servo.get("sLeft");
         servoRight = hardwareMap.servo.get("sRight");
+
+        motorExtend=hardwareMap.dcMotor.get("mExtend");
+        motorAbjure=hardwareMap.dcMotor.get("mAbjure");
 //      any code put before a wait will be run when the init button is pressedl. https://www.youtube.com/watch?v=OT_PGYIFBGE
         telemetry.addData("PP:", "Ready");    //
         telemetry.update();
@@ -55,11 +60,11 @@ public class TeleOpPP2 extends LinearOpMode
 
         while (opModeIsActive()) {
             //values for gamepad range from -1 to 1
-            motorLeft.setPower(-gamepad1.left_stick_y);
-            motorRight.setPower(-gamepad1.right_stick_y);
+            motorLeft.setPower(-gamepad2.left_stick_y);
+            motorRight.setPower(-gamepad2.right_stick_y);
 
-            motorLeft.setPower(gamepad2.right_stick_y);
-            motorRight.setPower(gamepad2.left_stick_y);
+            motorLeft.setPower(gamepad1.right_stick_y);
+            motorRight.setPower(gamepad1.left_stick_y);
 
 
 
@@ -72,6 +77,7 @@ public class TeleOpPP2 extends LinearOpMode
 
             }
 */
+
 
             if (gamepad1.x)
                 motorArm.setPower(ARM_UP_POWER);
@@ -87,6 +93,17 @@ public class TeleOpPP2 extends LinearOpMode
             else
                 motorRetract.setPower(0.0);
 
+            if (gamepad1.dpad_up)
+                motorExtend.setPower(0.6);
+                motorAbjure.setPower(-0.6);
+            else if (gamepad1.dpad_down)
+                motorExtend.setPower(-0.6);
+                motorAbjure.setPower(0.6);
+            else
+                motorExtend.setPower(0);
+                motorAbjure.setPower(0);
+
+
             // Send telemetry message to signify robot running;
 //            telemetry.addData("claw", "Offset = %.2f", clawOffset);
 //            telemetry.addData("left", "%.2f", left);
@@ -95,17 +112,17 @@ public class TeleOpPP2 extends LinearOpMode
 
             // Use gamepad left & right Bumpers to open and close the claw
 
-            if (gamepad1.a)
-                clawOffset += CLAW_SPEED;
-            else if (gamepad1.b)
-                clawOffset -= CLAW_SPEED;
-
-            // Move both servos to new position.  Assume servos are mirror image of each other.
-            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            servoRight.setPosition(MID_SERVO + clawOffset);
-            servoLeft.setPosition(MID_SERVO - clawOffset);
-            //gives hardware time to catch up
-            idle();
+//            if (gamepad1.a)
+//                clawOffset += CLAW_SPEED;
+//            else if (gamepad1.b)
+//                clawOffset -= CLAW_SPEED;
+//
+//            // Move both servos to new position.  Assume servos are mirror image of each other.
+//            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+//            servoRight.setPosition(MID_SERVO + clawOffset);
+//            servoLeft.setPosition(MID_SERVO - clawOffset);
+//            //gives hardware time to catch up
+//            idle();
         }
     }
 }
