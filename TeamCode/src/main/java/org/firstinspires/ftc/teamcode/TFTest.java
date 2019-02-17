@@ -219,14 +219,14 @@ public class TFTest extends LinearOpMode {
     private void unlatching()
     {
 
-        motorLatch.setPower(-0.8);
-        while (opModeIsActive() && (runtime.seconds() < 3.5)) {
+        motorLatch.setPower(-0.5);
+        while (opModeIsActive() && (runtime.seconds() < 4.5)) {
             telemetry.addData("Path", "Step 1: Unlatching %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLatch.setPower(0);
 
-        sleep(1000);
+        sleep(800);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setPower(0.3);
         motorRight.setPower(0.3);
@@ -240,7 +240,7 @@ public class TFTest extends LinearOpMode {
         motorLeft.setPower(0);
         motorRight.setPower(0);
         //small turn
-        sleep(1000);
+        sleep(800);
         motorRight.setPower(0.3);
         motorLeft.setPower(-0.3);
         runtime.reset();
