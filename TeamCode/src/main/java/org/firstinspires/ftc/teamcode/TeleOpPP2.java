@@ -94,14 +94,17 @@ public class TeleOpPP2 extends LinearOpMode
                 motorRetract.setPower(0.0);
 
             if (gamepad1.dpad_up)
+            {
                 motorExtend.setPower(0.6);
-                motorAbjure.setPower(-0.6);
-            else if (gamepad1.dpad_down)
+                motorAbjure.setPower(-0.6);}
+            else if(gamepad1.dpad_down) {
                 motorExtend.setPower(-0.6);
                 motorAbjure.setPower(0.6);
-            else
+            }
+            else {
                 motorExtend.setPower(0);
                 motorAbjure.setPower(0);
+            }
 
 
             // Send telemetry message to signify robot running;
