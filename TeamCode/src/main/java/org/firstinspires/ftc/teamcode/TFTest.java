@@ -86,7 +86,7 @@ public class TFTest extends LinearOpMode {
             if (tfod != null) {
                 tfod.activate();
             }
-            unlatching();
+            //unlatching();
             while (opModeIsActive()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -111,15 +111,20 @@ public class TFTest extends LinearOpMode {
                             if (goldMineralX != -1 && silverMineral1X != -1 ) {
                                 if (goldMineralX < silverMineral1X ) {
                                     telemetry.addData("Gold Mineral Position", "Left");
+                                    unlatching();
                                     runLeft();
 
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
+                                    unlatching();
                                     runMiddle();
                                 }
                                 }
                                 else
+                                    {
                                 telemetry.addData("Gold Mineral Position", "Right");
+                                unlatching();
+                                    }
                             }
                         }
                         telemetry.update();
