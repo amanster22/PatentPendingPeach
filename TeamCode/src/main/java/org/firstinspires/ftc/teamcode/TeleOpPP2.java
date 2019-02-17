@@ -78,21 +78,21 @@ public class TeleOpPP2 extends LinearOpMode
             }
 */
 
-
+//arm that moves like a joint
             if (gamepad1.x)
                 motorArm.setPower(ARM_UP_POWER);
             else if (gamepad1.y)
                 motorArm.setPower(ARM_DOWN_POWER);
             else
                 motorArm.setPower(0.0);
-
+//latch that moves using controller 2
             if (gamepad2.x)
                 motorRetract.setPower(ARM_UP_POWER);
             else if (gamepad2.y)
                 motorRetract.setPower(ARM_DOWN_POWER);
             else
                 motorRetract.setPower(0.0);
-
+//extender
             if (gamepad1.dpad_up)
             {
                 motorExtend.setPower(0.6);
