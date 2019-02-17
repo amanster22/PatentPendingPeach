@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
@@ -36,7 +37,7 @@ public class TFTest extends LinearOpMode {
     private DcMotor motorLatch;
 
 
-   /////////////////////////////////////
+    /////////////////////////////////////
     private static final String VUFORIA_KEY = "AdDXLt3/////AAABmZbiIZDoMksbg6nqJc3deqEd+M9xq3k2f+FgTzaPiAad7oT1lr/YPo2zIOgo/ufXH9xFZ3n3HhO2pMJ96x1NZfM6C4Y+hSgk5bXAxomE7lI571xHlpGumFh8jns+8NA/llYnvjRl6GBpBLIj0+qltMMkRWNja+JpTOQQIGPXGNR/QER7VNQ2i6spWHnzkqNaQLfwJ24qcRhfKTN83yWiaYUGppkWQy34vdJ2XHW8LpuztSBY4EnI9U1tkN+TEHc9nFPPHS6sfi184UQEVQ8HPrFfJni1YJrxe8//+XisQkgFBZkB/SR7UdcVrUqB+dGk4epjHXlMmSn3XHM7AX747Nh+4+T9eXbXc6s0Qu4vKzcY";
 
     /**
@@ -59,7 +60,7 @@ public class TFTest extends LinearOpMode {
 
         motorLatch = hardwareMap.dcMotor.get("mRetract");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorMarker= hardwareMap.dcMotor.get("mMarker");
+        motorMarker = hardwareMap.dcMotor.get("mMarker");
 
         motorArm = hardwareMap.dcMotor.get("mArm");
 
@@ -109,8 +110,8 @@ public class TFTest extends LinearOpMode {
                                 }
                             }
 
-                            if (goldMineralX != -1 && silverMineral1X != -1 ) {
-                                if (goldMineralX < silverMineral1X ) {
+                            if (goldMineralX != -1 && silverMineral1X != -1) {
+                                if (goldMineralX < silverMineral1X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
                                     unlatching();
                                     runLeft();
@@ -123,18 +124,16 @@ public class TFTest extends LinearOpMode {
                                     unlatching();
                                     runMiddle();
                                 }
-                                }
-                                else
-                                    {
+                            } else {
                                 telemetry.addData("Gold Mineral Position", "Right");
                                 unlatching();
                                 runRight();
-                                    }
                             }
                         }
-                        telemetry.update();
                     }
+                    telemetry.update();
                 }
+            }
 
         }
 
@@ -173,14 +172,11 @@ public class TFTest extends LinearOpMode {
     }
 
 
-
-    private void runLeft()
-    {
+    private void runLeft() {
         sleep(800);
         motorRight.setPower(0.3);
         motorLeft.setPower(-0.3);
         runtime.reset();
-        //Turn to release the latch
         while (opModeIsActive() && (runtime.seconds() < 0.5)) {
             telemetry.addData("Left", "Running1", runtime.seconds());
             telemetry.update();
@@ -191,7 +187,7 @@ public class TFTest extends LinearOpMode {
 
         sleep(1000);
         motorRight.setPower(0.5);
-        motorLeft.setPower(-0.5);
+        motorLeft.setPower(0.5);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2)) {
             telemetry.addData("Left", "Running %2.5f", runtime.seconds());
@@ -199,38 +195,41 @@ public class TFTest extends LinearOpMode {
         }
         motorLeft.setPower(0);
         motorRight.setPower(0);
+        sleep(1000);
+        //turn before dropping marker
 
-
-
-/*
-        sleep(1500);
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorLeft.setPower(0.3);
-        motorRight.setPower(0.3);
+        motorRight.setPower(-0.5);
         runtime.reset();
-        //Push Forward
-        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
-            telemetry.addData("Path", "Step 3: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 0.6)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
             telemetry.update();
         }
 
+        sleep(500);
+        //drive straight
+        motorRight.setPower(0.5);
+        motorLeft.setPower(0.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.update();
+        }
         motorLeft.setPower(0);
         motorRight.setPower(0);
-        //small turn
-        sleep(2000);
-        motorRight.setPower(0.15);
-        motorLeft.setPower(-0.15);
+        sleep(500);
+        //release marker
+        motorMarker.setPower(0.2);
         runtime.reset();
-        //Turn to release the latch
-        while (opModeIsActive() && (runtime.seconds() < 0.01)) {
-            telemetry.addData("Path", "Step 2: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 0.4)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
             telemetry.update();
         }
-        */
     }
 
-    private void runMiddle()
-    {
+
+
+
+    private void runMiddle() {
         sleep(1000);
         motorRight.setPower(-0.5);
         motorLeft.setPower(-0.5);
@@ -244,8 +243,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0);
     }
 
-    private void runRight()
-    {
+    private void runRight() {
         sleep(800);
         motorRight.setPower(-0.3);
         motorLeft.setPower(0.3);
@@ -272,10 +270,7 @@ public class TFTest extends LinearOpMode {
     }
 
 
-
-
-    private void unlatching()
-    {
+    private void unlatching() {
 
         motorLatch.setPower(-0.55);
         runtime.reset();
@@ -335,8 +330,6 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0);
         runtime.reset();
     }
-
-
 
 
 }
