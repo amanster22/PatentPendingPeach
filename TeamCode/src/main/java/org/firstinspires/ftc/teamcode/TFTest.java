@@ -31,7 +31,7 @@ public class TFTest extends LinearOpMode {
     //clear motor objects
     private DcMotor motorLeft;
     private DcMotor motorRight;
-
+    private DcMotor motorMarker;
     private DcMotor motorArm;
     private DcMotor motorLatch;
 
@@ -59,6 +59,7 @@ public class TFTest extends LinearOpMode {
 
         motorLatch = hardwareMap.dcMotor.get("mRetract");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorMarker= hardwareMap.dcMotor.get("mMarker");
 
         motorArm = hardwareMap.dcMotor.get("mArm");
 
@@ -189,7 +190,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0);
 
         sleep(1000);
-        motorRight.setPower(-0.5);
+        motorRight.setPower(0.5);
         motorLeft.setPower(-0.5);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2)) {
@@ -312,8 +313,8 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0);
         //////////////////////////////
         sleep(700);
-        motorLeft.setPower(-0.3);
-        motorRight.setPower(-0.3);
+        motorLeft.setPower(0.3);
+        motorRight.setPower(0.3);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.3)) {
             telemetry.addData("Path", "Step 4: Turn %2.5f", runtime.seconds());
