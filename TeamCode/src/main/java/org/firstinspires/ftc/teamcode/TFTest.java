@@ -19,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 //
 
 
-@Autonomous(name = "PP AUTO V1.1")
+@Autonomous(name = "PP AUTO V1.2")
 //@Disabled
 public class TFTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";

@@ -26,6 +26,7 @@ public class TeleOpPP2 extends LinearOpMode
     private DcMotor motorRetract;
     private DcMotor motorExtend;
     private DcMotor motorAbjure;
+    private DcMotor motorMarker;
 
     private Servo servoLeft;
     private Servo servoRight;
@@ -52,6 +53,7 @@ public class TeleOpPP2 extends LinearOpMode
 
         motorExtend=hardwareMap.dcMotor.get("mExtend");
         motorAbjure=hardwareMap.dcMotor.get("mAbjure");
+        motorMarker=hardwareMap.dcMotor.get("mMarker");
 //      any code put before a wait will be run when the init button is pressedl. https://www.youtube.com/watch?v=OT_PGYIFBGE
         telemetry.addData("PP:", "Ready");    //
         telemetry.update();
@@ -105,6 +107,16 @@ public class TeleOpPP2 extends LinearOpMode
             else {
                 motorExtend.setPower(0);
                 motorAbjure.setPower(0);
+            }
+
+            if(gamepad1.dpad_left) {
+                motorMarker.setPower(0.1);
+            }
+            else if(gamepad1.dpad_down) {
+                motorMarker.setPower(-0.1);
+            }
+            else {
+                motorMarker.setPower(0);
             }
 
 
