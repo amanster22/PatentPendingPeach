@@ -110,10 +110,10 @@ public class TeleOpPP2 extends LinearOpMode
             }
 
             if(gamepad1.dpad_left) {
-                motorMarker.setPower(0.1);
+                motorMarker.setPower(0.25);
             }
-            else if(gamepad1.dpad_down) {
-                motorMarker.setPower(-0.1);
+            else if(gamepad1.dpad_right) {
+                motorMarker.setPower(-0.25);
             }
             else {
                 motorMarker.setPower(0);
