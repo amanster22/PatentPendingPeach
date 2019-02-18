@@ -280,7 +280,8 @@ runtime.reset();
             telemetry.update();
         }
 
-
+motorLeft.setPower(0);
+        motorRight.setPower(0);
     }
 
 
