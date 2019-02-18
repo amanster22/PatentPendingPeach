@@ -210,7 +210,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0.5);
         motorLeft.setPower(0.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
             telemetry.addData("Left", "Running %2.5f", runtime.seconds());
             telemetry.update();
         }
@@ -220,11 +220,69 @@ public class TFTest extends LinearOpMode {
         //release marker
         motorMarker.setPower(0.2);
         runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.5)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.update();
+
+
+        }
+        sleep(500);
+        motorMarker.setPower(0);
+
+        motorLeft.setPower(-0.6);
+        motorRight.setPower(-0.6);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        motorRight.setPower(0);
+        motorLeft.setPower(0);
+        sleep(400);
+        motorLeft.setPower(-0.6);
+
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 2.2)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        runtime.reset();
+
+        motorLeft.setPower(0.6);
+        motorRight.setPower(0.6);
+
+        while (opModeIsActive() && (runtime.seconds() < 0.7)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+runtime.reset();
+sleep(400);
+        motorLeft.setPower(-0.6);
+
         while (opModeIsActive() && (runtime.seconds() < 0.4)) {
             telemetry.addData("Left", "Running %2.5f", runtime.seconds());
             telemetry.update();
         }
+
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+runtime.reset();
+        motorLeft.setPower(0.6);
+        motorRight.setPower(0.6);
+
+        while (opModeIsActive() && (runtime.seconds() < 0.7)) {
+            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+
+
     }
+
 
 
 
