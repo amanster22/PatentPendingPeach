@@ -173,12 +173,13 @@ public class TFTest extends LinearOpMode {
 
 
     private void runLeft() {
+        //
         sleep(800);
-        motorRight.setPower(0.3);
-        motorLeft.setPower(-0.3);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.5)) {
-            telemetry.addData("Left", "Running1", runtime.seconds());
+        motorRight.setPower(0.4);
+        motorLeft.setPower(-0.4);
+        runtime.reset();              //0.5
+        while (opModeIsActive() && (runtime.seconds() < 0.25)) {
+            telemetry.addData("Left", "Turning to the left", runtime.seconds());
             telemetry.update();
         }
 
@@ -190,7 +191,7 @@ public class TFTest extends LinearOpMode {
         motorLeft.setPower(0.5);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Pushing the gold mineral %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
@@ -201,7 +202,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(-0.5);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.6)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Turning towards the depot %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -211,7 +212,7 @@ public class TFTest extends LinearOpMode {
         motorLeft.setPower(0.5);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1.2)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Driving towards the depot %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
@@ -221,7 +222,7 @@ public class TFTest extends LinearOpMode {
         motorMarker.setPower(0.2);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.5)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Releasing the marker %2.5f", runtime.seconds());
             telemetry.update();
 
 
@@ -233,7 +234,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(-0.6);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "back up %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorRight.setPower(0);
@@ -243,7 +244,7 @@ public class TFTest extends LinearOpMode {
 
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2.2)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Long turn %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
@@ -254,7 +255,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0.6);
 
         while (opModeIsActive() && (runtime.seconds() < 0.7)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Forward towards the crater %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -265,7 +266,7 @@ sleep(400);
         motorLeft.setPower(-0.6);
 
         while (opModeIsActive() && (runtime.seconds() < 0.4)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Left", "Minor turn %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -275,8 +276,8 @@ runtime.reset();
         motorLeft.setPower(0.6);
         motorRight.setPower(0.6);
 
-        while (opModeIsActive() && (runtime.seconds() < 0.7)) {
-            telemetry.addData("Left", "Running %2.5f", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            telemetry.addData("Left", "parking %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -290,16 +291,30 @@ motorLeft.setPower(0);
 
     private void runMiddle() {
         sleep(1000);
-        motorRight.setPower(-0.5);
-        motorLeft.setPower(-0.5);
+        motorRight.setPower(0.5);
+        motorLeft.setPower(0.5);
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.8)) {
-            telemetry.addData("Path", "Middle: Running %2.5f", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 2.3)) {
+            telemetry.addData("Path", "Middle: Pushing the marker %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
         motorRight.setPower(0);
+
+        //release marker
+        motorMarker.setPower(0.2);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.5)) {
+            telemetry.addData("Left", "Releasing the marker %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        sleep(500);
+        motorMarker.setPower(0);
+
+
+
+
     }
 
     private void runRight() {
@@ -334,7 +349,7 @@ motorLeft.setPower(0);
         motorLatch.setPower(-0.55);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 4.7)) {
-            telemetry.addData("Path", "Step 1: Unlatching %2.5f", runtime.seconds());
+            telemetry.addData("Path", "Step 1: Unlatching lowering %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLatch.setPower(0);
@@ -346,7 +361,7 @@ motorLeft.setPower(0);
         runtime.reset();
         //Push Forward
         while (opModeIsActive() && (runtime.seconds() < 0.1)) {
-            telemetry.addData("Path", "Step 2: Small Turn %2.5f", runtime.seconds());
+            telemetry.addData("Path", "Step 2: Go away from the wall %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -359,7 +374,7 @@ motorLeft.setPower(0);
         runtime.reset();
         //Turn to release the latch
         while (opModeIsActive() && (runtime.seconds() < 0.7)) {
-            telemetry.addData("Path", "Step 3: Turn %2.5f", runtime.seconds());
+            telemetry.addData("Path", "Step 3: Release the latch %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -371,7 +386,7 @@ motorLeft.setPower(0);
         motorRight.setPower(0.3);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.3)) {
-            telemetry.addData("Path", "Step 4: Turn %2.5f", runtime.seconds());
+            telemetry.addData("Path", "Step 4: Go forward %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
