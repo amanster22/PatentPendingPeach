@@ -346,7 +346,7 @@ motorLeft.setPower(0);
 
     private void unlatching() {
 
-        motorLatch.setPower(-0.55);
+        motorLatch.setPower(-0.4);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 4.7)) {
             telemetry.addData("Path", "Step 1: Unlatching lowering %2.5f", runtime.seconds());
