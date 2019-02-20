@@ -24,8 +24,8 @@ public class TeleOpPP2 extends LinearOpMode
 
     private DcMotor motorArm;
     private DcMotor motorRetract;
-    private DcMotor motorExtend;
-    private DcMotor motorAbjure;
+    private Servo motorExtend;
+    private Servo motorAbjure;
     private DcMotor motorMarker;
 
     private Servo servoLeft;
@@ -39,6 +39,7 @@ public class TeleOpPP2 extends LinearOpMode
     final double ARM_UP_POWER = 0.45;
     // final double ARM_DOWN_POWER = -0.45;
     final double ARM_DOWN_POWER = -0.45;
+
     @Override
     public void runOpMode() throws InterruptedException {
         motorLeft = hardwareMap.dcMotor.get("mLeft");
@@ -51,8 +52,8 @@ public class TeleOpPP2 extends LinearOpMode
         servoLeft = hardwareMap.servo.get("sLeft");
         servoRight = hardwareMap.servo.get("sRight");
 
-        motorExtend=hardwareMap.dcMotor.get("mExtend");
-        motorAbjure=hardwareMap.dcMotor.get("mAbjure");
+        motorExtend=hardwareMap.servo.get("mExtend");
+        motorAbjure=hardwareMap.servo.get("mAbjure");
         motorMarker=hardwareMap.dcMotor.get("mMarker");
 //      any code put before a wait will be run when the init button is pressedl. https://www.youtube.com/watch?v=OT_PGYIFBGE
         telemetry.addData("PP:", "Ready");    //
@@ -97,7 +98,7 @@ public class TeleOpPP2 extends LinearOpMode
 //extender
             if (gamepad1.dpad_up)
             {
-                motorExtend.setPower(0.6);
+                motorExtend.(0.6);
                 motorAbjure.setPower(-0.6);
             }
             else if(gamepad1.dpad_down) {
