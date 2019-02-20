@@ -130,6 +130,8 @@ public class TFTest extends LinearOpMode {
                                 runRight();
                             }
                         }
+                        else if(runtime.seconds()>= 15)
+                            unlatching();
                     }
                     telemetry.update();
                 }
