@@ -324,7 +324,7 @@ motorLeft.setPower(0);
         runtime.reset();
         //Turn to release the latch
         while (opModeIsActive() && (runtime.seconds() < 0.6)) {
-            telemetry.addData("Right", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Right", "Positioning to the right %2.5f", runtime.seconds());
             telemetry.update();
         }
 
@@ -336,7 +336,30 @@ motorLeft.setPower(0);
         motorLeft.setPower(-0.5);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2)) {
-            telemetry.addData("Right", "Running %2.5f", runtime.seconds());
+            telemetry.addData("Right", "Pushing %2.5f", runtime.seconds());
+            telemetry.update();
+        }
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+
+        sleep(800);
+        motorRight.setPower(0.4);
+        motorLeft.setPower(-0.4);
+        runtime.reset();              //0.5
+        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
+            telemetry.addData("Left", "Turning towards the crater", runtime.seconds());
+            telemetry.update();
+        }
+
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+
+        sleep(1000);
+        motorRight.setPower(0.5);
+        motorLeft.setPower(0.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 3.8)) {
+            telemetry.addData("Right", "Driving into the crater %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
