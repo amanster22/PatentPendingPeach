@@ -115,6 +115,7 @@ public class TFTest extends LinearOpMode {
                                     telemetry.addData("Gold Mineral Position", "Left");
                                     unlatching();
                                     runLeft();
+                                    break;
 
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
@@ -123,15 +124,21 @@ public class TFTest extends LinearOpMode {
                                     telemetry.addData("Ready to run", "Center");
                                     unlatching();
                                     runMiddle();
+                                    break;
                                 }
                             } else {
                                 telemetry.addData("Gold Mineral Position", "Right");
                                 unlatching();
                                 runRight();
+                                break;
                             }
                         }
-                        else if(runtime.seconds()>= 15)
+                        else if(runtime.seconds()>= 15) {
                             unlatching();
+                            runMiddle();
+
+                        }
+
                     }
                     telemetry.update();
                 }
