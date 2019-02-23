@@ -28,8 +28,8 @@ public class TeleOpPP2 extends LinearOpMode
     //private Servo motorAbjure;
     private DcMotor motorMarker;
 
-    private Servo servoLeft;
-    private Servo servoRight;
+    //private Servo servoLeft;
+    //private Servo servoRight;
     double clawOffset = 0;                       // Servo mid position
     final double CLAW_SPEED = 0.02;                   // sets rate to move servo
 
@@ -51,8 +51,8 @@ public class TeleOpPP2 extends LinearOpMode
 
         motorArm = hardwareMap.dcMotor.get("mArm");
         motorRetract=hardwareMap.dcMotor.get("mRetract");
-        servoLeft = hardwareMap.servo.get("sLeft");
-        servoRight = hardwareMap.servo.get("sRight");
+        //servoLeft = hardwareMap.servo.get("sLeft");
+        //servoRight = hardwareMap.servo.get("sRight");
 
 
         motorMarker=hardwareMap.dcMotor.get("mMarker");
@@ -120,8 +120,8 @@ public class TeleOpPP2 extends LinearOpMode
 
 //            // Move both servos to new position.  Assume servos are mirror image of each other.
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            servoRight.setPosition(clawOffset);
-            servoLeft.setPosition(clawOffset);
+            //servoRight.setPosition(clawOffset);
+            //servoLeft.setPosition(clawOffset);
 //            //gives hardware time to catch up
             //idle();
         }
