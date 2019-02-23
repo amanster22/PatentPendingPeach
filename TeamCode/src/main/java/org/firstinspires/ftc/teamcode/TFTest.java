@@ -352,7 +352,7 @@ motorLeft.setPower(0);
         motorRight.setPower(0.6);
         motorLeft.setPower(0.6);
         runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.9)) {
             telemetry.addData("Left", "go", runtime.seconds());
             telemetry.update();
         }

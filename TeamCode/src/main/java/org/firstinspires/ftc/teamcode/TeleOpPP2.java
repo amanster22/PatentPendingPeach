@@ -40,6 +40,8 @@ public class TeleOpPP2 extends LinearOpMode
     // final double ARM_DOWN_POWER = -0.45;
     final double ARM_DOWN_POWER = -0.45;
 
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         motorLeft = hardwareMap.dcMotor.get("mLeft");
@@ -58,9 +60,12 @@ public class TeleOpPP2 extends LinearOpMode
         telemetry.addData("PP:", "Ready");    //
         telemetry.update();
 
+
+
         waitForStart();
 
         while (opModeIsActive()) {
+
             //values for gamepad range from -1 to 1
             motorLeft.setPower(-gamepad2.left_stick_y);
             motorRight.setPower(-gamepad2.right_stick_y);
@@ -97,45 +102,28 @@ public class TeleOpPP2 extends LinearOpMode
 //extender
             if (gamepad1.dpad_up)
             {
-
+                motorArm.setPower(0.3);
             }
             else if(gamepad1.dpad_down) {
-
+                motorArm.setPower(-0.3);
             }
-            else {
 
-            }
 
             if(gamepad1.dpad_left) {
-                motorMarker.setPower(0.25);
+
+                clawOffset += CLAW_SPEED;
             }
             else if(gamepad1.dpad_right) {
-                motorMarker.setPower(-0.25);
-            }
-            else {
-                motorMarker.setPower(0);
+                clawOffset -= CLAW_SPEED;
             }
 
 
-            // Send telemetry message to signify robot running;
-//            telemetry.addData("claw", "Offset = %.2f", clawOffset);
-//            telemetry.addData("left", "%.2f", left);
-//            telemetry.addData("right", "%.2f", right);
-//            telemetry.update();
-
-            // Use gamepad left & right Bumpers to open and close the claw
-
-//            if (gamepad1.a)
-//                clawOffset += CLAW_SPEED;
-//            else if (gamepad1.b)
-//                clawOffset -= CLAW_SPEED;
-//
 //            // Move both servos to new position.  Assume servos are mirror image of each other.
-//            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-//            servoRight.setPosition(MID_SERVO + clawOffset);
-//            servoLeft.setPosition(MID_SERVO - clawOffset);
+            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            servoRight.setPosition(clawOffset);
+            servoLeft.setPosition(clawOffset);
 //            //gives hardware time to catch up
-//            idle();
+            //idle();
         }
     }
 }
