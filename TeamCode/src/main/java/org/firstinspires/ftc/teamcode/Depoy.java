@@ -1,32 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import java.util.List;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
 
 //hellooooooooooooooooooooooooooooooooooooooo
 //
 
 
-@Autonomous(name = "PP AUTO V1.2")
+@Autonomous(name = "PP AUT2")
 //@Disabled
-public class TFTest extends LinearOpMode {
+public class Depoy extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-    private static final VuforiaLocalizer.CameraDirection CAMERA_DIRECTION = CameraDirection.FRONT;
+    private static final CameraDirection CAMERA_DIRECTION = CameraDirection.FRONT;
 
     private ElapsedTime runtime = new ElapsedTime();
     //clear motor objects
@@ -115,7 +112,6 @@ public class TFTest extends LinearOpMode {
                                     telemetry.addData("Gold Mineral Position", "Left");
                                     unlatching();
                                     runLeft();
-                                    break;
 
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
@@ -124,21 +120,15 @@ public class TFTest extends LinearOpMode {
                                     telemetry.addData("Ready to run", "Center");
                                     unlatching();
                                     runMiddle();
-                                    break;
                                 }
                             } else {
                                 telemetry.addData("Gold Mineral Position", "Right");
                                 unlatching();
                                 runRight();
-                                break;
                             }
                         }
-                        else if(runtime.seconds()>= 15) {
+                        else if(runtime.seconds()>= 15)
                             unlatching();
-                            runMiddle();
-
-                        }
-
                     }
                     telemetry.update();
                 }
@@ -187,7 +177,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0.4);
         motorLeft.setPower(-0.4);
         runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.25)) {
             telemetry.addData("Left", "Turning to the left", runtime.seconds());
             telemetry.update();
         }
@@ -228,7 +218,7 @@ public class TFTest extends LinearOpMode {
         motorRight.setPower(0);
         sleep(500);
         //release marker
-        motorMarker.setPower(-0.2);
+        motorMarker.setPower(0.2);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.5)) {
             telemetry.addData("Left", "Releasing the marker %2.5f", runtime.seconds());
@@ -299,24 +289,12 @@ motorLeft.setPower(0);
 
 
     private void runMiddle() {
-        sleep(800);
-        motorRight.setPower(-0.4);
-        motorLeft.setPower(0.4);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.15)) {
-            telemetry.addData("Left", "Turning towards the depot", runtime.seconds());
-            telemetry.update();
-        }
-
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
-
         sleep(1000);
         motorRight.setPower(0.5);
         motorLeft.setPower(0.5);
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.5)) {
+        while (opModeIsActive() && (runtime.seconds() < 2.3)) {
             telemetry.addData("Path", "Middle: Pushing the marker %2.5f", runtime.seconds());
             telemetry.update();
         }
@@ -324,7 +302,7 @@ motorLeft.setPower(0);
         motorRight.setPower(0);
 
         //release marker
-        motorMarker.setPower(0.2);
+        motorMarker.setPower(-0.2);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 0.5)) {
             telemetry.addData("Left", "Releasing the marker %2.5f", runtime.seconds());
@@ -334,54 +312,7 @@ motorLeft.setPower(0);
         motorMarker.setPower(0);
 
 
-        ////////////////////////
-        sleep(800);
-        motorRight.setPower(0.3);
-        motorLeft.setPower(-0.3);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 2.5)) {
-            telemetry.addData("Left", "Turns back", runtime.seconds());
-            telemetry.update();
-        }
 
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
-
-    ////////////////
-        sleep(800);
-        motorRight.setPower(0.6);
-        motorLeft.setPower(0.6);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.9)) {
-            telemetry.addData("Left", "go", runtime.seconds());
-            telemetry.update();
-        }
-
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
-
-        sleep(800);
-        motorRight.setPower(0.3);
-        motorLeft.setPower(-0.3);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.7)) {
-            telemetry.addData("Left", "Turns back", runtime.seconds());
-            telemetry.update();
-        }
-
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
-
-        motorRight.setPower(0.6);
-        motorLeft.setPower(0.6);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 3)) {
-            telemetry.addData("Left", "go", runtime.seconds());
-            telemetry.update();
-        }
-
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
 
     }
 
@@ -400,10 +331,10 @@ motorLeft.setPower(0);
         motorRight.setPower(0);
 
         sleep(1000);
-        motorRight.setPower(0.5);
-        motorLeft.setPower(0.5);
+        motorRight.setPower(-0.5);
+        motorLeft.setPower(-0.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.7)) {
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
             telemetry.addData("Right", "Pushing %2.5f", runtime.seconds());
             telemetry.update();
         }
@@ -414,7 +345,7 @@ motorLeft.setPower(0);
         motorRight.setPower(0.4);
         motorLeft.setPower(-0.4);
         runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.7)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
             telemetry.addData("Left", "Turning towards the crater", runtime.seconds());
             telemetry.update();
         }
@@ -426,91 +357,25 @@ motorLeft.setPower(0);
         motorRight.setPower(0.5);
         motorLeft.setPower(0.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
+        while (opModeIsActive() && (runtime.seconds() < 3.8)) {
             telemetry.addData("Right", "Driving into the crater %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLeft.setPower(0);
         motorRight.setPower(0);
-
-        //release marker
-        motorMarker.setPower(0.2);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.5)) {
-            telemetry.addData("Left", "Releasing the marker %2.5f", runtime.seconds());
-            telemetry.update();
-        }
-        sleep(500);
-        motorMarker.setPower(0);
-
-        sleep(800);
-
-        motorLeft.setPower(-0.4);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
-            telemetry.addData("Left", "Turning towards the crater", runtime.seconds());
-            telemetry.update();
-        }
-
-        motorLeft.setPower(0);
-
-        sleep(1000);
-        motorRight.setPower(-0.6);
-        motorLeft.setPower(-0.6);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
-            telemetry.addData("Right", "Driving into the crater %2.5f", runtime.seconds());
-            telemetry.update();
-        }
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
-
-        sleep(800);
-
-        motorLeft.setPower(-0.4);
-        runtime.reset();              //0.5
-        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
-            telemetry.addData("Left", "Turning towards the crater", runtime.seconds());
-            telemetry.update();
-
-            sleep(1000);
-            motorRight.setPower(-0.6);
-            motorLeft.setPower(-0.6);
-            runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 2)) {
-                telemetry.addData("Right", "Driving into the crater %2.5f", runtime.seconds());
-                telemetry.update();
-            }
-            motorLeft.setPower(0);
-            motorRight.setPower(0);
-        }
     }
 
 
     private void unlatching() {
 
-        motorLatch.setPower(-0.5);
+        motorLatch.setPower(-0.4);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.5)) {
+        while (opModeIsActive() && (runtime.seconds() < 4.7)) {
             telemetry.addData("Path", "Step 1: Unlatching lowering %2.5f", runtime.seconds());
             telemetry.update();
         }
         motorLatch.setPower(0);
-        ////////////////////////
-        sleep(800);
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorLeft.setPower(0.7);
 
-        runtime.reset();
-        //Push Forward
-        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
-            telemetry.addData("Path", "left %2.5f", runtime.seconds());
-            telemetry.update();
-        }
-
-        motorLeft.setPower(0);
-
-/////////////////////////
         sleep(800);
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorLeft.setPower(0.3);
@@ -530,7 +395,7 @@ motorLeft.setPower(0);
         motorLeft.setPower(-0.3);
         runtime.reset();
         //Turn to release the latch
-        while (opModeIsActive() && (runtime.seconds() < 0.4)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.7)) {
             telemetry.addData("Path", "Step 3: Release the latch %2.5f", runtime.seconds());
             telemetry.update();
         }
