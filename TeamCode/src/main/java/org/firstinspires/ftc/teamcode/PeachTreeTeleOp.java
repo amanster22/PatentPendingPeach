@@ -126,6 +126,7 @@ public class PeachTreeTeleOp extends OpMode {
             }
         }
         telemetry.addData("speed control", speed_on);
+        telemetry.addData("servo holding", servo_hold);
 //        relativeLayout.post(new Runnable(
 //        ) {
 //            public void run() {
