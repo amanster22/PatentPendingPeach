@@ -22,7 +22,8 @@ public class PeachTreeTeleOp extends OpMode {
     private CRServo LServo;
     private double speed = 0.5;
     private boolean speed_on = false;
-    private String phoneBackground="WHITE";
+    private boolean servo_hold = false;
+//    private String phoneBackground="WHITE";
 
 
 
@@ -62,26 +63,33 @@ public class PeachTreeTeleOp extends OpMode {
         double right = -gamepad1.right_stick_y;
         speed = 0.5;
 
-        if (speed_on) {
-            speed = speed + (gamepad1.right_trigger*0.5) - (gamepad1.left_trigger*0.3);
-            if (speed < 0.1) {
-                speed = 0.1;
-                phoneBackground="RED";
-            }
-            if (speed > 0.9) {
-                speed = 1;
-                phoneBackground="GREEN";
-            }
+        //toggle servo holding, which will hold the item by applying constant servo pressure
+        if (gamepad1.b) {
+            servo_hold = true;
+        } else if (gamepad1.a) {
+            servo_hold = false;
         }
-        LFMotor.setPower(-left * speed);
-        LBMotor.setPower(-left * speed);
-        RFMotor.setPower(right * speed);
-        RBMotor.setPower(right * speed);
+        //toggle speed control
         if (gamepad1.y) {
             speed_on = true;
         } else if (gamepad1.x) {
             speed_on = false;
         }
+        //adjust speed if speed control is on, right trigger is a boost, left trigger is a brake, but not a complete brake
+        if (speed_on) {
+            speed = speed + (gamepad1.right_trigger*0.5) - (gamepad1.left_trigger*0.3);
+            if (speed < 0.1) {
+                speed = 0.1;
+            }
+            if (speed > 0.9) {
+                speed = 1;
+            }
+        }
+        //move motors based on speed and human xbox controller position
+        LFMotor.setPower(-left * speed);
+        LBMotor.setPower(-left * speed);
+        RFMotor.setPower(right * speed);
+        RBMotor.setPower(right * speed);
         telemetry.addData("speed %", speed*100);
         relativeLayout.post(new Runnable(
         ) {
@@ -95,36 +103,42 @@ public class PeachTreeTeleOp extends OpMode {
 
             }
         });
-        telemetry.update();
-
-        if (gamepad1.left_bumper) {
-            RServo.setPower(-1);
-            LServo.setPower(1);
-
-
-        } else if (gamepad1.right_bumper) {
-            RServo.setPower(1);
-            LServo.setPower(-1);
-
+        //either hold servo or use human for manual servo control
+        if (servo_hold) {
+            RServo.setPower(0.5);
+            LServo.setPower(-0.5);
         } else {
-            RServo.setPower(0);
-            LServo.setPower(0);
-            phoneBackground="BLACK";
-        }
+            if (gamepad1.left_bumper) {
+                //open gripper
+                RServo.setPower(-1);
+                LServo.setPower(1);
 
-        telemetry.addData("speed control", speed_on);
-        relativeLayout.post(new Runnable(
-        ) {
-            public void run() {
-                if(phoneBackground=="RED")
-                    relativeLayout.setBackgroundColor(Color.RED);
-                else if(phoneBackground=="GREEN")
-                    relativeLayout.setBackgroundColor(Color.GREEN);
-                else if(phoneBackground=="BLACK")
-                    relativeLayout.setBackgroundColor(Color.BLACK);
 
+            } else if (gamepad1.right_bumper) {
+                //close gripper
+                RServo.setPower(1);
+                LServo.setPower(-1);
+
+            } else {
+                // no gripper movement
+                RServo.setPower(0);
+                LServo.setPower(0);
+                //            phoneBackground="BLACK";
             }
-        });
+        }
+        telemetry.addData("speed control", speed_on);
+//        relativeLayout.post(new Runnable(
+//        ) {
+//            public void run() {
+//                if(phoneBackground=="RED")
+//                    relativeLayout.setBackgroundColor(Color.RED);
+//                else if(phoneBackground=="GREEN")
+//                    relativeLayout.setBackgroundColor(Color.GREEN);
+//                else if(phoneBackground=="BLACK")
+//                    relativeLayout.setBackgroundColor(Color.BLACK);
+//
+//            }
+//        });
         telemetry.update();
     }
 
