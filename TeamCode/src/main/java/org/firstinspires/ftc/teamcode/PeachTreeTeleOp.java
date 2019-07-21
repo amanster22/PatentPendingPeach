@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.hardware.Camera;
 import android.view.View;
 
 @TeleOp(name = "peachOS", group = "PatentPending")
@@ -27,7 +26,7 @@ public class PeachTreeTeleOp extends OpMode {
 
 
 
-    View relativeLayout = null;
+    private View relativeLayout = null;
     public void init() {
         //Runs when Driver hits Init
 
