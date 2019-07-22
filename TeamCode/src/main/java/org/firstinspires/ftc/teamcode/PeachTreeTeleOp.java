@@ -22,6 +22,7 @@ public class PeachTreeTeleOp extends OpMode {
     private double speed = 0.5;
     private boolean speed_on = false;
     private boolean servo_hold = false;
+    private double claw_index = 0;
 //    private String phoneBackground="WHITE";
 
 
@@ -61,6 +62,8 @@ public class PeachTreeTeleOp extends OpMode {
         double left = -gamepad1.left_stick_y;
         double right = -gamepad1.right_stick_y;
         speed = 0.5;
+
+
 
         //toggle servo holding, which will hold the item by applying constant servo pressure
         if (gamepad1.b) {
