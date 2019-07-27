@@ -19,6 +19,7 @@ public class PeachTreeTeleOp extends OpMode {
     private DcMotor RBMotor;
     private CRServo RServo;
     private CRServo LServo;
+    private DcMotor HTrain;
     private double speed = 0.5;
     private boolean speed_on = false;
     private boolean servo_hold = false;
@@ -30,7 +31,8 @@ public class PeachTreeTeleOp extends OpMode {
     private View relativeLayout = null;
     public void init() {
         //Runs when Driver hits Init
-
+        telemetry.addData("Say", "Hello Driver");    //
+        telemetry.update();
 
         LFMotor = hardwareMap.dcMotor.get("lf");
         LBMotor = hardwareMap.dcMotor.get("lb");
@@ -38,7 +40,7 @@ public class PeachTreeTeleOp extends OpMode {
         RBMotor = hardwareMap.dcMotor.get("rb");
         RServo = hardwareMap.crservo.get("crr");
         LServo = hardwareMap.crservo.get("crl");
-
+        HTrain = hardwareMap.dcMotor.get("m");
 
 
         LFMotor.setPower(0);
@@ -47,6 +49,7 @@ public class PeachTreeTeleOp extends OpMode {
         RBMotor.setPower(0);
         RServo.setPower(0);
         LServo.setPower(0);
+        HTrain.setPower(0);
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
@@ -62,6 +65,7 @@ public class PeachTreeTeleOp extends OpMode {
         double left = -gamepad1.left_stick_y;
         double right = -gamepad1.right_stick_y;
         speed = 0.5;
+//        double htrain_dir = 0;
 
 
 
@@ -86,6 +90,13 @@ public class PeachTreeTeleOp extends OpMode {
             if (speed > 0.9) {
                 speed = 1;
             }
+        }
+        if (gamepad1.dpad_left) {
+            HTrain.setPower(speed);
+        } else if (gamepad1.dpad_right) {
+            HTrain.setPower(speed*-1);
+        } else {
+            HTrain.setPower(0);
         }
         //move motors based on speed and human xbox controller position
         LFMotor.setPower(-left * speed);
@@ -153,5 +164,6 @@ public class PeachTreeTeleOp extends OpMode {
         RBMotor.setPower(0);
         RServo.setPower(0);
         LServo.setPower(0);
+        HTrain.setPower(0);
     }
 }
