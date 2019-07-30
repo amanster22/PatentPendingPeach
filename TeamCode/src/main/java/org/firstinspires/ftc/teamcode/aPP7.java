@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -38,6 +39,7 @@ sticks-Float=[-1,1]
 a,b,x,y-Boolean= True or False
  */
 @Autonomous(name = "Patent Pending Auto 7.1-detect")
+@Disabled
 public class aPP7 extends LinearOpMode {
 
 

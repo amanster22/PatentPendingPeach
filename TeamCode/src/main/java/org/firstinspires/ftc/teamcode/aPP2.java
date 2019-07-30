@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 
 /*
@@ -16,6 +17,7 @@ sticks-Float=[-1,1]
 a,b,x,y-Boolean= True or False
  */
 @Autonomous(name = "Patent Pending Auto 2.0")
+@Disabled
 public class aPP2 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //clear motor objects
