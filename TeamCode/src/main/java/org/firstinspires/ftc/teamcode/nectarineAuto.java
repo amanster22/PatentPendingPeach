@@ -65,7 +65,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="NectarineAuto", group="Pushbot")
 //@Disabled
 public class nectarineAuto extends LinearOpMode {
 
@@ -112,13 +112,13 @@ public class nectarineAuto extends LinearOpMode {
 
         LFMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RFMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LBMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RBMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        LBMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        RBMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         LFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        LBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        RBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
@@ -131,12 +131,9 @@ public class nectarineAuto extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  5,  5, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -5, -5, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-
-        LServo.setPower(1.0);            // S4: Stop and close the claw.
-        RServo.setPower(-1.0);
+        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
         sleep(1000);     // pause for servos to move
 
         telemetry.addData("Path", "Complete");
@@ -154,37 +151,26 @@ public class nectarineAuto extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTargetF;
-        int newRightTargetF;
-        int newRightTargetB;
-        int newLeftTargetB;
+        int newLeftTarget;
+        int newRightTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTargetF = LFMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTargetF = RFMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newRightTargetB = RBMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newLeftTargetB = LBMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-
-            LFMotor.setTargetPosition(newLeftTargetF);
-            RFMotor.setTargetPosition(newRightTargetF);
-            LBMotor.setTargetPosition(newLeftTargetB);
-            RBMotor.setTargetPosition(newRightTargetB);
+            newLeftTarget = LFMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightTarget = RFMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            LFMotor.setTargetPosition(newLeftTarget);
+            RFMotor.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
             LFMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             RFMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            LBMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RBMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            LFMotor.setPower(-Math.abs(speed));
+           LFMotor.setPower(Math.abs(speed));
             RFMotor.setPower(Math.abs(speed));
-            LBMotor.setPower(Math.abs(speed));
-            RBMotor.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -194,27 +180,23 @@ public class nectarineAuto extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (LFMotor.isBusy() && RFMotor.isBusy() && RBMotor.isBusy() && LBMotor.isBusy())) {
+                    (LFMotor.isBusy() && RFMotor.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTargetF,  newRightTargetF);
+                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                        RFMotor.getCurrentPosition(),
-                        RBMotor.getCurrentPosition());
+                        LFMotor.getCurrentPosition(),
+                        RFMotor.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
             LFMotor.setPower(0);
             RFMotor.setPower(0);
-            LBMotor.setPower(0);
-            RBMotor.setPower(0);
 
             // Turn off RUN_TO_POSITION
             LFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RFMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RBMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
         }
