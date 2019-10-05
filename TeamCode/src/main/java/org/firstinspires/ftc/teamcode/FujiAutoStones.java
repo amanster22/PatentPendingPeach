@@ -142,7 +142,7 @@ public class FujiAutoStones extends LinearOpMode {
             lfMotor.setPower(speed);
             rbMotor.setPower(speed);
             lbMotor.setPower(speed);
-            // keep looping while we are still active and any motors are running.
+            // Keep looping while we are still active and any motors are running.
             telemetry.addData("Turn", "started turning.");
             telemetry.update();
             while (opModeIsActive() &&
