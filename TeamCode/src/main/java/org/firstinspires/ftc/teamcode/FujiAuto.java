@@ -39,7 +39,7 @@ public class FujiAuto extends LinearOpMode {
     private static final double COLOR_SENSOR_SCALE_FACTOR = 255.0;
     private static final float[] COLOR_SENSOR_HSV = {0F, 0F, 0F};
     // Declare field measurements.
-    private static final double STONE_WALL_DISTANCE_INCH = 47.0;
+    private static final double STONE_WALL_DISTANCE_INCH = 45.0;
     private static final double SKYSTONE_DISTANCE_STONES = 3.0;
     private static final double STONE_LENGTH_INCH = 8.0;
 
