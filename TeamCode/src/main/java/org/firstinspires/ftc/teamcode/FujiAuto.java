@@ -39,7 +39,7 @@ public class FujiAuto extends LinearOpMode {
     private static final double COLOR_SENSOR_SCALE_FACTOR = 255.0;
     private static final float[] COLOR_SENSOR_HSV = {0F, 0F, 0F};
     // Declare field measurements.
-    private static final double STONE_WALL_DISTANCE_INCH = 45.0;
+    private static final double STONE_WALL_DISTANCE_INCH = 47.0;
     private static final double SKYSTONE_DISTANCE_STONES = 3.0;
     private static final double STONE_LENGTH_INCH = 8.0;
 
@@ -220,7 +220,7 @@ public class FujiAuto extends LinearOpMode {
                        (int) (sensorColor.green() * COLOR_SENSOR_SCALE_FACTOR),
                        (int) (sensorColor.blue() * COLOR_SENSOR_SCALE_FACTOR),
                               COLOR_SENSOR_HSV);
-        telemetry.addData("Value", COLOR_SENSOR_HSV[2]);
+        telemetry.addData("Value", Float.toString(COLOR_SENSOR_HSV[2]));
 
         // Check which stone is sensed.
         if (COLOR_SENSOR_HSV[2] > 80) {
@@ -228,7 +228,7 @@ public class FujiAuto extends LinearOpMode {
         } else {
             BlockID = 1; // Skystone.
         }
-        telemetry.addData("Block ID", Integer.toString(BlockID) + ".");
+        telemetry.addData("Block ID", Integer.toString(BlockID));
 
         // Return sensed block.
         telemetry.update();
