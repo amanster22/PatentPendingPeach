@@ -29,7 +29,7 @@ public class FujiAuto extends LinearOpMode {
     private static final double INCH_PER_WHEEL_REV = WHEEL_DIAMETER_INCH * PI;
     // Declare motor measurements.
     private static final double DRIVE_SPEED = 0.7;
-    private static final double COUNT_PER_REV = 1120.0;  // eg: REV Motor Encoder.
+    private static final double COUNT_PER_REV = 1120.0; // eg: REV Motor Encoder.
     private static final double COUNT_PER_INCH = COUNT_PER_REV / INCH_PER_WHEEL_REV;
     // Declare robot measurements.
     private static final double ROBOT_EDGE_INCH = 17.7;
@@ -39,7 +39,7 @@ public class FujiAuto extends LinearOpMode {
     private static final double COLOR_SENSOR_SCALE_FACTOR = 255.0;
     private static final float[] COLOR_SENSOR_HSV = {0F, 0F, 0F};
     // Declare field measurements.
-    private static final double STONE_WALL_DISTANCE_INCH = 45.0;
+    private static final double STONE_WALL_DISTANCE_INCH = 47.0;
     private static final double SKYSTONE_DISTANCE_STONES = 3.0;
     private static final double STONE_LENGTH_INCH = 8.0;
 
