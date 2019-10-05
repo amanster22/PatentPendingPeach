@@ -220,7 +220,7 @@ public class FujiAuto extends LinearOpMode {
                        (int) (sensorColor.green() * COLOR_SENSOR_SCALE_FACTOR),
                        (int) (sensorColor.blue() * COLOR_SENSOR_SCALE_FACTOR),
                               COLOR_SENSOR_HSV);
-        telemetry.addData("Value", Float.toString(COLOR_SENSOR_HSV[2]) + ".");
+        telemetry.addData("Value", COLOR_SENSOR_HSV[2]);
 
         // Check which stone is sensed.
         if (COLOR_SENSOR_HSV[2] > 80) {
