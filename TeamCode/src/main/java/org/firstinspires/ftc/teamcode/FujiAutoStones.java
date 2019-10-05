@@ -4,13 +4,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import android.graphics.Color;
 
 //@Disabled
 @Autonomous(name="FujiAuto", group="Pushbot")
-public class FujiAuto extends LinearOpMode {
+public class FujiAutoStones extends LinearOpMode {
 
     // Declare timer.
     private ElapsedTime runtime = new ElapsedTime();
@@ -21,6 +23,7 @@ public class FujiAuto extends LinearOpMode {
     private DcMotor rbMotor;
     private DcMotor lbMotor;
     private ColorSensor sensorColor;
+    private DistanceSensor sensorDistance;
 
     // Declare wheel measurements.
     private static final double PI = 3.1415;
@@ -56,6 +59,7 @@ public class FujiAuto extends LinearOpMode {
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
         sensorColor = hardwareMap.colorSensor.get("color");
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "distance");
 
         telemetry.addData("Motors", "resetting encoders.");
         telemetry.update();
@@ -82,6 +86,12 @@ public class FujiAuto extends LinearOpMode {
         telemetry.update();
 
         encoderDrive(DRIVE_SPEED, STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
+
+        driveOn(-DRIVE_SPEED, 0.0);
+        while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
+        driveOn(0.0, 0.0);
+
+        encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH / 2  , 10.0);
         while (true) {
             if (senseBlock() == 1) {
                 firstSkystone = currentStone;
@@ -95,12 +105,10 @@ public class FujiAuto extends LinearOpMode {
                 encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH, 10.0);
             }
         }
-        // Extend arm to second skystone.
-        // Grab blocks.
-        // Bring arm in.
+        // Grab stone.
         encoderDrive(DRIVE_SPEED, -20.0, 0.0, 10.0);
         encoderDrive(DRIVE_SPEED, 0.0, -firstSkystone * STONE_LENGTH_INCH - 50.0, 10.0);
-        // Drop blocks.
+        // Drop stone.
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
@@ -139,9 +147,7 @@ public class FujiAuto extends LinearOpMode {
             telemetry.update();
             while (opModeIsActive() &&
                     runtime.seconds() < timeout &&
-                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {
-                continue;
-            }
+                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
             telemetry.addData("Turn", "done turning.");
             telemetry.update();
             // Stop all motion.
@@ -208,6 +214,13 @@ public class FujiAuto extends LinearOpMode {
             rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+    }
+
+    public void driveOn (double forSpeed, double horiSpeed) {
+        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
+        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
+        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
+        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
     }
 
     public int senseBlock() {
