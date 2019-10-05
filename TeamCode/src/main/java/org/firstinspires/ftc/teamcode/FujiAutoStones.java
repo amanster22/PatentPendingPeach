@@ -59,7 +59,7 @@ public class FujiAutoStones extends LinearOpMode {
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
         sensorColor = hardwareMap.colorSensor.get("color");
-        sensorDistance = hardwareMap.get(DistanceSensor.class, "distance");
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
 
         telemetry.addData("Motors", "resetting encoders.");
         telemetry.update();
