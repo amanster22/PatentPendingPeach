@@ -68,7 +68,7 @@ public class FujiAutoFoundation extends LinearOpMode {
         telemetry.addData("Motors", "encoders done resetting.");
         telemetry.update();
 
-        // Wait for game to start (driver presses PLAY).
+        // Wait for game to start (driver presses PLAY) .
         waitForStart();
 
         // Run autonomous.
