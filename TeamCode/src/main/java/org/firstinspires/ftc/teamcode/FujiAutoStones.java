@@ -44,7 +44,7 @@ public class FujiAutoStones extends LinearOpMode {
     // Declare field measurements.
     private static final double STONE_WALL_DISTANCE_INCH = 47.0;
     private static final double SKYSTONE_DISTANCE_STONES = 3.0;
-    private static final double STONE_LENGTH_INCH = 8.0;
+    private static final double STONE_LENGTH_INCH = 9.0;
 
     // Declare block sensing.
     private double firstSkystone;
