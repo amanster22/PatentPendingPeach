@@ -3,12 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import android.graphics.Color;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 //@Disabled
 @Autonomous(name="FujiAuto", group="Pushbot")
@@ -115,56 +115,6 @@ public class FujiAutoStones extends LinearOpMode {
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
-    }
-
-    public void encoderTurn(double speed, double revolutions, double timeout) {
-
-        // Ensure that the opMode is still active.
-        if (opModeIsActive()) {
-
-            // Declare motor targets.
-            double rfInch = revolutions * INCH_PER_ROBOT_REV;
-            double lfInch = revolutions * INCH_PER_ROBOT_REV;
-            double rbInch = revolutions * INCH_PER_ROBOT_REV;
-            double lbInch = revolutions * INCH_PER_ROBOT_REV;
-            // Set targets.
-            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH) + rfMotor.getCurrentPosition());
-            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH) + rbMotor.getCurrentPosition());
-            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH) + lfMotor.getCurrentPosition());
-            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH) + lbMotor.getCurrentPosition());
-            // Set motors to RUN_TO_POSITION mode.
-            rfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rbMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lbMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            // Reset the timer.
-            runtime.reset();
-
-            // Start motion.
-            rfMotor.setPower(speed);
-            lfMotor.setPower(speed);
-            rbMotor.setPower(speed);
-            lbMotor.setPower(speed);
-            // Keep looping while we are still active and any motors are running.
-            telemetry.addData("Turn", "started turning.");
-            telemetry.update();
-            while (opModeIsActive() &&
-                    runtime.seconds() < timeout &&
-                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
-            telemetry.addData("Turn", "done turning.");
-            telemetry.update();
-            // Stop all motion.
-            rfMotor.setPower(0);
-            lfMotor.setPower(0);
-            rbMotor.setPower(0);
-            lbMotor.setPower(0);
-
-            // Turn off RUN_TO_POSITION mode.
-            rfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
     }
 
     public void encoderDrive(double speed, double forInch, double horiInch, double timeout) {
