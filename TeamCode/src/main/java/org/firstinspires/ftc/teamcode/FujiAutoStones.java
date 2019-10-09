@@ -87,10 +87,13 @@ public class FujiAutoStones extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
 
+        //drive backward until the robot reaches the foundation
         driveOn(-DRIVE_SPEED, 0.0);
         while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
         driveOn(0.0, 0.0);
-
+        //attach servo grip by moving servo down on the foundation (NOT DONE YET)
+        
+        //move to the middle of the foundation
         encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH / 2  , 10.0);
         while (true) {
             if (senseBlock() == 1) {
