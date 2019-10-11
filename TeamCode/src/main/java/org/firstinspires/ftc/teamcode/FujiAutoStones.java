@@ -36,8 +36,6 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double COUNT_PER_INCH = COUNT_PER_REV / INCH_PER_WHEEL_REV;
     // Declare robot measurements.
     private static final double ROBOT_EDGE_INCH = 17.7;
-    private static final double WHEEL_SQUARE_DIAGONAL_INCH = 19.0;
-    private static final double INCH_PER_ROBOT_REV = WHEEL_SQUARE_DIAGONAL_INCH * PI;
     // Declare color measurements.
     private static final double COLOR_SENSOR_SCALE_FACTOR = 255.0;
     private static final float[] COLOR_SENSOR_HSV = {0F, 0F, 0F};
