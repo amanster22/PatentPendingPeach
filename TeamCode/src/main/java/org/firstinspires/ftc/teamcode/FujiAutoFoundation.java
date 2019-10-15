@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -9,8 +8,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-//@Disabled
-@Autonomous(name="FujiAuto", group="Pushbot")
+@Autonomous(name="FujiAutoFoundation", group="PatentPending")
 public class FujiAutoFoundation extends LinearOpMode {
 
     // Declare timer.
@@ -174,9 +172,7 @@ public class FujiAutoFoundation extends LinearOpMode {
             telemetry.update();
             while (opModeIsActive() &&
                     runtime.seconds() < timeout &&
-                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {
-                continue;
-            }
+                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
             telemetry.addData("Move", "done moving.");
             telemetry.update();
             // Stop all motion.

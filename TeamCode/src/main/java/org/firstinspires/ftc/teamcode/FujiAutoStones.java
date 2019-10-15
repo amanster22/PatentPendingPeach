@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -10,8 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-//@Disabled
-@Autonomous(name="FujiAuto", group="Pushbot")
+@Autonomous(name="FujiAutoStones", group="PatentPending")
 public class FujiAutoStones extends LinearOpMode {
 
     // Declare timer.
@@ -85,13 +83,12 @@ public class FujiAutoStones extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
 
-        //drive backward until the robot reaches the foundation
+        // Drive backward until the robot reaches the stones.
         driveOn(-DRIVE_SPEED, 0.0);
         while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
         driveOn(0.0, 0.0);
-        //attach servo grip by moving servo down on the foundation (NOT DONE YET)
         
-        //move to the middle of the foundation
+        // Move to the middle of the first stone.
         encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH / 2  , 10.0);
         while (true) {
             if (senseBlock() == 1) {
@@ -148,9 +145,7 @@ public class FujiAutoStones extends LinearOpMode {
             telemetry.update();
             while (opModeIsActive() &&
                    runtime.seconds() < timeout &&
-                  (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {
-                continue;
-            }
+                  (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
             telemetry.addData("Move", "done moving.");
             telemetry.update();
             // Stop all motion.
@@ -169,9 +164,9 @@ public class FujiAutoStones extends LinearOpMode {
 
     public void driveOn (double forSpeed, double horiSpeed) {
         rfMotor.setPower((+forSpeed - horiSpeed) / 2);
-        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
-        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
-        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
+        rbMotor.setPower((+forSpeed + horiSpeed) / 2);
+        lfMotor.setPower((-forSpeed - horiSpeed) / 2);
+        lbMotor.setPower((-forSpeed + horiSpeed) / 2);
     }
 
     public int senseBlock() {
