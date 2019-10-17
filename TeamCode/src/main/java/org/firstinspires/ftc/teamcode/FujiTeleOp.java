@@ -24,10 +24,10 @@ public class FujiTeleOp extends OpMode {
         // Initialize opMode members.
         rfMotor = hardwareMap.dcMotor.get("rf");
         rbMotor = hardwareMap.dcMotor.get("rb");
-            //lfMotor = hardwareMap.dcMotor.get("lf");
-            //lbMotor = hardwareMap.dcMotor.get("lb");
+        lfMotor = hardwareMap.dcMotor.get("lf");
+        lbMotor = hardwareMap.dcMotor.get("lb");
         extender = hardwareMap.dcMotor.get("ext");
-            //hinge = hardwareMap.dcMotor.get("hin");
+        hinge = hardwareMap.dcMotor.get("hin");
         // Stop all motion.
         stop();
         // Initialize relative layout to change the phone's background color.
@@ -54,12 +54,12 @@ public class FujiTeleOp extends OpMode {
 
         // Set arm motor speeds.
         extender.setPower(extenderSpeed);
-            //hinge.setPower(hingeSpeed);
+        hinge.setPower(hingeSpeed);
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed, 1), -1));
         rbMotor.setPower(Math.max(Math.min(rbSpeed, 1), -1));
-            //lfMotor.setPower(Math.max(Math.min(lfSpeed, 1), -1));
-            //lbMotor.setPower(Math.max(Math.min(lbSpeed, 1), -1));
+        lfMotor.setPower(Math.max(Math.min(lfSpeed, 1), -1));
+        lbMotor.setPower(Math.max(Math.min(lbSpeed, 1), -1));
 
         // Set phone background color.
         relativeLayout.post(new Runnable() {
@@ -74,9 +74,9 @@ public class FujiTeleOp extends OpMode {
         // Stop all motion.
         rfMotor.setPower(0);
         rbMotor.setPower(0);
-            //lfMotor.setPower(0);
-            //lbMotor.setPower(0);
+        lfMotor.setPower(0);
+        lbMotor.setPower(0);
         extender.setPower(0);
-            //hinge.setPower(0);
+        hinge.setPower(0);
     }
 }
