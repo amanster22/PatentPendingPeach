@@ -80,10 +80,11 @@ public class FujiAutoStones extends LinearOpMode {
         telemetry.addData("Path", "started.");
         telemetry.update();
 
+	// Go up to stones.
         encoderDrive(DRIVE_SPEED, STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
 
-        // Drive backward until the robot reaches the stones.
-        driveOn(-DRIVE_SPEED, 0.0);
+        // Drive sideways until the robot reaches the end of the stone line.
+        driveOn(0.0, -DRIVE_SPEED);
         while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
         driveOn(0.0, 0.0);
         
