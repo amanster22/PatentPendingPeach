@@ -67,17 +67,17 @@ public class FujiAutoFoundation extends LinearOpMode {
         telemetry.addData("Motors", "encoders done resetting.");
         telemetry.update();
 
-        // Wait for game to start (driver presses PLAY) .
+        // Wait for game to start (driver presses PLAY).
         waitForStart();
 
         // Run autonomous.
         telemetry.addData("Path", "started.");
         telemetry.update();
 
-	// Go up to stones.
+	// Go up to foundation.
         encoderDrive(DRIVE_SPEED, FOUNDATION_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
 
-	// Drive to end of foundation.
+	// Drive sideways until the robot reaches the end of the foundation.
         driveOn(0.0, DRIVE_SPEED);
         while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
         driveOn(0.0, 0.0);
