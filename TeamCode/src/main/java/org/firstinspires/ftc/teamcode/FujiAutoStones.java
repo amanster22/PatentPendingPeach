@@ -43,7 +43,6 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double STONE_LENGTH_INCH = 9.0;
 
     // Declare block sensing.
-    private double firstSkystone;
     private double currentStone = 0.0;
 
     @Override
@@ -90,11 +89,9 @@ public class FujiAutoStones extends LinearOpMode {
         
         // Move to the middle of the first stone.
         encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH / 2  , 10.0);
-        while (true) {
-            if (senseBlock() == 1) {
-                firstSkystone = currentStone;
-                break;
-            }
+
+	// Start sensing stones.
+        while (senseBlock() != 1) {
             currentStone++;
             if (currentStone >= SKYSTONE_DISTANCE_STONES) {
                 encoderDrive (DRIVE_SPEED, 0.0, -STONE_LENGTH_INCH * (SKYSTONE_DISTANCE_STONES - 1.0), 10.0);
@@ -103,10 +100,11 @@ public class FujiAutoStones extends LinearOpMode {
                 encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH, 10.0);
             }
         }
-        // Grab stone.
+
+        // Grab stone here.
         encoderDrive(DRIVE_SPEED, -20.0, 0.0, 10.0);
-        encoderDrive(DRIVE_SPEED, 0.0, -firstSkystone * STONE_LENGTH_INCH - 50.0, 10.0);
-        // Drop stone.
+        encoderDrive(DRIVE_SPEED, 0.0, -currentStone * STONE_LENGTH_INCH - 50.0, 10.0);
+        // Drop stone here.
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
@@ -163,10 +161,10 @@ public class FujiAutoStones extends LinearOpMode {
     }
 
     public void driveOn (double forSpeed, double horiSpeed) {
-        rfMotor.setPower((+forSpeed - horiSpeed) / 2);
-        rbMotor.setPower((+forSpeed + horiSpeed) / 2);
-        lfMotor.setPower((-forSpeed - horiSpeed) / 2);
-        lbMotor.setPower((-forSpeed + horiSpeed) / 2);
+        rfMotor.setPower((+ forSpeed - horiSpeed) / 2);
+        rbMotor.setPower((+ forSpeed + horiSpeed) / 2);
+        lfMotor.setPower((- forSpeed - horiSpeed) / 2);
+        lbMotor.setPower((- forSpeed + horiSpeed) / 2);
     }
 
     public int senseBlock() {
