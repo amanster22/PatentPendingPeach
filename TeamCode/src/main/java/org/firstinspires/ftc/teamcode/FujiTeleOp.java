@@ -62,12 +62,10 @@ public class FujiTeleOp extends OpMode {
         lbMotor.setPower(Math.max(Math.min(lbSpeed, 1), -1));
 
         // Set phone background color.
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                double TotalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
-                relativeLayout.setBackgroundColor((int)(TotalSpeed * 255));
-            }
-        });
+        relativeLayout.post(new Runnable() {public void run() {
+                double totalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
+                relativeLayout.setBackgroundColor((int)(totalSpeed * 255));
+        }});
     }
 
     public void stop() {
