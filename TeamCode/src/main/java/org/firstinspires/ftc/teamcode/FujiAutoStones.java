@@ -20,6 +20,8 @@ public class FujiAutoStones extends LinearOpMode {
     private DcMotor lfMotor;
     private DcMotor rbMotor;
     private DcMotor lbMotor;
+    private DcMotor extender;
+    private DcMotor hinge;
     private ColorSensor sensorColor;
     private DistanceSensor sensorDistance;
 
@@ -38,6 +40,7 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double COLOR_SENSOR_SCALE_FACTOR = 255.0;
     private static final float[] COLOR_SENSOR_HSV = {0F, 0F, 0F};
     // Declare field measurements.
+    private static final double STONE_BRIDGE_DISTANCE_INCH = 24.0;
     private static final double STONE_WALL_DISTANCE_INCH = 47.0;
     private static final double SKYSTONE_DISTANCE_STONES = 3.0;
     private static final double STONE_LENGTH_INCH = 9.0;
@@ -53,6 +56,8 @@ public class FujiAutoStones extends LinearOpMode {
         lfMotor = hardwareMap.dcMotor.get("lf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
+        extender = hardwareMap.dcMotor.get("ext");
+        hinge = hardwareMap.dcMotor.get("hin");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
 
@@ -64,11 +69,15 @@ public class FujiAutoStones extends LinearOpMode {
         lfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extender.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hinge.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         rfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hinge.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addData("Motors", "encoders done resetting.");
         telemetry.update();
@@ -80,7 +89,7 @@ public class FujiAutoStones extends LinearOpMode {
         telemetry.addData("Path", "started.");
         telemetry.update();
 
-	// Go up to stones.
+	    // Go up to stones.
         encoderDrive(DRIVE_SPEED, STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
 
         // Drive sideways until the robot reaches the end of the stone line.
@@ -91,7 +100,7 @@ public class FujiAutoStones extends LinearOpMode {
         // Move to the middle of the first stone.
         encoderDrive (DRIVE_SPEED, 0.0, STONE_LENGTH_INCH / 2  , 10.0);
 
-	// Start sensing stones.
+	    // Start sensing stones.
         while (senseBlock() != 1) {
             currentStone++;
             if (currentStone >= SKYSTONE_DISTANCE_STONES) {
@@ -103,9 +112,12 @@ public class FujiAutoStones extends LinearOpMode {
         }
 
         // Grab stone here.
-        encoderDrive(DRIVE_SPEED, -20.0, 0.0, 10.0);
-        encoderDrive(DRIVE_SPEED, 0.0, -currentStone * STONE_LENGTH_INCH - 50.0, 10.0);
+        encoderDrive(DRIVE_SPEED, STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
+        encoderDrive(DRIVE_SPEED, 0.0,
+             -currentStone * STONE_LENGTH_INCH - STONE_BRIDGE_DISTANCE_INCH - STONE_LENGTH_INCH / 2,
+             10.0);
         // Drop stone here.
+        encoderDrive(DRIVE_SPEED, 0.0, ROBOT_EDGE_INCH / 2, 10.0);
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
@@ -174,10 +186,10 @@ public class FujiAutoStones extends LinearOpMode {
 
         // Get HSV value.
         telemetry.addData("Color Sensor", "sensing block.");
-        Color.RGBToHSV((int) (sensorColor.red() * COLOR_SENSOR_SCALE_FACTOR),
-                       (int) (sensorColor.green() * COLOR_SENSOR_SCALE_FACTOR),
-                       (int) (sensorColor.blue() * COLOR_SENSOR_SCALE_FACTOR),
-                              COLOR_SENSOR_HSV);
+        Color.RGBToHSV((int)(sensorColor.red() * COLOR_SENSOR_SCALE_FACTOR),
+                       (int)(sensorColor.green() * COLOR_SENSOR_SCALE_FACTOR),
+                       (int)(sensorColor.blue() * COLOR_SENSOR_SCALE_FACTOR),
+                        COLOR_SENSOR_HSV);
         telemetry.addData("Value", Float.toString(COLOR_SENSOR_HSV[2]));
 
         // Check which stone is sensed.

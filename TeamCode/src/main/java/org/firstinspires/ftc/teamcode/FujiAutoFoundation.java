@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -19,7 +18,6 @@ public class FujiAutoFoundation extends LinearOpMode {
     private DcMotor lfMotor;
     private DcMotor rbMotor;
     private DcMotor lbMotor;
-    private Servo latchServo;
     private DistanceSensor sensorDistance;
 
     // Declare wheel measurements.
@@ -47,7 +45,6 @@ public class FujiAutoFoundation extends LinearOpMode {
         lfMotor = hardwareMap.dcMotor.get("lf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
-        latchServo = hardwareMap.servo.get("latch");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
 
         telemetry.addData("Motors", "resetting encoders.");
@@ -74,10 +71,10 @@ public class FujiAutoFoundation extends LinearOpMode {
         telemetry.addData("Path", "started.");
         telemetry.update();
 
-	// Go up to foundation.
+	    // Go up to foundation.
         encoderDrive(DRIVE_SPEED, FOUNDATION_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
 
-	// Drive sideways until the robot reaches the end of the foundation.
+	    // Drive sideways until the robot reaches the end of the foundation.
         driveOn(0.0, DRIVE_SPEED);
         while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
         driveOn(0.0, 0.0);
@@ -123,8 +120,8 @@ public class FujiAutoFoundation extends LinearOpMode {
             telemetry.addData("Turn", "started turning.");
             telemetry.update();
             while (opModeIsActive() &&
-                    runtime.seconds() < timeout &&
-                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
+                   runtime.seconds() < timeout &&
+                  (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
             telemetry.addData("Turn", "done turning.");
             telemetry.update();
             // Stop all motion.

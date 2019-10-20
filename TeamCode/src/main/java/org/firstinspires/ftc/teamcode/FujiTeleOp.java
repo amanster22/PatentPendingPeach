@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
 
 @TeleOp(name = "FujiTeleOp", group = "PatentPending")
@@ -63,8 +62,8 @@ public class FujiTeleOp extends OpMode {
 
         // Set phone background color.
         relativeLayout.post(new Runnable() {public void run() {
-                double totalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
-                relativeLayout.setBackgroundColor((int)(totalSpeed * 255));
+            double totalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
+            relativeLayout.setBackgroundColor((int)(totalSpeed * 255));
         }});
     }
 
