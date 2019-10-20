@@ -83,7 +83,7 @@ public class FujiAutoFoundation extends LinearOpMode {
         encoderDrive (DRIVE_SPEED, 0.0, -FOUNDATION_LENGTH_INCH / 2  , 10.0);
         encoderTurn (DRIVE_SPEED, -0.25, 10.0);
         // Grab foundation.
-        encoderDrive(DRIVE_SPEED, 0.0, -(FOUNDATION_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH),10.0);
+        encoderDrive(DRIVE_SPEED, 0.0, -FOUNDATION_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH,10.0);
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
