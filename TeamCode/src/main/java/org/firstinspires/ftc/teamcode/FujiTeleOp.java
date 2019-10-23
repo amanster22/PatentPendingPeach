@@ -17,7 +17,7 @@ public class FujiTeleOp extends OpMode {
     private DcMotor extender;
     private DcMotor hinge;
     private View relativeLayout;
-    private double speed = 0.5;
+    private double speed = 1;
 
     public void init() {
         // Initialize opMode members.
@@ -46,10 +46,10 @@ public class FujiTeleOp extends OpMode {
         final double hingeSpeed = gamepad2.right_stick_y;
 
         // Declare drive motor speeds.
-        final double rfSpeed = (- rightForward + sideways) * speed;
-        final double rbSpeed = (- rightForward - sideways) * speed;
-        final double lfSpeed = (+ leftForward + sideways) * speed;
-        final double lbSpeed = (+ leftForward - sideways) * speed;
+        final double rfSpeed = ((- rightForward - sideways) / 2) * speed;
+        final double rbSpeed = ((- rightForward + sideways) / 2) * speed;
+        final double lfSpeed = ((+ leftForward + sideways) / 2) * speed;
+        final double lbSpeed = ((+ leftForward - sideways) / 2) * speed;
 
         // Set arm motor speeds.
         extender.setPower(extenderSpeed);
