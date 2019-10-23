@@ -170,8 +170,8 @@ public class FujiAutoFoundation extends LinearOpMode {
             telemetry.addData("Move", "started moving.");
             telemetry.update();
             while (opModeIsActive() &&
-                    runtime.seconds() < timeout &&
-                    (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
+                   runtime.seconds() < timeout &&
+                  (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
             telemetry.addData("Move", "done moving.");
             telemetry.update();
             // Stop all motion.
