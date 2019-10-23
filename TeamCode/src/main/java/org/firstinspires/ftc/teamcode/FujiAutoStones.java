@@ -29,11 +29,13 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     private static final double WHEEL_DIAMETER_INCH = 3.5;
-    private static final double INCH_PER_WHEEL_REV = WHEEL_DIAMETER_INCH * PI;
+    private static final double GEAR_RATIO = 1; // Gear Ratio on the motors, should be 1 or greater if gearing faster
+    private static final double INCH_PER_WHEEL_REV = (WHEEL_DIAMETER_INCH * PI);
     // Declare motor measurements.
     private static final double DRIVE_SPEED = 0.7;
     private static final double COUNT_PER_REV = 1120.0; // eg: REV Motor Encoder.
-    private static final double COUNT_PER_INCH = COUNT_PER_REV / INCH_PER_WHEEL_REV;
+    private static final double COUNT_PER_INCH = COUNT_PER_REV / (INCH_PER_WHEEL_REV * GEAR_RATIO);
+    private static final double ARM_COUNT_PER_INCH = COUNT_PER_REV / INCH_PER_WHEEL_REV;
     // Declare robot measurements.
     private static final double ROBOT_EDGE_INCH = 17.7;
     // Declare color measurements.
@@ -206,8 +208,8 @@ public class FujiAutoStones extends LinearOpMode {
         return BlockID;
     }
     public void armGrab(){
-        encoderDrive(0.5, -7,0,2);
-
+        encoderDrive(DRIVE_SPEED, -7,0,2); //backup 7 inches
+        encoderTurn(DRIVE_SPEED,0.5,2) //180 turn
     }
     public void encoderTurn(double speed, double revolutions, double timeout) {
 
@@ -256,6 +258,43 @@ public class FujiAutoStones extends LinearOpMode {
             lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+    }
+    public void encoderDrive(double speed, double hinRev, double extenderInch, double timeout) {
+
+        // Ensure that the opMode is still active.
+        if (opModeIsActive()) {
+
+            // Declare motor targets.
+            hingeInch = hinRev*INCH_PER_ARM_REV; //set to inches per a hypotetical full arm rotation using some calculations
+            // Set targets.
+            hinge.setTargetPosition((int)(hingeInch * COUNT_PER_INCH) + rfMotor.getCurrentPosition());
+            extender.setTargetPosition((int)(extenderInch * COUNT_PER_INCH) + rbMotor.getCurrentPosition());
+            // Set motors to RUN_TO_POSITION mode.
+            hinge.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            // Reset the timer.
+            runtime.reset();
+
+            // Start motion.
+            hinge.setPower(speed);
+            extender.setPower(speed);
+            
+            // keep looping while we are still active and any motors are running.
+            telemetry.addData("Update", "Started moving.");
+            telemetry.update();
+            while (opModeIsActive() &&
+                   runtime.seconds() < timeout &&
+                  (rfMotor.isBusy() || lfMotor.isBusy() || rbMotor.isBusy() || lbMotor.isBusy())) {}
+            telemetry.addData("Update", "Done moving.");
+            telemetry.update();
+            // Stop all motion.
+            hinge.setPower(0);
+            extender.setPower(0);
+
+            // Turn off RUN_USING_ENCODER mode.
+            hinge.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 }
