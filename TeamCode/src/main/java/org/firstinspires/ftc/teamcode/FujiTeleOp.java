@@ -48,8 +48,8 @@ public class FujiTeleOp extends OpMode {
         // Declare drive motor speeds.
         final double rfSpeed = (- rightForward - sideways) / 2 * speed;
         final double rbSpeed = (- rightForward + sideways) / 2 * speed;
-        final double lfSpeed = (+ leftForward + sideways) / 2 * speed;
-        final double lbSpeed = (+ leftForward - sideways) / 2 * speed;
+        final double lfSpeed = (+ leftForward - sideways) / 2 * speed;
+        final double lbSpeed = (+ leftForward + sideways) / 2 * speed;
 
         // Set arm motor speeds.
         extender.setPower(extenderSpeed);
