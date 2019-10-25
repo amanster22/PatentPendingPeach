@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import android.app.Activity;
 import android.view.View;
 
@@ -16,6 +17,7 @@ public class FujiTeleOp extends OpMode {
     private DcMotor lbMotor;
     private DcMotor extender;
     private DcMotor hinge;
+    private CRServo pinch;
     private View relativeLayout;
     private double speed = 1;
 
@@ -27,6 +29,7 @@ public class FujiTeleOp extends OpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         extender = hardwareMap.dcMotor.get("ext");
         hinge = hardwareMap.dcMotor.get("hin");
+        pinch = hardwareMap.crservo.get("pin");
         // Stop all motion.
         stop();
         // Initialize relative layout to change the phone's background color.
@@ -42,8 +45,11 @@ public class FujiTeleOp extends OpMode {
         final double leftForward = gamepad1.left_stick_y;
         final double rightForward = gamepad1.right_stick_y;
         final double sideways = (gamepad1.right_stick_x + gamepad1.left_stick_x) / 2;
-        final double extenderSpeed = gamepad2.left_stick_y;
-        final double hingeSpeed = gamepad2.right_stick_y;
+        double extenderSpeed = gamepad2.left_stick_y;
+        double hingeSpeed = gamepad2.right_stick_y;
+        double pinchSpeed = 0;
+        if (gamepad2.dpad_up) {pinchSpeed++;}
+        if (gamepad2.dpad_down) {pinchSpeed--;}
 
         // Declare drive motor speeds.
         final double rfSpeed = (- rightForward - sideways) / 2 * speed;
@@ -54,6 +60,7 @@ public class FujiTeleOp extends OpMode {
         // Set arm motor speeds.
         extender.setPower(extenderSpeed);
         hinge.setPower(hingeSpeed);
+        pinch.setPower(pinchSpeed);
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed, 1), -1));
         rbMotor.setPower(Math.max(Math.min(rbSpeed, 1), -1));
