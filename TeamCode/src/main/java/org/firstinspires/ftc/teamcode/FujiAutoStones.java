@@ -19,8 +19,6 @@ public class FujiAutoStones extends LinearOpMode {
     private DcMotor lfMotor;
     private DcMotor rbMotor;
     private DcMotor lbMotor;
-    private DcMotor extender;
-    private DcMotor hinge;
     private ColorSensor sensorColor;
     private DistanceSensor sensorDistance;
 
@@ -62,8 +60,6 @@ public class FujiAutoStones extends LinearOpMode {
         lfMotor = hardwareMap.dcMotor.get("lf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
-        extender = hardwareMap.dcMotor.get("ext");
-        hinge = hardwareMap.dcMotor.get("hin");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
 
@@ -75,15 +71,11 @@ public class FujiAutoStones extends LinearOpMode {
         lfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extender.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hinge.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         rfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        hinge.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addData("Motors", "encoders done resetting.");
         telemetry.update();
