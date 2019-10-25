@@ -210,6 +210,7 @@ public class FujiAutoStones extends LinearOpMode {
     public void armGrab(){
         encoderDrive(DRIVE_SPEED, -7,0,2); //backup 7 inches
         encoderTurn(DRIVE_SPEED,0.5,2) //180 turn
+        armMove(DRIVE_SPEED, )
     }
     public void encoderTurn(double speed, double revolutions, double timeout) {
 
@@ -260,7 +261,7 @@ public class FujiAutoStones extends LinearOpMode {
             lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
-    public void encoderDrive(double speed, double hinRev, double extenderInch, double timeout) {
+    public void armMove(double speed, double hinRev, double extenderInch, double timeout) {
 
         // Ensure that the opMode is still active.
         if (opModeIsActive()) {
