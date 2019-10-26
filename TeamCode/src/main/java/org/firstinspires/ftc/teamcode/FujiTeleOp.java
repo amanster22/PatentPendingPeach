@@ -21,7 +21,7 @@ public class FujiTeleOp extends OpMode {
     private View relativeLayout;
     // Declare speeds.
     private static final double driveSpeed = 1;
-    private static final double hingeSpeed = 0.4;
+    private static final double hingeSpeed = 0.5;
     private static final double extenderSpeed = 1;
     private static final double pinchSpeed = 1;
 
