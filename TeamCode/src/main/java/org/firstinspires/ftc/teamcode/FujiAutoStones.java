@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -19,6 +20,7 @@ public class FujiAutoStones extends LinearOpMode {
     private DcMotor lfMotor;
     private DcMotor rbMotor;
     private DcMotor lbMotor;
+    private CRServo pinch;
     private ColorSensor sensorColor;
     private DistanceSensor sensorDistance;
 
@@ -36,6 +38,7 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double ROBOT_EDGE_INCH = 17.8;
     private static final double ROBOT_DIAGONAL_INCH = 19;
     private static final double INCH_PER_ROBOT_REV = ROBOT_DIAGONAL_INCH * PI;
+    private static final long PINCH_WAIT = 1000;
     // Declare distance measurements.
     private static final double COUNT_PER_MOTOR_REV = 1120; // REV Motor Encoder.
     private static final double COUNT_PER_WHEEL_REV = COUNT_PER_MOTOR_REV / GEAR_RATIO;
@@ -60,6 +63,7 @@ public class FujiAutoStones extends LinearOpMode {
         lfMotor = hardwareMap.dcMotor.get("lf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
+        pinch = hardwareMap.crservo.get("pin");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
 
@@ -178,6 +182,18 @@ public class FujiAutoStones extends LinearOpMode {
         rbMotor.setPower(0);
         lfMotor.setPower(0);
         lbMotor.setPower(0);
+    }
+
+    private void startPinch() {
+        pinch.setPower(1);
+        sleep((long)(1.1 * PINCH_WAIT));
+        pinch.setPower(0.1);
+    }
+
+    private void stopPinch() {
+        pinch.setPower(-1);
+        sleep(PINCH_WAIT);
+        pinch.setPower(0);
     }
 
     private boolean isSkystone() {

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -18,6 +19,7 @@ public class FujiAutoFoundation extends LinearOpMode {
     private DcMotor lfMotor;
     private DcMotor rbMotor;
     private DcMotor lbMotor;
+    private CRServo pinch;
     private DistanceSensor sensorDistance;
 
     // Declare wheel measurements.
@@ -45,6 +47,7 @@ public class FujiAutoFoundation extends LinearOpMode {
         lfMotor = hardwareMap.dcMotor.get("lf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
+        pinch = hardwareMap.crservo.get("pin");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
 
         telemetry.addData("Motors", "resetting encoders.");
