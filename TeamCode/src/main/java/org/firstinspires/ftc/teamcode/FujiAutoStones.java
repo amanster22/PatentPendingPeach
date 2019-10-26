@@ -109,9 +109,14 @@ public class FujiAutoStones extends LinearOpMode {
             }
         }
 
-        // Park under bridge.
+        // Grab stone.
+        startPinch();
+        // Go to build zone.
         encoderDrive(STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH,
                      -currentStone * STONE_LENGTH_INCH - STONE_LENGTH_INCH / 2 - STONE_BRIDGE_DISTANCE_INCH);
+        // Drop stone.
+        stopPinch();
+        // Park under bridge.
         encoderDrive(0, ROBOT_EDGE_INCH / 2);
 
         telemetry.addData("Path", "complete.");
