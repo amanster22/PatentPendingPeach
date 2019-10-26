@@ -90,7 +90,7 @@ public class FujiAutoStones extends LinearOpMode {
         telemetry.addData("Path", "started.");
         telemetry.update();
 
-	    // Go up to stones.
+	// Go up to stones.
         sensorDrive(1, 0, 3, true);
         // Drive sideways until the robot reaches the end of the stone line.
         sensorDrive(0, -1, 4, false);
@@ -179,23 +179,23 @@ public class FujiAutoStones extends LinearOpMode {
     }
 
     private void sensorDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
+	// Get distance.
         double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
-
         telemetry.addData("Distance Sensor", senseD);
         telemetry.update();
         sleep(1000);
-
+        // Start motion.
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-
+	// Wait until at correct distance.
         while ((senseD > distance && upTo) || (senseD < distance && !upTo) || Double.isNaN(senseD)) {
             senseD = sensorDistance.getDistance(DistanceUnit.INCH);
             telemetry.addData("Distance Sensor", senseD);
             telemetry.update();
         }
-
+        // Stop motion.
         rfMotor.setPower(0);
         rbMotor.setPower(0);
         lfMotor.setPower(0);
