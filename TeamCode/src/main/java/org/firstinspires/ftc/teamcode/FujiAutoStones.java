@@ -28,7 +28,7 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     // Declare drive measurements.
-    private static final double DRIVE_SPEED = 1;
+    private static final double DRIVE_SPEED = 0.5;
     private static final double TIMEOUT_SEC = 10;
     // Declare wheel measurements.
     private static final double GEAR_RATIO = 1; // Should be > 1 if gearing faster.
@@ -167,8 +167,8 @@ public class FujiAutoStones extends LinearOpMode {
 
     private void encoderDrive(double forInch, double horiInch) {
         encoderMove((+ forInch - horiInch) / ROOT_TWO,
-                    (+ forInch + horiInch) / ROOT_TWO,
                     (- forInch - horiInch) / ROOT_TWO,
+                    (+ forInch + horiInch) / ROOT_TWO,
                     (- forInch + horiInch) / ROOT_TWO);
     }
 
@@ -176,8 +176,8 @@ public class FujiAutoStones extends LinearOpMode {
         telemetry.addData("Sense Move", "started moving.");
         telemetry.update();
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
+        rbMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
+        lfMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         while (sensorDistance.getDistance(DistanceUnit.INCH) < distance) {}
         rfMotor.setPower(0);
