@@ -29,7 +29,7 @@ public class FujiAutoStones extends LinearOpMode {
     private static final double DRIVE_SPEED = 1;
     private static final double TIMEOUT_SEC = 10;
     // Declare wheel measurements.
-    private static final double GEAR_RATIO = 1; // Gear ratio on the motors, should be greater than 1 if gearing faster.
+    private static final double GEAR_RATIO = 1; // Should be > 1 if gearing faster.
     private static final double WHEEL_DIAMETER_INCH = 3.7;
     private static final double INCH_PER_WHEEL_REV = WHEEL_DIAMETER_INCH * PI;
     // Declare robot measurements.
