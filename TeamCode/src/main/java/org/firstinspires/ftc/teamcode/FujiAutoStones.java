@@ -181,7 +181,7 @@ public class FujiAutoStones extends LinearOpMode {
     private void sensorDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
         telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.INCH));
         telemetry.update();
-        sleep(1);
+        sleep(1000);
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         rbMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         lfMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
