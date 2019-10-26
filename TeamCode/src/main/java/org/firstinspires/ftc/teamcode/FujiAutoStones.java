@@ -91,10 +91,10 @@ public class FujiAutoStones extends LinearOpMode {
         telemetry.update();
 
 	    // Go up to stones.
-        sensorDrive(1, 0, 1, true);
+        sensorDrive(1, 0, 3, true);
         // Drive sideways until the robot reaches the end of the stone line.
-        sensorDrive(0, -1, 2, false);
-        sensorDrive(0, 1, 2, true);
+        sensorDrive(0, -1, 4, false);
+        sensorDrive(0, 1, 4, true);
         // Move to the middle of the first stone.
         encoderDrive (0, STONE_LENGTH_INCH / 2);
 
@@ -173,24 +173,29 @@ public class FujiAutoStones extends LinearOpMode {
 
     private void encoderDrive(double forInch, double horiInch) {
         encoderMove((+ forInch - horiInch) / ROOT_TWO,
-                    (- forInch - horiInch) / ROOT_TWO,
                     (+ forInch + horiInch) / ROOT_TWO,
+                    (- forInch - horiInch) / ROOT_TWO,
                     (- forInch + horiInch) / ROOT_TWO);
     }
 
     private void sensorDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
-        telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.INCH));
+        double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
+
+        telemetry.addData("Distance Sensor", senseD);
         telemetry.update();
         sleep(1000);
+
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        rbMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        lfMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        while ((sensorDistance.getDistance(DistanceUnit.INCH) > distance && upTo) ||
-               (sensorDistance.getDistance(DistanceUnit.INCH) < distance && !upTo)) {
-            telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.INCH));
+
+        while ((senseD > distance && upTo) || (senseD < distance && !upTo) || Double.isNaN(senseD)) {
+            senseD = sensorDistance.getDistance(DistanceUnit.INCH);
+            telemetry.addData("Distance Sensor", senseD);
             telemetry.update();
         }
+
         rfMotor.setPower(0);
         rbMotor.setPower(0);
         lfMotor.setPower(0);
