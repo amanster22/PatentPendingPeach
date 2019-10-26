@@ -91,9 +91,10 @@ public class FujiAutoStones extends LinearOpMode {
         telemetry.update();
 
 	    // Go up to stones.
-        encoderDrive(STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0);
+        sensorDrive(1, 0, 1, true);
         // Drive sideways until the robot reaches the end of the stone line.
-        sensorDrive(0, -1, 3);
+        sensorDrive(0, -1, 2, false);
+        sensorDrive(0, 1, 2, true);
         // Move to the middle of the first stone.
         encoderDrive (0, STONE_LENGTH_INCH / 2);
 
@@ -109,8 +110,8 @@ public class FujiAutoStones extends LinearOpMode {
         }
 
         // Park under bridge.
-        encoderDrive(STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0);
-        encoderDrive(0, -currentStone * STONE_LENGTH_INCH - STONE_LENGTH_INCH / 2 - STONE_BRIDGE_DISTANCE_INCH);
+        encoderDrive(STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH,
+                     -currentStone * STONE_LENGTH_INCH - STONE_LENGTH_INCH / 2 - STONE_BRIDGE_DISTANCE_INCH);
         encoderDrive(0, ROBOT_EDGE_INCH / 2);
 
         telemetry.addData("Path", "complete.");
@@ -172,14 +173,15 @@ public class FujiAutoStones extends LinearOpMode {
                     (- forInch + horiInch) / ROOT_TWO);
     }
 
-    private void sensorDrive(double forSpeed, double horiSpeed, double distance) {
+    private void sensorDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
         telemetry.addData("Sense Move", "started moving.");
         telemetry.update();
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         rbMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         lfMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        while (sensorDistance.getDistance(DistanceUnit.INCH) < distance) {}
+        while ((sensorDistance.getDistance(DistanceUnit.INCH) > distance && upTo) ||
+               (sensorDistance.getDistance(DistanceUnit.INCH) < distance && !upTo)) {}
         rfMotor.setPower(0);
         rbMotor.setPower(0);
         lfMotor.setPower(0);
