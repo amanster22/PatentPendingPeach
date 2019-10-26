@@ -179,20 +179,22 @@ public class FujiAutoStones extends LinearOpMode {
     }
 
     private void sensorDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
-        telemetry.addData("Sense Move", "started moving.");
+        telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.INCH));
         telemetry.update();
+        sleep(1);
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         rbMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         lfMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         while ((sensorDistance.getDistance(DistanceUnit.INCH) > distance && upTo) ||
-               (sensorDistance.getDistance(DistanceUnit.INCH) < distance && !upTo)) {}
+               (sensorDistance.getDistance(DistanceUnit.INCH) < distance && !upTo)) {
+            telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.INCH));
+            telemetry.update();
+        }
         rfMotor.setPower(0);
         rbMotor.setPower(0);
         lfMotor.setPower(0);
         lbMotor.setPower(0);
-        telemetry.addData("Sense Move", "done moving.");
-        telemetry.update();
     }
 
     private void startPinch() {
