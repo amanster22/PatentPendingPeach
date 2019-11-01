@@ -5,14 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="FujiAutoStones", group="PatentPending")
 public class FujiAutoStones extends FujiAuto {
 
-    private static final double PINCH_WAIT = 1000;
+    private static final double HOOK_WAIT = 1000;
 
     @Override
     public void runOpMode() {
         // Initialize OpMode.
-        int currentStone = 0;
         initMotors();
-
         telemetry.addData("Path", "started.");
         telemetry.update();
 
@@ -22,7 +20,6 @@ public class FujiAutoStones extends FujiAuto {
         distanceDrive(0, -1, 4, false);
         // Drive sideways until the robot reaches a skystone.
         colorDrive(0, 1);
-
         // Grab stone.
         startGrab();
         // Drive to the end of the stone line.
@@ -41,16 +38,16 @@ public class FujiAutoStones extends FujiAuto {
 
     @Override
     void startGrab() {
-        pinch.setPower(1);
-        sleep((long)(1.1 * PINCH_WAIT));
-        pinch.setPower(0.1);
+        hook.setPower(1);
+        sleep((long)(1.1 * HOOK_WAIT));
+        hook.setPower(0.1);
     }
 
     @Override
     void stopGrab() {
-        pinch.setPower(-1);
-        sleep((long)PINCH_WAIT);
-        pinch.setPower(0);
+        hook.setPower(-1);
+        sleep((long)HOOK_WAIT);
+        hook.setPower(0);
 
     }
 /*

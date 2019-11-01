@@ -21,6 +21,7 @@ abstract class FujiAuto extends LinearOpMode {
     private DistanceSensor sensorDistance;
     DcMotor hin1;
     DcMotor hin2;
+    CRServo hook;
     CRServo pinch;
 
     // Declare constants.
@@ -44,7 +45,6 @@ abstract class FujiAuto extends LinearOpMode {
     static final double ROBOT_EDGE_INCH = 17.8;
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double STONE_WALL_DISTANCE_INCH = 47;
-    static final double STONE_LENGTH_INCH = 8;
 
     abstract void startGrab();
     abstract void stopGrab();
@@ -173,7 +173,8 @@ abstract class FujiAuto extends LinearOpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
-        pinch = hardwareMap.crservo.get("pin");
+        hook = hardwareMap.crservo.get("hook");
+        pinch = hardwareMap.crservo.get("pinch");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
         // Reset encoders.

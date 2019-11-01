@@ -24,8 +24,6 @@ public class FujiTeleOp extends OpMode {
     private static final double hingeSpeed = 1;
     private static final double hookSpeed = 1;
     private static final double pinchSpeed = 1;
-    // Declare motion.
-    private boolean pinchOn;
 
     public void init() {
         // Initialize OpMode members.
