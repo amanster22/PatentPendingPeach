@@ -17,11 +17,15 @@ public class FujiTeleOp extends OpMode {
     private DcMotor hin1;
     private DcMotor hin2;
     private CRServo pinch;
+    private CRServo hook;
     private View relativeLayout;
     // Declare speeds.
     private static final double driveSpeed = 1;
-    private static final double hingeSpeed = 0.5;
+    private static final double hingeSpeed = 1;
+    private static final double hookSpeed = 1;
     private static final double pinchSpeed = 1;
+    // Declare motion.
+    private boolean pinchOn;
 
     public void init() {
         // Initialize OpMode members.
@@ -31,7 +35,8 @@ public class FujiTeleOp extends OpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
-        pinch = hardwareMap.crservo.get("pin");
+        hook = hardwareMap.crservo.get("hook");
+        pinch = hardwareMap.crservo.get("pinch");
         // Stop all motion.
         stop();
         // Initialize relative layout to change the phone's background color.
@@ -47,14 +52,15 @@ public class FujiTeleOp extends OpMode {
         double leftForward = gamepad1.left_stick_y;
         double rightForward = gamepad1.right_stick_y;
         double sideways = (gamepad1.right_stick_x + gamepad1.left_stick_x) / 2;
-        double hingeInput = 0;
+        double hingeInput = gamepad2.right_stick_y;
+        double hookInput = 0;
         double pinchInput = 0;
 
-        if (gamepad2.left_bumper) {hingeInput++;}
-        if (gamepad2.right_bumper) {hingeInput--;}
+        if (gamepad2.dpad_up) {hookInput++;}
+        if (gamepad2.dpad_down) {hookInput--;}
 
-        if (gamepad2.dpad_up) {pinchInput++;}
-        if (gamepad2.dpad_down) {pinchInput--;}
+        if (gamepad2.right_bumper) {pinchInput++;}
+        if (gamepad2.left_bumper) {pinchInput--;}
 
         // Declare drive motor speeds.
         final double rfSpeed = (- rightForward - sideways) / 2;
@@ -65,6 +71,7 @@ public class FujiTeleOp extends OpMode {
         // Set arm motor speeds.
         hin1.setPower(hingeInput * hingeSpeed);
         hin2.setPower(hingeInput * -hingeSpeed);
+        hook.setPower(hookInput * hookSpeed);
         pinch.setPower(pinchInput * pinchSpeed);
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed * driveSpeed, 1), -1));
@@ -87,6 +94,7 @@ public class FujiTeleOp extends OpMode {
         lbMotor.setPower(0);
         hin1.setPower(0);
         hin2.setPower(0);
+        hook.setPower(0);
         pinch.setPower(0);
     }
 }

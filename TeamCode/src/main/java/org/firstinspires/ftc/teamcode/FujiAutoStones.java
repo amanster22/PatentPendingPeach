@@ -28,7 +28,7 @@ public class FujiAutoStones extends FujiAuto {
         // Drive to the end of the stone line.
         distanceDrive(0, -1, 4, false);
         // Go to build zone.
-        encoderDrive( -STONE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH,
+        encoderDrive(-STONE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH,
                      -STONE_BRIDGE_DISTANCE_INCH - ROBOT_EDGE_INCH / 2);
         // Drop stone.
         stopGrab();
