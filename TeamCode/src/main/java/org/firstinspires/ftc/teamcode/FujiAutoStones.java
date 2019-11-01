@@ -17,29 +17,19 @@ public class FujiAutoStones extends FujiAuto {
         telemetry.update();
 
 	    // Go up to stones.
-        sensorDrive(1, 0, 3, true);
+        distanceDrive(1, 0, 3, true);
         // Drive sideways until the robot reaches the end of the stone line.
-        sensorDrive(0, -1, 4, false);
-        sensorDrive(0, 1, 4, true);
-        // Move to the middle of the first stone.
-        encoderDrive (0, STONE_LENGTH_INCH / 2);
-
-        // Start sensing stones.
-        while (!isSkystone()) {
-            currentStone++;
-            if (currentStone >= SKYSTONE_DISTANCE_STONES) {
-                encoderDrive (0, -STONE_LENGTH_INCH * (SKYSTONE_DISTANCE_STONES - 1));
-                currentStone = 0;
-            } else {
-                encoderDrive (0, STONE_LENGTH_INCH);
-            }
-        }
+        distanceDrive(0, -1, 4, false);
+        // Drive sideways until the robot reaches a skystone.
+        colorDrive(0, 1);
 
         // Grab stone.
         startGrab();
+        // Drive to the end of the stone line.
+        distanceDrive(0, -1, 4, false);
         // Go to build zone.
-        encoderDrive(STONE_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH,
-                     -currentStone * STONE_LENGTH_INCH - STONE_LENGTH_INCH / 2 - STONE_BRIDGE_DISTANCE_INCH);
+        encoderDrive( -STONE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH,
+                     -STONE_BRIDGE_DISTANCE_INCH - ROBOT_EDGE_INCH / 2);
         // Drop stone.
         stopGrab();
         // Park under bridge.
@@ -49,12 +39,14 @@ public class FujiAutoStones extends FujiAuto {
         telemetry.update();
     }
 
+    @Override
     void startGrab() {
         pinch.setPower(1);
         sleep((long)(1.1 * PINCH_WAIT));
         pinch.setPower(0.1);
     }
 
+    @Override
     void stopGrab() {
         pinch.setPower(-1);
         sleep((long)PINCH_WAIT);

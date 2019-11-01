@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,32 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Autonomous(name="FujiAutoFoundation", group="PatentPending")
-public class FujiAutoFoundation extends LinearOpMode {
+public class FujiAutoFoundation extends FujiAuto {
 
-    // Declare timer.
-    private ElapsedTime runtime = new ElapsedTime();
-
-    // Declare OpMode members.
-    private DcMotor rfMotor;
-    private DcMotor lfMotor;
-    private DcMotor rbMotor;
-    private DcMotor lbMotor;
-    private CRServo pinch;
-    private DistanceSensor sensorDistance;
-
-    // Declare wheel measurements.
-    private static final double PI = 3.1415;
-    private static final double ROOT_TWO = 1.4142;
-    private static final double WHEEL_DIAMETER_INCH = 3.5;
-    private static final double INCH_PER_WHEEL_REV = WHEEL_DIAMETER_INCH * PI;
-    // Declare motor measurements.
-    private static final double DRIVE_SPEED = 0.7;
-    private static final double COUNT_PER_REV = 1120.0; // eg: REV Motor Encoder.
-    private static final double COUNT_PER_INCH = COUNT_PER_REV / INCH_PER_WHEEL_REV;
-    // Declare robot measurements.
-    private static final double ROBOT_EDGE_INCH = 17.7;
-    private static final double WHEEL_SQUARE_DIAGONAL_INCH = 19.0;
-    private static final double INCH_PER_ROBOT_REV = WHEEL_SQUARE_DIAGONAL_INCH * PI;
     // Declare field measurements.
     private static final double FOUNDATION_WALL_DISTANCE_INCH = 47.25;
     private static final double FOUNDATION_LENGTH_INCH = 34.5;
@@ -42,45 +18,17 @@ public class FujiAutoFoundation extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        // Initialize OpMode members.
-        rfMotor = hardwareMap.dcMotor.get("rf");
-        lfMotor = hardwareMap.dcMotor.get("lf");
-        rbMotor = hardwareMap.dcMotor.get("rb");
-        lbMotor = hardwareMap.dcMotor.get("lb");
-        pinch = hardwareMap.crservo.get("pin");
-        sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
-
-        telemetry.addData("Motors", "resetting encoders.");
-        telemetry.update();
-        sleep(500);
-
-        rfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        rfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        telemetry.addData("Motors", "encoders done resetting.");
-        telemetry.update();
-
-        // Wait for game to start (driver presses PLAY).
-        waitForStart();
+        initMotors();
 
         // Run autonomous.
         telemetry.addData("Path", "started.");
         telemetry.update();
 
 	    // Go up to foundation.
-        encoderDrive(DRIVE_SPEED, FOUNDATION_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0, 10.0);
+        encoderDrive(FOUNDATION_WALL_DISTANCE_INCH - ROBOT_EDGE_INCH, 0.0);
 
 	    // Drive sideways until the robot reaches the end of the foundation.
-        driveOn(0.0, DRIVE_SPEED);
-        while (sensorDistance.getDistance(DistanceUnit.INCH) < 5.0) {}
-        driveOn(0.0, 0.0);
+        sensorDrive(0.0,-1.0, 1, true);
 
         encoderDrive (DRIVE_SPEED, 0.0, -FOUNDATION_LENGTH_INCH / 2, 10.0);
         encoderTurn (DRIVE_SPEED, -0.25, 10.0);
@@ -197,4 +145,4 @@ public class FujiAutoFoundation extends LinearOpMode {
         lfMotor.setPower((-forSpeed - horiSpeed) / 2);
         lbMotor.setPower((-forSpeed + horiSpeed) / 2);
     }
-}
+}*/

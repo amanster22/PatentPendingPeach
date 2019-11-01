@@ -9,20 +9,18 @@ import android.view.View;
 
 @TeleOp(name = "FujiTeleOp", group = "PatentPending")
 public class FujiTeleOp extends OpMode {
-
     // Declare OpMode members.
     private DcMotor rfMotor;
     private DcMotor lfMotor;
     private DcMotor rbMotor;
     private DcMotor lbMotor;
-    private DcMotor extender;
-    private DcMotor hinge;
+    private DcMotor hin1;
+    private DcMotor hin2;
     private CRServo pinch;
     private View relativeLayout;
     // Declare speeds.
     private static final double driveSpeed = 1;
     private static final double hingeSpeed = 0.5;
-    private static final double extenderSpeed = 1;
     private static final double pinchSpeed = 1;
 
     public void init() {
@@ -31,8 +29,8 @@ public class FujiTeleOp extends OpMode {
         rbMotor = hardwareMap.dcMotor.get("rb");
         lfMotor = hardwareMap.dcMotor.get("lf");
         lbMotor = hardwareMap.dcMotor.get("lb");
-        extender = hardwareMap.dcMotor.get("ext");
-        hinge = hardwareMap.dcMotor.get("hin");
+        hin1 = hardwareMap.dcMotor.get("hin1");
+        hin2 = hardwareMap.dcMotor.get("hin2");
         pinch = hardwareMap.crservo.get("pin");
         // Stop all motion.
         stop();
@@ -49,25 +47,31 @@ public class FujiTeleOp extends OpMode {
         double leftForward = gamepad1.left_stick_y;
         double rightForward = gamepad1.right_stick_y;
         double sideways = (gamepad1.right_stick_x + gamepad1.left_stick_x) / 2;
-        double extenderInput= gamepad2.left_stick_y;
-        double hingeInput = gamepad2.right_stick_y;
+        double hingeInput = 0;
         double pinchInput = 0;
+
+        if (gamepad2.left_bumper) {hingeInput++;}
+        if (gamepad2.right_bumper) {hingeInput--;}
+
         if (gamepad2.dpad_up) {pinchInput++;}
         if (gamepad2.dpad_down) {pinchInput--;}
+
         // Declare drive motor speeds.
-        final double rfSpeed = (- rightForward - sideways) / 2 * driveSpeed;
-        final double rbSpeed = (- rightForward + sideways) / 2 * driveSpeed;
-        final double lfSpeed = (+ leftForward - sideways) / 2 * driveSpeed;
-        final double lbSpeed = (+ leftForward + sideways) / 2 * driveSpeed;
+        final double rfSpeed = (- rightForward - sideways) / 2;
+        final double rbSpeed = (- rightForward + sideways) / 2;
+        final double lfSpeed = (+ leftForward - sideways) / 2;
+        final double lbSpeed = (+ leftForward + sideways) / 2;
+
         // Set arm motor speeds.
-        extender.setPower(extenderInput * extenderSpeed);
-        hinge.setPower(hingeInput * hingeSpeed);
+        hin1.setPower(hingeInput * hingeSpeed);
+        hin2.setPower(hingeInput * -hingeSpeed);
         pinch.setPower(pinchInput * pinchSpeed);
         // Set drive motor speeds.
-        rfMotor.setPower(Math.max(Math.min(rfSpeed, 1), -1));
-        rbMotor.setPower(Math.max(Math.min(rbSpeed, 1), -1));
-        lfMotor.setPower(Math.max(Math.min(lfSpeed, 1), -1));
-        lbMotor.setPower(Math.max(Math.min(lbSpeed, 1), -1));
+        rfMotor.setPower(Math.max(Math.min(rfSpeed * driveSpeed, 1), -1));
+        rbMotor.setPower(Math.max(Math.min(rbSpeed * driveSpeed, 1), -1));
+        lfMotor.setPower(Math.max(Math.min(lfSpeed * driveSpeed, 1), -1));
+        lbMotor.setPower(Math.max(Math.min(lbSpeed * driveSpeed, 1), -1));
+
         // Set phone background color.
         relativeLayout.post(new Runnable() {public void run() {
             double totalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
@@ -81,8 +85,8 @@ public class FujiTeleOp extends OpMode {
         rbMotor.setPower(0);
         lfMotor.setPower(0);
         lbMotor.setPower(0);
-        extender.setPower(0);
-        hinge.setPower(0);
+        hin1.setPower(0);
+        hin2.setPower(0);
         pinch.setPower(0);
     }
 }

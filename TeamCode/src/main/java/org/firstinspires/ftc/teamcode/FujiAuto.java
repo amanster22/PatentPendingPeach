@@ -19,6 +19,8 @@ abstract class FujiAuto extends LinearOpMode {
     private DcMotor lbMotor;
     private ColorSensor sensorColor;
     private DistanceSensor sensorDistance;
+    DcMotor hin1;
+    DcMotor hin2;
     CRServo pinch;
 
     // Declare constants.
@@ -43,7 +45,6 @@ abstract class FujiAuto extends LinearOpMode {
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double STONE_WALL_DISTANCE_INCH = 47;
     static final double STONE_LENGTH_INCH = 8;
-    static final double SKYSTONE_DISTANCE_STONES = 3;
 
     abstract void startGrab();
     abstract void stopGrab();
@@ -105,17 +106,17 @@ abstract class FujiAuto extends LinearOpMode {
                 (- forInch + horiInch) / ROOT_TWO);
     }
 
-    final void sensorDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
-        // Get distance.
+    final void distanceDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
+        // Get distance. Distance sensor goes from 5cm to 25cm, roughly 1.9in to 9.8in.
         double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
         telemetry.addData("Distance Sensor", senseD);
         telemetry.update();
         sleep(1000);
         // Start motion.
-        rfMotor.setPower((+forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        rbMotor.setPower((+forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        lfMotor.setPower((-forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        lbMotor.setPower((-forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
+        rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
+        lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
         // Wait until at correct distance.
         while ((senseD > distance && upTo) || (senseD < distance && !upTo) || Double.isNaN(senseD)) {
             senseD = sensorDistance.getDistance(DistanceUnit.INCH);
@@ -129,7 +130,22 @@ abstract class FujiAuto extends LinearOpMode {
         lbMotor.setPower(0);
     }
 
-    final boolean isSkystone() {
+    final void colorDrive(double forSpeed, double horiSpeed) {
+        // Start motion.
+        rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
+        rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
+        lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        // Wait until at skystone.
+        while(!isSkystone()) {}
+        // Stop motion.
+        rfMotor.setPower(0);
+        rbMotor.setPower(0);
+        lfMotor.setPower(0);
+        lbMotor.setPower(0);
+    }
+
+    private boolean isSkystone() {
         // Declare BlockID.
         boolean blockID;
         float[] hsv = {0F, 0F, 0F};
@@ -146,7 +162,6 @@ abstract class FujiAuto extends LinearOpMode {
         telemetry.addData("Block ID", blockID);
         // Return sensed stone.
         telemetry.update();
-        sleep(1000);
         return blockID;
     }
 
@@ -156,6 +171,8 @@ abstract class FujiAuto extends LinearOpMode {
         lfMotor = hardwareMap.dcMotor.get("lf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lbMotor = hardwareMap.dcMotor.get("lb");
+        hin1 = hardwareMap.dcMotor.get("hin1");
+        hin2 = hardwareMap.dcMotor.get("hin2");
         pinch = hardwareMap.crservo.get("pin");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
