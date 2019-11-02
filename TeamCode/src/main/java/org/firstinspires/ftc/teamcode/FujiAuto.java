@@ -19,8 +19,8 @@ abstract class FujiAuto extends LinearOpMode {
     private DcMotor lbMotor;
     private ColorSensor sensorColor;
     private DistanceSensor sensorDistance;
-    DcMotor hin1;
-    DcMotor hin2;
+    private DcMotor hin1;
+    private DcMotor hin2;
     CRServo hook;
     CRServo pinch;
 
@@ -30,11 +30,15 @@ abstract class FujiAuto extends LinearOpMode {
     // Declare drive measurements.
     private static final double DRIVE_SPEED = 0.5;
     private static final double TIMEOUT_SEC = 10;
-    private static final double ERROR_MARGIN = 1.2;
+    private static final double DRIVE_ERROR_MARGIN = 1.2;
+    private static final double TURN_ERROR_MARGIN = 1.15;
     // Declare wheel measurements.
     private static final double GEAR_RATIO = 1; // Should be > 1 if gearing faster.
     private static final double WHEEL_DIAMETER_INCH = 3.7;
     private static final double INCH_PER_WHEEL_REV = WHEEL_DIAMETER_INCH * PI;
+    // Declare Arm Measurements
+    private static final double MOTOR_REV_PER_ARM_REV = 72.0/15.0;
+    private static final double COUNT_PER_HEX_CORE_MOTOR_REV = 288;
     // Declare distance measurements.
     private static final double COUNT_PER_MOTOR_REV = 1120; // REV Motor Encoder.
     private static final double COUNT_PER_WHEEL_REV = COUNT_PER_MOTOR_REV / GEAR_RATIO;
@@ -42,8 +46,12 @@ abstract class FujiAuto extends LinearOpMode {
     // Declare robot measurements.
     private static final double ROBOT_DIAGONAL_INCH = 19;
     private static final double INCH_PER_ROBOT_REV = ROBOT_DIAGONAL_INCH * PI;
+    // Declare field measurements.
+    private static final double SENSE_DISTANCE = 3;
+    private static final double STONE_LENGTH_INCH = 9;
     // Declare non-private measurements.
     static final double ROBOT_EDGE_INCH = 17.8;
+    static final double SKYSTONE_DISTANCE_STONES = 3;
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double STONE_WALL_DISTANCE_INCH = 47;
 
@@ -54,10 +62,10 @@ abstract class FujiAuto extends LinearOpMode {
         // Ensure that the OpMode is still active.
         if (opModeIsActive()) {
             // Set targets.
-            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH * ERROR_MARGIN) + rfMotor.getCurrentPosition());
-            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH * ERROR_MARGIN) + rbMotor.getCurrentPosition());
-            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH * ERROR_MARGIN) + lfMotor.getCurrentPosition());
-            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH * ERROR_MARGIN) + lbMotor.getCurrentPosition());
+            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH) + rfMotor.getCurrentPosition());
+            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH) + rbMotor.getCurrentPosition());
+            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH) + lfMotor.getCurrentPosition());
+            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH) + lbMotor.getCurrentPosition());
             // Set motors to RUN_TO_POSITION mode.
             rfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -93,33 +101,41 @@ abstract class FujiAuto extends LinearOpMode {
 
     final void encoderTurn(double revolutions) {
         encoderMove(
-                revolutions * INCH_PER_ROBOT_REV,
-                revolutions * INCH_PER_ROBOT_REV,
-                revolutions * INCH_PER_ROBOT_REV,
-                revolutions * INCH_PER_ROBOT_REV);
+                -revolutions * INCH_PER_ROBOT_REV * TURN_ERROR_MARGIN,
+                -revolutions * INCH_PER_ROBOT_REV * TURN_ERROR_MARGIN,
+                -revolutions * INCH_PER_ROBOT_REV * TURN_ERROR_MARGIN,
+                -revolutions * INCH_PER_ROBOT_REV * TURN_ERROR_MARGIN);
     }
 
     final void encoderDrive(double forInch, double horiInch) {
         encoderMove(
-                (+ forInch - horiInch) / ROOT_TWO,
-                (- forInch - horiInch) / ROOT_TWO,
-                (+ forInch + horiInch) / ROOT_TWO,
-                (- forInch + horiInch) / ROOT_TWO);
+                (+ forInch - horiInch) / ROOT_TWO * DRIVE_ERROR_MARGIN,
+                (- forInch - horiInch) / ROOT_TWO * DRIVE_ERROR_MARGIN,
+                (+ forInch + horiInch) / ROOT_TWO * DRIVE_ERROR_MARGIN,
+                (- forInch + horiInch) / ROOT_TWO * DRIVE_ERROR_MARGIN);
     }
 
-    final void distanceDrive(double forSpeed, double horiSpeed, double distance, boolean upTo) {
+    final void prepSense(double distance) {
+        encoderDrive(distance - ROBOT_EDGE_INCH - SENSE_DISTANCE, 0);
+    }
+
+    final void nextStone(double stoneCount) {
+        encoderDrive(0, stoneCount * STONE_LENGTH_INCH);
+    }
+
+    final void endLine(double speed) {
         // Get distance. Distance sensor goes from 5cm to 25cm, roughly 1.9in to 9.8in.
         double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
         telemetry.addData("Distance Sensor", senseD);
         telemetry.update();
-        sleep(1000);
+        sleep(500);
         // Start motion.
-        rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
+        rfMotor.setPower(-speed / 2 * DRIVE_SPEED);
+        rbMotor.setPower(+speed / 2 * DRIVE_SPEED);
+        lfMotor.setPower(-speed / 2 * DRIVE_SPEED);
+        lbMotor.setPower(+speed / 2 * DRIVE_SPEED);
         // Wait until at correct distance.
-        while ((senseD > distance && upTo) || (senseD < distance && !upTo) || Double.isNaN(senseD)) {
+        while (senseD < SENSE_DISTANCE + 5 || Double.isNaN(senseD)) {
             senseD = sensorDistance.getDistance(DistanceUnit.INCH);
             telemetry.addData("Distance Sensor", senseD);
             telemetry.update();
@@ -131,7 +147,7 @@ abstract class FujiAuto extends LinearOpMode {
         lbMotor.setPower(0);
     }
 
-    final void colorDrive(double forSpeed, double horiSpeed) {
+/*    final void colorDrive(double forSpeed, double horiSpeed) {
         // Start motion.
         rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
         rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
@@ -144,9 +160,9 @@ abstract class FujiAuto extends LinearOpMode {
         rbMotor.setPower(0);
         lfMotor.setPower(0);
         lbMotor.setPower(0);
-    }
+    } */
 
-    private boolean isSkystone() {
+    final boolean isSkystone() {
         // Declare BlockID.
         boolean blockID;
         float[] hsv = {0F, 0F, 0F};
@@ -159,10 +175,11 @@ abstract class FujiAuto extends LinearOpMode {
                 hsv);
         telemetry.addData("Value", hsv[2]);
         // Check which stone is sensed.
-        blockID = hsv[2] <= 80;
+        blockID = hsv[2] <= 100;
         telemetry.addData("Block ID", blockID);
         // Return sensed stone.
         telemetry.update();
+        sleep(1000);
         return blockID;
     }
 
@@ -177,7 +194,7 @@ abstract class FujiAuto extends LinearOpMode {
         hook = hardwareMap.crservo.get("hook");
         pinch = hardwareMap.crservo.get("pinch");
         sensorColor = hardwareMap.colorSensor.get("color");
-        sensorDistance = hardwareMap.get(DistanceSensor.class, "color");
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "dist");
         // Reset encoders.
         telemetry.addData("Motors", "resetting encoders.");
         telemetry.update();
@@ -194,5 +211,40 @@ abstract class FujiAuto extends LinearOpMode {
         telemetry.update();
         // Wait for game to start (driver presses PLAY).
         waitForStart();
+    }
+
+    final void armMove(double hinRev) {
+        // Ensure that the opMode is still active.
+        if (opModeIsActive()) {
+            // Declare motor targets.
+            // counts /288 * 1/4.8 = arm rev
+            //therefore counts =  288counts/shaft * 4.8shafts/armrev * arm rev
+            double hingecounts = COUNT_PER_HEX_CORE_MOTOR_REV *  MOTOR_REV_PER_ARM_REV * hinRev; //set to inches per a hypotetical full arm rotation using some calculations
+            // Set targets.
+            hin1.setTargetPosition((int)(hingecounts) + rfMotor.getCurrentPosition());
+            hin2.setTargetPosition((int)(-hingecounts) + rbMotor.getCurrentPosition());
+            // Set motors to RUN_TO_POSITION mode.
+            hin1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            hin2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            // Reset the timer.
+            runtime.reset();
+            // Start motion.
+            hin1.setPower(DRIVE_SPEED);
+            hin2.setPower(DRIVE_SPEED);
+            // keep looping while we are still active and any motors are running.
+            telemetry.addData("Update", "Started moving.");
+            telemetry.update();
+            while (opModeIsActive() &&
+                    runtime.seconds() < TIMEOUT_SEC &&
+                    (hin1.isBusy() || hin2.isBusy())) {}
+            telemetry.addData("Update", "Done moving.");
+            telemetry.update();
+            // Stop all motion.
+            hin1.setPower(0);
+            hin2.setPower(0);
+            // Turn off RUN_USING_ENCODER mode.
+            hin1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            hin2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 }
