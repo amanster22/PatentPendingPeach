@@ -30,6 +30,7 @@ abstract class FujiAuto extends LinearOpMode {
     // Declare drive measurements.
     private static final double DRIVE_SPEED = 0.5;
     private static final double TIMEOUT_SEC = 10;
+    private static final double ERROR_MARGIN = 1.2;
     // Declare wheel measurements.
     private static final double GEAR_RATIO = 1; // Should be > 1 if gearing faster.
     private static final double WHEEL_DIAMETER_INCH = 3.7;
@@ -53,10 +54,10 @@ abstract class FujiAuto extends LinearOpMode {
         // Ensure that the OpMode is still active.
         if (opModeIsActive()) {
             // Set targets.
-            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH) + rfMotor.getCurrentPosition());
-            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH) + rbMotor.getCurrentPosition());
-            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH) + lfMotor.getCurrentPosition());
-            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH) + lbMotor.getCurrentPosition());
+            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH * ERROR_MARGIN) + rfMotor.getCurrentPosition());
+            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH * ERROR_MARGIN) + rbMotor.getCurrentPosition());
+            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH * ERROR_MARGIN) + lfMotor.getCurrentPosition());
+            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH * ERROR_MARGIN) + lbMotor.getCurrentPosition());
             // Set motors to RUN_TO_POSITION mode.
             rfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -101,8 +102,8 @@ abstract class FujiAuto extends LinearOpMode {
     final void encoderDrive(double forInch, double horiInch) {
         encoderMove(
                 (+ forInch - horiInch) / ROOT_TWO,
-                (+ forInch + horiInch) / ROOT_TWO,
                 (- forInch - horiInch) / ROOT_TWO,
+                (+ forInch + horiInch) / ROOT_TWO,
                 (- forInch + horiInch) / ROOT_TWO);
     }
 

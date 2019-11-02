@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import android.app.Activity;
 import android.view.View;
 
+import static android.os.SystemClock.sleep;
+
 @TeleOp(name = "FujiTeleOp", group = "PatentPending")
 public class FujiTeleOp extends OpMode {
     // Declare OpMode members.
@@ -21,7 +23,7 @@ public class FujiTeleOp extends OpMode {
     private View relativeLayout;
     // Declare speeds.
     private static final double driveSpeed = 1;
-    private static final double hingeSpeed = 0.5;
+    private static final double hingeSpeed = 0.3;
     private static final double hookSpeed = -1;
     private static final double pinchSpeed = 1;
 
@@ -93,6 +95,6 @@ public class FujiTeleOp extends OpMode {
         hin1.setPower(0);
         hin2.setPower(0);
         hook.setPower(0);
-        pinch.setPower(0);
+        pinch.setPower(-1);
     }
 }
