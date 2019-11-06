@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name="FujiAutoStones", group="PatentPending")
-public class FujiAutoStones extends FujiAuto {
+public final class FujiAutoStones extends FujiAuto {
 
-    private static final double PINCH_WAIT = 1000;
+    private static final long PINCH_WAIT = 1000;
 
     @Override
     public void runOpMode() {
@@ -16,7 +16,7 @@ public class FujiAutoStones extends FujiAuto {
         telemetry.update();
 
 	    // Go up to stones.
-        prepSense(STONE_WALL_DISTANCE_INCH);
+        prepSense(BRIDGE_WALL_DISTANCE_INCH);
         // Drive sideways until the robot reaches the end of the stone line.
         endLine(-1);
         // Drive to the middle of the first stone.
@@ -52,7 +52,7 @@ public class FujiAutoStones extends FujiAuto {
         encoderTurn(0.5);
         armMove(0.7);
         pinch.setPower(1);
-        sleep((long)PINCH_WAIT);
+        sleep(PINCH_WAIT);
         pinch.setPower(0.1);
         armMove(-0.7);
         encoderTurn(0.5);
@@ -63,7 +63,7 @@ public class FujiAutoStones extends FujiAuto {
     void stopGrab() {
         armMove(0.7);
         pinch.setPower(-1);
-        sleep((long)PINCH_WAIT);
+        sleep(PINCH_WAIT);
         pinch.setPower(0);
         armMove(-0.7);
 

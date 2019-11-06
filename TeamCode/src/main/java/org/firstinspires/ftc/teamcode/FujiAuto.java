@@ -53,7 +53,9 @@ abstract class FujiAuto extends LinearOpMode {
     static final double ROBOT_EDGE_INCH = 17.8;
     static final double SKYSTONE_DISTANCE_STONES = 3;
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
-    static final double STONE_WALL_DISTANCE_INCH = 47;
+    static final double FOUNDATION_LENGTH_INCH = 34.5;
+    static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
+    static final double BRIDGE_WALL_DISTANCE_INCH = 47;
 
     abstract void startGrab();
     abstract void stopGrab();
