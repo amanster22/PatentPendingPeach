@@ -17,7 +17,8 @@ public final class FujiTeleOp extends OpMode {
     private DcMotor hin1;
     private DcMotor hin2;
     private CRServo pinch;
-    private CRServo hook;
+    private CRServo hook1;
+    private CRServo hook2;
     private View relativeLayout;
     // Declare speeds.
     private static final double driveSpeed = 1;
@@ -33,7 +34,8 @@ public final class FujiTeleOp extends OpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
-        hook = hardwareMap.crservo.get("hook");
+        hook1 = hardwareMap.crservo.get("hook1");
+        hook2 = hardwareMap.crservo.get("hook2");
         pinch = hardwareMap.crservo.get("pinch");
         // Stop all motion.
         stop();
@@ -69,7 +71,8 @@ public final class FujiTeleOp extends OpMode {
         // Set arm motor speeds.
         hin1.setPower(hingeInput * hingeSpeed);
         hin2.setPower(hingeInput * -hingeSpeed);
-        hook.setPower(hookInput * hookSpeed);
+        hook1.setPower(hookInput * hookSpeed);
+        hook2.setPower(hookInput * hookSpeed);
         pinch.setPower(pinchInput * pinchSpeed);
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed * driveSpeed, 1), -1));
@@ -92,7 +95,8 @@ public final class FujiTeleOp extends OpMode {
         lbMotor.setPower(0);
         hin1.setPower(0);
         hin2.setPower(0);
-        hook.setPower(0);
+        hook1.setPower(0);
+        hook2.setPower(0);
         pinch.setPower(-1);
     }
 }

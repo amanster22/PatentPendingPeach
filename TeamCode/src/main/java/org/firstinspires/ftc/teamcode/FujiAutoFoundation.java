@@ -38,15 +38,19 @@ abstract class FujiAutoFoundation extends FujiAuto {
 
     @Override
     final void startGrab()  {
-        hook.setPower(1);
+        hook1.setPower(1);
+        hook2.setPower(1);
         sleep(HOOK_WAIT);
-        hook.setPower(0.3);
+        hook1.setPower(0.1);
+        hook2.setPower(0.1);
     }
 
     @Override
     final void stopGrab() {
-        hook.setPower(-1);
+        hook1.setPower(-1);
+        hook2.setPower(-1);
         sleep(HOOK_WAIT);
-        hook.setPower(0);
+        hook1.setPower(0);
+        hook2.setPower(0);
     }
 }

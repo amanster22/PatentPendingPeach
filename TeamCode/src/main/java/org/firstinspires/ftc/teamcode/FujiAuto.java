@@ -21,7 +21,8 @@ abstract class FujiAuto extends LinearOpMode {
     private DistanceSensor sensorDistance;
     private DcMotor hin1;
     private DcMotor hin2;
-    CRServo hook;
+    CRServo hook1;
+    CRServo hook2;
     CRServo pinch;
 
     // Declare constants.
@@ -178,7 +179,8 @@ abstract class FujiAuto extends LinearOpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
-        hook = hardwareMap.crservo.get("hook");
+        hook1 = hardwareMap.crservo.get("hook1");
+        hook2 = hardwareMap.crservo.get("hook2");
         pinch = hardwareMap.crservo.get("pinch");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "dist");
