@@ -7,10 +7,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import android.app.Activity;
 import android.view.View;
 
-import static android.os.SystemClock.sleep;
-
 @TeleOp(name = "FujiTeleOp", group = "PatentPending")
-public class FujiTeleOp extends OpMode {
+public final class FujiTeleOp extends OpMode {
     // Declare OpMode members.
     private DcMotor rfMotor;
     private DcMotor lfMotor;
@@ -27,7 +25,7 @@ public class FujiTeleOp extends OpMode {
     private static final double hookSpeed = -1;
     private static final double pinchSpeed = 1;
 
-    public void init() {
+    public final void init() {
         // Initialize OpMode members.
         rfMotor = hardwareMap.dcMotor.get("rf");
         rbMotor = hardwareMap.dcMotor.get("rb");
@@ -44,10 +42,10 @@ public class FujiTeleOp extends OpMode {
         relativeLayout = ((Activity)hardwareMap.appContext).findViewById(relativeLayoutId);
     }
 
-    public void start() {
+    public final void start() {
     }
 
-    public void loop() {
+    public final void loop() {
         // Get input from the controller.
         double leftForward = gamepad1.left_stick_y;
         double rightForward = gamepad1.right_stick_y;
@@ -86,7 +84,7 @@ public class FujiTeleOp extends OpMode {
         }});
     }
 
-    public void stop() {
+    public final void stop() {
         // Stop all motion.
         rfMotor.setPower(0);
         rbMotor.setPower(0);

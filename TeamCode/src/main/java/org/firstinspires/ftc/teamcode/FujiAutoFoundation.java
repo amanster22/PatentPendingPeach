@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+abstract class FujiAutoFoundation extends FujiAuto {
 
-@Autonomous(name="FujiAutoFoundation", group="PatentPending")
-public final class FujiAutoFoundation extends FujiAuto {
+    private static final long HOOK_WAIT = 2750;
+    private static final int FOUNDATION_ERROR_MARGIN = 2;
 
-    private static final long HOOK_WAIT = 1000;
-
-    @Override
-    public void runOpMode() {
+    final void main(boolean WALL_PARK) {
         // Initialize OpMode.
         initMotors();
         telemetry.addData("Path", "started.");
@@ -27,7 +24,13 @@ public final class FujiAutoFoundation extends FujiAuto {
         // Drop foundation.
         stopGrab();
         // Park under bridge.
-        encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH + FOUNDATION_LENGTH_INCH / 2);
+        if (WALL_PARK) {
+            encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH + (FOUNDATION_LENGTH_INCH / 2));
+        } else {
+            encoderDrive(0, (FOUNDATION_LENGTH_INCH / 2) + (ROBOT_EDGE_INCH / 2) + FOUNDATION_ERROR_MARGIN);
+            encoderDrive(ROBOT_EDGE_INCH + FOUNDATION_ERROR_MARGIN, 0);
+            encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH - (ROBOT_EDGE_INCH / 2) - FOUNDATION_ERROR_MARGIN);
+        }
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
@@ -37,7 +40,7 @@ public final class FujiAutoFoundation extends FujiAuto {
     final void startGrab()  {
         hook.setPower(1);
         sleep(HOOK_WAIT);
-        hook.setPower(0.1);
+        hook.setPower(0.3);
     }
 
     @Override

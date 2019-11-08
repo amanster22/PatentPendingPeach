@@ -8,7 +8,7 @@ public final class FujiAutoStones extends FujiAuto {
     private static final long PINCH_WAIT = 1000;
 
     @Override
-    public void runOpMode() {
+    public final void runOpMode() {
         // Initialize OpMode.
         int currentStone = 0;
         initMotors();
@@ -36,7 +36,7 @@ public final class FujiAutoStones extends FujiAuto {
         // Drive to the end of the stone line.
         endLine(-1);
         // Go to build zone.
-        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - ROBOT_EDGE_INCH / 2);
+        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (ROBOT_EDGE_INCH / 2));
         // Drop stone.
         stopGrab();
         // Park under bridge.
@@ -47,7 +47,7 @@ public final class FujiAutoStones extends FujiAuto {
     }
 
     @Override
-    void startGrab() {
+    final void startGrab() {
         encoderDrive(-10, 0);
         encoderTurn(0.5);
         armMove(0.7);
@@ -60,7 +60,7 @@ public final class FujiAutoStones extends FujiAuto {
     }
 
     @Override
-    void stopGrab() {
+    final void stopGrab() {
         armMove(0.7);
         pinch.setPower(-1);
         sleep(PINCH_WAIT);

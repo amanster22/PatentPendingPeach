@@ -50,7 +50,7 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double SENSE_DISTANCE = 3;
     private static final double STONE_LENGTH_INCH = 9;
     // Declare non-private measurements.
-    static final double ROBOT_EDGE_INCH = 17.8;
+    static final double ROBOT_EDGE_INCH = 18;
     static final double SKYSTONE_DISTANCE_STONES = 3;
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double FOUNDATION_LENGTH_INCH = 34.5;
@@ -148,21 +148,6 @@ abstract class FujiAuto extends LinearOpMode {
         lfMotor.setPower(0);
         lbMotor.setPower(0);
     }
-
-/*    final void colorDrive(double forSpeed, double horiSpeed) {
-        // Start motion.
-        rfMotor.setPower((+ forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        rbMotor.setPower((+ forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        lfMotor.setPower((- forSpeed - horiSpeed) / 2 * DRIVE_SPEED);
-        lbMotor.setPower((- forSpeed + horiSpeed) / 2 * DRIVE_SPEED);
-        // Wait until at skystone.
-        while(!isSkystone()) {}
-        // Stop motion.
-        rfMotor.setPower(0);
-        rbMotor.setPower(0);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-    } */
 
     final boolean isSkystone() {
         // Declare BlockID.
