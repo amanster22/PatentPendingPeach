@@ -30,9 +30,9 @@ abstract class FujiAutoFoundation extends FujiAuto {
         stopGrab();
         // Park under bridge.
         if (WALL_PARK) {
-            encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH + (FOUNDATION_LENGTH_INCH / 2));
+            encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH + FOUNDATION_LENGTH_INCH - (ROBOT_EDGE_INCH / 2));
         } else {
-            encoderDrive(0, (FOUNDATION_LENGTH_INCH / 2) + (ROBOT_EDGE_INCH / 2) + PARK_ERROR_MARGIN);
+            encoderDrive(0, FOUNDATION_LENGTH_INCH  + PARK_ERROR_MARGIN);
             encoderDrive(ROBOT_EDGE_INCH + PARK_ERROR_MARGIN, 0);
             encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH - (ROBOT_EDGE_INCH / 2) - PARK_ERROR_MARGIN);
         }
