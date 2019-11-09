@@ -22,9 +22,10 @@ public final class FujiTeleOp extends OpMode {
     private View relativeLayout;
     // Declare speeds.
     private static final double driveSpeed = 1;
-    private static final double hingeSpeed = 0.2;
+    private static final double hingeSpeed = 0.4;
     private static final double hookSpeed = 0.3;
     private static final double pinchSpeed = 1;
+    private boolean reverse = false;
 
     public final void init() {
         // Initialize OpMode members.
@@ -59,11 +60,21 @@ public final class FujiTeleOp extends OpMode {
         if (gamepad2.right_bumper) {pinchInput++;}
         if (gamepad2.left_bumper) {pinchInput--;}
 
+        if (gamepad1.x) {reverse = true;}
+        if (gamepad1.y) {reverse = false;}
+
         // Declare drive motor speeds.
-        final double rfSpeed = (- rightForward - sideways) / 2;
-        final double rbSpeed = (- rightForward + sideways) / 2;
-        final double lfSpeed = (+ leftForward - sideways) / 2;
-        final double lbSpeed = (+ leftForward + sideways) / 2;
+        double middle;
+        if (reverse) {
+            middle = rightForward;
+            rightForward = leftForward;
+            leftForward = middle;
+        }
+
+        final double rfSpeed = (- rightForward - sideways) / 2 * (reverse ? -1 : 1);
+        final double rbSpeed = (- rightForward + sideways) / 2 * (reverse ? -1 : 1);
+        final double lfSpeed = (+ leftForward - sideways) / 2 * (reverse ? -1 : 1);
+        final double lbSpeed = (+ leftForward + sideways) / 2 * (reverse ? -1 : 1);
 
         // Set arm motor speeds.
         hin1.setPower(hingeInput * -hingeSpeed);
