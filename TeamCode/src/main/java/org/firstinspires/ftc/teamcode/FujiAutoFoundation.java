@@ -46,8 +46,8 @@ abstract class FujiAutoFoundation extends FujiAuto {
         hook1.setPower(1);
         hook2.setPower(1);
         sleep(HOOK_WAIT);
-        hook1.setPower(0);
-        hook2.setPower(0);
+        hook1.setPower(0.5);
+        hook2.setPower(0.5);
     }
 
     @Override
