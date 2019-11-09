@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Autonomous(name="FujiAutoStones", group="PatentPending")
+// @Autonomous(name="FujiAutoStones", group="PatentPending")
+@Disabled
 public final class FujiAutoStones extends FujiAuto {
 
     private static final long PINCH_WAIT = 1000;
