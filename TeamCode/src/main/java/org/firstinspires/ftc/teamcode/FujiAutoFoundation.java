@@ -4,7 +4,7 @@ abstract class FujiAutoFoundation extends FujiAuto {
 
     private static final long HOOK_WAIT = 2000;
     private static final int PARK_ERROR_MARGIN = 2;
-    private static final int PULL_ERROR_MARGIN = 10;
+    private static final int PULL_ERROR_MARGIN = 20;
 
     final void main(boolean WALL_PARK, boolean RED) {
         // Reverse the controlls if on red side.
@@ -25,7 +25,7 @@ abstract class FujiAutoFoundation extends FujiAuto {
         startGrab();
         // Drive to wall.
         encoderDrive(-BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN,
-                -(-BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN));
+                -BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN);
         // Drop foundation.
         stopGrab();
         // Park under bridge.
