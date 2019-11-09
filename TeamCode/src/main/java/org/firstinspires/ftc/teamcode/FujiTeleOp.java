@@ -96,7 +96,7 @@ public final class FujiTeleOp extends OpMode {
             relativeLayout.setBackgroundColor((int)(totalSpeed * 255));
         }});
 
-        // Update telemetry
+        // Update telemetry.
         telemetry.update();
     }
 
