@@ -23,7 +23,7 @@ public final class FujiTeleOp extends OpMode {
     // Declare speeds.
     private static final double driveSpeed = 1;
     private static final double hingeSpeed = 0.3;
-    private static final double hookSpeed = -1;
+    private static final double hookSpeed = 0.3;
     private static final double pinchSpeed = 1;
 
     public final void init() {

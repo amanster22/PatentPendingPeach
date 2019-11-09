@@ -48,13 +48,13 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double ROBOT_DIAGONAL_INCH = 19;
     private static final double INCH_PER_ROBOT_REV = ROBOT_DIAGONAL_INCH * PI;
     // Declare field measurements.
-    private static final double SENSE_DISTANCE = 3;
+    private static final double SENSE_DISTANCE = 1;
     private static final double STONE_LENGTH_INCH = 9;
     // Declare non-private measurements.
     static final double ROBOT_EDGE_INCH = 18;
     static final double SKYSTONE_DISTANCE_STONES = 3;
-    static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double FOUNDATION_LENGTH_INCH = 34.5;
+    static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
     static final double BRIDGE_WALL_DISTANCE_INCH = 47;
 

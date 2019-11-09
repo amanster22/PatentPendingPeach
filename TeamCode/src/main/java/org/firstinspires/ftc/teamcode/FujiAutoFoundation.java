@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 abstract class FujiAutoFoundation extends FujiAuto {
 
-    private static final long HOOK_WAIT = 2750;
+    private static final long HOOK_WAIT = 2000;
     private static final int FOUNDATION_ERROR_MARGIN = 2;
 
     final void main(boolean WALL_PARK) {
@@ -41,8 +41,8 @@ abstract class FujiAutoFoundation extends FujiAuto {
         hook1.setPower(1);
         hook2.setPower(1);
         sleep(HOOK_WAIT);
-        hook1.setPower(0.1);
-        hook2.setPower(0.1);
+        hook1.setPower(0);
+        hook2.setPower(0);
     }
 
     @Override
