@@ -110,6 +110,6 @@ public final class FujiTeleOp extends OpMode {
         hin2.setPower(0);
         hook1.setPower(0);
         hook2.setPower(0);
-        pinch.setPower(-1);
+        pinch.setPower(0);
     }
 }
