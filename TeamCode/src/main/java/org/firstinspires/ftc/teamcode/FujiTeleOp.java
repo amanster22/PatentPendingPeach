@@ -53,11 +53,8 @@ public final class FujiTeleOp extends OpMode {
         double rightForward = gamepad1.right_stick_y;
         double sideways = (gamepad1.right_stick_x + gamepad1.left_stick_x) / 2;
         double hingeInput = gamepad2.right_stick_y;
-        double hookInput = 0;
+        double hookInput = gamepad2.left_stick_y;
         double pinchInput = 0;
-
-        if (gamepad2.dpad_up) {hookInput++;}
-        if (gamepad2.dpad_down) {hookInput--;}
 
         if (gamepad2.right_bumper) {pinchInput++;}
         if (gamepad2.left_bumper) {pinchInput--;}
