@@ -63,7 +63,6 @@ public final class FujiTeleOp extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad1.y) {reverse = false;}
 
-        // Declare drive motor speeds.
         double middle;
         if (reverse) {
             middle = rightForward;
@@ -71,6 +70,7 @@ public final class FujiTeleOp extends OpMode {
             leftForward = middle;
         }
 
+        // Declare drive motor speeds.
         final double rfSpeed = (- rightForward - sideways) / 2 * (reverse ? -1 : 1);
         final double rbSpeed = (- rightForward + sideways) / 2 * (reverse ? -1 : 1);
         final double lfSpeed = (+ leftForward - sideways) / 2 * (reverse ? -1 : 1);

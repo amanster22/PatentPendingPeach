@@ -58,8 +58,15 @@ abstract class FujiAuto extends LinearOpMode {
     static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
     static final double BRIDGE_WALL_DISTANCE_INCH = 47;
 
+    // Declare non-final variables.
+    private boolean reverse = false;
+
     abstract void startGrab();
     abstract void stopGrab();
+
+    final void setReverse() {
+        reverse = !reverse;
+    }
 
     private void encoderMove(double rfInch, double lfInch, double rbInch, double lbInch) {
         // Ensure that the OpMode is still active.
@@ -103,6 +110,7 @@ abstract class FujiAuto extends LinearOpMode {
     }
 
     final void encoderTurn(double revolutions) {
+        if (reverse) {revolutions = -revolutions;}
         encoderMove(
                 -revolutions * INCH_PER_ROBOT_REV * TURN_ERROR_MARGIN,
                 -revolutions * INCH_PER_ROBOT_REV * TURN_ERROR_MARGIN,
@@ -111,6 +119,7 @@ abstract class FujiAuto extends LinearOpMode {
     }
 
     final void encoderDrive(double forInch, double horiInch) {
+        if (reverse) {horiInch = -horiInch;}
         encoderMove(
                 (+ forInch - horiInch) / ROOT_TWO * DRIVE_ERROR_MARGIN,
                 (- forInch - horiInch) / ROOT_TWO * DRIVE_ERROR_MARGIN,
@@ -133,10 +142,10 @@ abstract class FujiAuto extends LinearOpMode {
         telemetry.update();
         sleep(500);
         // Start motion.
-        rfMotor.setPower(-speed / 2 * DRIVE_SPEED);
-        rbMotor.setPower(+speed / 2 * DRIVE_SPEED);
-        lfMotor.setPower(-speed / 2 * DRIVE_SPEED);
-        lbMotor.setPower(+speed / 2 * DRIVE_SPEED);
+        rfMotor.setPower(-speed / 2 * DRIVE_SPEED * (reverse ? -1 : 1));
+        rbMotor.setPower(+speed / 2 * DRIVE_SPEED * (reverse ? -1 : 1));
+        lfMotor.setPower(-speed / 2 * DRIVE_SPEED * (reverse ? -1 : 1));
+        lbMotor.setPower(+speed / 2 * DRIVE_SPEED * (reverse ? -1 : 1));
         // Wait until at correct distance.
         while (senseD < SENSE_DISTANCE + 5 || Double.isNaN(senseD)) {
             senseD = sensorDistance.getDistance(DistanceUnit.INCH);

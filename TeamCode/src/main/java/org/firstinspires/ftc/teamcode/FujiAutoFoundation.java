@@ -6,15 +6,18 @@ abstract class FujiAutoFoundation extends FujiAuto {
     private static final int PARK_ERROR_MARGIN = 2;
     private static final int PULL_ERROR_MARGIN = 10;
 
-    final void main(boolean WALL_PARK) {
+    final void main(boolean WALL_PARK, boolean RED) {
+        // Reverse the controlls if on red side.
+        if (RED) {setReverse();}
+
         // Initialize OpMode.
         initMotors();
         telemetry.addData("Path", "started.");
         telemetry.update();
 
-	    // Go up to foundation.
+        // Go up to foundation.
         prepSense(BRIDGE_WALL_DISTANCE_INCH);
-	    // Drive sideways until the robot reaches the end of the foundation.
+        // Drive sideways until the robot reaches the end of the foundation.
         endLine(1);
         // Drive to the middle of the foundation.
         encoderDrive(0, -FOUNDATION_LENGTH_INCH / 2);
