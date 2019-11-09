@@ -63,12 +63,14 @@ public final class FujiTeleOp extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad1.y) {reverse = false;}
 
+        // Reverse controls if reverse is true.
         double middle;
         if (reverse) {
             middle = rightForward;
             rightForward = leftForward;
             leftForward = middle;
         }
+        telemetry.addData("Reverse", reverse);
 
         // Declare drive motor speeds.
         final double rfSpeed = (- rightForward - sideways) / 2 * (reverse ? -1 : 1);
@@ -93,6 +95,9 @@ public final class FujiTeleOp extends OpMode {
             double totalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
             relativeLayout.setBackgroundColor((int)(totalSpeed * 255));
         }});
+
+        // Update telemetry
+        telemetry.update();
     }
 
     public final void stop() {
