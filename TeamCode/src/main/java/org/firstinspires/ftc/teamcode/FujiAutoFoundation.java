@@ -3,7 +3,8 @@ package org.firstinspires.ftc.teamcode;
 abstract class FujiAutoFoundation extends FujiAuto {
 
     private static final long HOOK_WAIT = 2000;
-    private static final int FOUNDATION_ERROR_MARGIN = 2;
+    private static final int PARK_ERROR_MARGIN = 2;
+    private static final int PULL_ERROR_MARGIN = 10;
 
     final void main(boolean WALL_PARK) {
         // Initialize OpMode.
@@ -20,16 +21,17 @@ abstract class FujiAutoFoundation extends FujiAuto {
         // Grab foundation.
         startGrab();
         // Drive to wall.
-        prepSense(-BRIDGE_WALL_DISTANCE_INCH);
+        encoderDrive(-BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN,
+                -BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN);
         // Drop foundation.
         stopGrab();
         // Park under bridge.
         if (WALL_PARK) {
             encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH + (FOUNDATION_LENGTH_INCH / 2));
         } else {
-            encoderDrive(0, (FOUNDATION_LENGTH_INCH / 2) + (ROBOT_EDGE_INCH / 2) + FOUNDATION_ERROR_MARGIN);
-            encoderDrive(ROBOT_EDGE_INCH + FOUNDATION_ERROR_MARGIN, 0);
-            encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH - (ROBOT_EDGE_INCH / 2) - FOUNDATION_ERROR_MARGIN);
+            encoderDrive(0, (FOUNDATION_LENGTH_INCH / 2) + (ROBOT_EDGE_INCH / 2) + PARK_ERROR_MARGIN);
+            encoderDrive(ROBOT_EDGE_INCH + PARK_ERROR_MARGIN, 0);
+            encoderDrive(0, FOUNDATION_BRIDGE_DISTANCE_INCH - (ROBOT_EDGE_INCH / 2) - PARK_ERROR_MARGIN);
         }
 
         telemetry.addData("Path", "complete.");
