@@ -24,8 +24,8 @@ abstract class FujiAutoFoundation extends FujiAuto {
         // Grab foundation.
         startGrab();
         // Drive to wall.
-        encoderDrive(-BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN,
-                -BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN);
+        encoderDrive(-BRIDGE_WALL_DISTANCE_INCH + ROBOT_EDGE_INCH - PULL_ERROR_MARGIN, 0);
+        encoderDrive(0, -FOUNDATION_LENGTH_INCH / 2 - PULL_ERROR_MARGIN);
         // Drop foundation.
         stopGrab();
         // Park under bridge.

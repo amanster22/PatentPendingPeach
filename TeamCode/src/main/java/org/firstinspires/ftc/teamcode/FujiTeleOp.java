@@ -50,9 +50,9 @@ public final class FujiTeleOp extends OpMode {
 
     public final void loop() {
         // Get input from the controller.
-        double leftForward = gamepad1.left_stick_y;
-        double rightForward = gamepad1.right_stick_y;
-        double sideways = (gamepad1.right_stick_x + gamepad1.left_stick_x) / 2;
+        double forward = gamepad1.left_stick_y;
+        double sideways = gamepad1.left_stick_x;
+        double turn = gamepad1.right_stick_x;
         double hingeInput = gamepad2.left_stick_y;
         double hookInput = gamepad2.right_stick_y;
         double pinchInput = 0;
@@ -63,20 +63,14 @@ public final class FujiTeleOp extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad1.y) {reverse = false;}
 
-        // Reverse controls if reverse is true.
-        double middle;
-        if (reverse) {
-            middle = rightForward;
-            rightForward = leftForward;
-            leftForward = middle;
-        }
+        // Telemetry.
         telemetry.addData("Reverse", reverse);
 
         // Declare drive motor speeds.
-        final double rfSpeed = (- rightForward - sideways) / 2 * (reverse ? -1 : 1);
-        final double rbSpeed = (- rightForward + sideways) / 2 * (reverse ? -1 : 1);
-        final double lfSpeed = (+ leftForward - sideways) / 2 * (reverse ? -1 : 1);
-        final double lbSpeed = (+ leftForward + sideways) / 2 * (reverse ? -1 : 1);
+        final double rfSpeed = (- forward - sideways + turn) * (reverse ? -1 : 1);
+        final double rbSpeed = (- forward + sideways + turn) * (reverse ? -1 : 1);
+        final double lfSpeed = (+ forward - sideways + turn) * (reverse ? -1 : 1);
+        final double lbSpeed = (+ forward + sideways + turn) * (reverse ? -1 : 1);
 
         // Set arm motor speeds.
         hin1.setPower(hingeInput * -hingeSpeed);
