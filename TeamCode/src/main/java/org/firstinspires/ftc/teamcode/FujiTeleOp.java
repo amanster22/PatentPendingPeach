@@ -63,7 +63,7 @@ public final class FujiTeleOp extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad1.y) {reverse = false;}
 
-        // Telemetry.
+        // Add telemetry data.
         telemetry.addData("Reverse", reverse);
 
         // Declare drive motor speeds.
