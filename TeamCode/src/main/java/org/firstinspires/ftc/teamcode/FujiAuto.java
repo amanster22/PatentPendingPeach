@@ -29,7 +29,7 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     // Declare drive measurements.
-    private static final double DRIVE_SPEED = 0.5;
+    private static final double DRIVE_SPEED = 0.8;
     private static final double TIMEOUT_SEC = 10;
     private static final double DRIVE_ERROR_MARGIN = 1.2;
     private static final double TURN_ERROR_MARGIN = 1.15;
@@ -49,7 +49,7 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double INCH_PER_ROBOT_REV = ROBOT_DIAGONAL_INCH * PI;
     // Declare field measurements.
     private static final double SENSE_DISTANCE = 1;
-    private static final double STONE_LENGTH_INCH = 9;
+    private static final double STONE_LENGTH_INCH = 8.75;
     // Declare non-private measurements.
     static final double ROBOT_EDGE_INCH = 18;
     static final double SKYSTONE_DISTANCE_STONES = 3;
@@ -176,7 +176,7 @@ abstract class FujiAuto extends LinearOpMode {
         telemetry.addData("Block ID", blockID);
         // Return sensed stone.
         telemetry.update();
-        sleep(1000);
+//        sleep(300);
         return blockID;
     }
 
@@ -219,8 +219,8 @@ abstract class FujiAuto extends LinearOpMode {
             //therefore counts =  288counts/shaft * 4.8shafts/armrev * arm rev
             double hingecounts = COUNT_PER_HEX_CORE_MOTOR_REV *  MOTOR_REV_PER_ARM_REV * hinRev; //set to inches per a hypotetical full arm rotation using some calculations
             // Set targets.
-            hin1.setTargetPosition((int)(hingecounts) + rfMotor.getCurrentPosition());
-            hin2.setTargetPosition((int)(-hingecounts) + rbMotor.getCurrentPosition());
+            hin1.setTargetPosition((int)(-hingecounts) + rfMotor.getCurrentPosition());
+            hin2.setTargetPosition((int)(hingecounts) + rbMotor.getCurrentPosition());
             // Set motors to RUN_TO_POSITION mode.
             hin1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             hin2.setMode(DcMotor.RunMode.RUN_TO_POSITION);

@@ -21,9 +21,10 @@ public final class FujiTeleOp extends OpMode {
     private CRServo hook2;
     private View relativeLayout;
     // Declare speeds.
-    private static final double driveSpeed = 1;
-    private static final double hingeSpeed = 0.4;
-    private static final double hookSpeed = 0.3;
+    private static final double driveSpeed = 0.8;
+    private static final double turnSpeed = 0.5;
+    private static final double hingeSpeed = 0.3;
+    private static final double hookSpeed = 0.5;
     private static final double pinchSpeed = 1;
     private boolean reverse = false;
 
@@ -67,10 +68,10 @@ public final class FujiTeleOp extends OpMode {
         telemetry.addData("Reverse", reverse);
 
         // Declare drive motor speeds.
-        final double rfSpeed = (- forward - sideways + turn) * (reverse ? -1 : 1);
-        final double rbSpeed = (- forward + sideways + turn) * (reverse ? -1 : 1);
-        final double lfSpeed = (+ forward - sideways + turn) * (reverse ? -1 : 1);
-        final double lbSpeed = (+ forward + sideways + turn) * (reverse ? -1 : 1);
+        final double rfSpeed = (- forward - sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
+        final double rbSpeed = (- forward + sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
+        final double lfSpeed = (+ forward - sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
+        final double lbSpeed = (+ forward + sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
 
         // Set arm motor speeds.
         hin1.setPower(hingeInput * -hingeSpeed);
