@@ -25,15 +25,13 @@ abstract class FujiAuto extends LinearOpMode {
     DcMotor hin2;
     CRServo hook1;
     CRServo hook2;
-//    Servo pinch;
-//    CRServo wrist;
-    Servo closer;
+    Servo pin;
 
     // Declare constants.
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     // Declare drive measurements.
-    private static final double DRIVE_SPEED = 0.8;
+    private static final double DRIVE_SPEED = 0.6;
     private static final double SENSE_DISTANCE = 1;
     private static final double DRIVE_ERROR_MARGIN = 1.2;
     private static final double TURN_ERROR_MARGIN = 1.15;
@@ -73,10 +71,10 @@ abstract class FujiAuto extends LinearOpMode {
         // Ensure that the OpMode is still active.
         if (opModeIsActive()) {
             // Set targets.
-            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH));
-            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH));
-            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH));
-            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH));
+            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH + rfMotor.getCurrentPosition()));
+            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH + rbMotor.getCurrentPosition()));
+            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH + lfMotor.getCurrentPosition()));
+            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH + lbMotor.getCurrentPosition()));
             // Set motors to RUN_TO_POSITION mode.
             rfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -102,10 +100,6 @@ abstract class FujiAuto extends LinearOpMode {
             rbMotor.setPower(0);
             lbMotor.setPower(0);
             // Turn off RUN_TO_POSITION mode.
-            rfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            lfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            lbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -210,14 +204,12 @@ abstract class FujiAuto extends LinearOpMode {
         hin2 = hardwareMap.dcMotor.get("hin2");
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap. crservo.get("hook2");
-//        pinch = hardwareMap.servo.get("pinch");
-        closer = hardwareMap.servo.get("closer");
-//        wrist = hardwareMap.crservo.get("wrist");
+        pin = hardwareMap.servo.get("pinch");
+        telemetry.addData("postition" , pin.getPosition());
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "dist");
         // Reset encoders.
         telemetry.addData("Motors", "resetting encoders.");
-        telemetry.update();
         rfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -227,7 +219,6 @@ abstract class FujiAuto extends LinearOpMode {
         rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Motors", "encoders done resetting.");
-        telemetry.update();
         // Wait for game to start (driver presses PLAY).
         waitForStart();
     }

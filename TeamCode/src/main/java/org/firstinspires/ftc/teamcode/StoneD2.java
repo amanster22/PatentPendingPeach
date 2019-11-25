@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="StoneD2", group="PatentPending")
 public class StoneD2 extends FujiAuto {
 
-    private static final long PINCH_WAIT = 2000;
+    private static final long PINCH_WAIT = 1000;
 
     @Override
     public final void runOpMode() {
@@ -19,6 +19,7 @@ public class StoneD2 extends FujiAuto {
         prepSense(BRIDGE_WALL_DISTANCE_INCH);
         // Drive sideways until the robot reaches the end of the stone line.
         endLine(-1);
+        sleep(500);
         // Drive to the middle of the first stone.
         nextStone(0.5);
         // Start stone sensing.
@@ -32,17 +33,18 @@ public class StoneD2 extends FujiAuto {
             }
         }
         // Grab stone.
+        encoderDrive(-2, -3);
         startGrab();
 
 //        encoderTurn(0.25); save incase we need to migrate back to spinning and moving backwards
 
         //- (ROBOT_EDGE_INCH / 2) save for later if needed
 
-        // Park under bridge.
-        encoderDrive(-3,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH));
-
         //go to foundation
-        encoderDrive(3,  -(23*1.5));
+        encoderDrive(-3,0);
+        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (23*1.5));
+
+        encoderDrive(3,0);
 //
 //      encoderTurn(-0.235);
 
@@ -50,17 +52,19 @@ public class StoneD2 extends FujiAuto {
         stopGrab();
 
         // go back to bridge and to stone line and to the next skystone
-        encoderDrive(-3, (23*1.5));
-        encoderDrive(3, STONE_BRIDGE_DISTANCE_INCH);
+        encoderDrive(-3,0);
+        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (23*1.5));
+        encoderDrive(6,0);
 //      encoderTurn(-0.01);
-        nextStone(3.5 + currentStone);
+        nextStone(3 + currentStone);
 
         //grab stone
         startGrab();
 //        encoderTurn(0.25);
         //bring stone to foundation
-        encoderDrive(-3, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3.5+currentStone)));
-        encoderDrive(3,  -(23*1.5));
+        encoderDrive(-3,0);
+        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3.5+currentStone)) - (23*1.5));
+        encoderDrive(3,  0);
 //        encoderTurn(-0.235);
         //drop stone
         stopGrab();
@@ -75,12 +79,11 @@ public class StoneD2 extends FujiAuto {
 
     @Override
     final void startGrab() {
-        encoderDrive(-0.6, -2.75);
         hook1.setPower(1);
         hook2.setPower(1);
         sleep(PINCH_WAIT);
-        //0.5 in servo postition is 90 degrees so it closes on the skystone
-        closer.setPosition(closer.getPosition()+0.5);
+        //0.5 in servo position is 90 degrees so it closes on the skystone
+        pin.setPosition(pin.getPosition()-0.5);
 
         hook1.setPower(-1);
         hook2.setPower(-1);
@@ -97,7 +100,7 @@ public class StoneD2 extends FujiAuto {
         hook2.setPower(1);
         sleep(PINCH_WAIT);
 
-        closer.setPosition(closer.getPosition()-0.5);
+        pin.setPosition(pin.getPosition()+0.5);
         hook1.setPower(-1);
         hook2.setPower(-1);
 

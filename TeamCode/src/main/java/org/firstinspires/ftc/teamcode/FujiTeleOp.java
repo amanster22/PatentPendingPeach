@@ -1,57 +1,63 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
-import android.app.Activity;
-import android.content.Context;
-import android.view.View;
 
 @TeleOp(name = "FujiTeleOp", group = "PatentPending")
 public final class FujiTeleOp extends OpMode {
+
     // Declare OpMode members.
-    private DcMotor rfMotor;
-    private DcMotor lfMotor;
-    private DcMotor rbMotor;
-    private DcMotor lbMotor;
-    private DcMotor hin1;
-    private DcMotor hin2;
-    private CRServo pinch;
-    private CRServo hook1;
-    private CRServo hook2;
-    private Servo closer;
-    private View relativeLayout;
+    private DcMotor rfMotor; // base
+    private DcMotor lfMotor; // base
+    private DcMotor rbMotor; // base
+    private DcMotor lbMotor; // base
+    private DcMotor hin1; // arm
+    private DcMotor hin2; // arm
+    private CRServo wrist; // arm
+    private Servo arm; // arm
+    private CRServo hook1; // pinch
+    private CRServo hook2; // pinch
+    private Servo pin; // pinch
     // Declare speeds.
-    private static double driveSpeed = 1;
-    private static double hingeSpeed;
-    private static final double turnSpeed = 0.5;
+    private double driveSpeedInput = 1;
+    private double hinSpeedInput = 1;
+    private boolean reverseInput = false;
+    private static final double driveSpeed = -1;
+    private static final double turnSpeed = -0.5;
+    private static final double hinSpeed = 0.5;
     private static final double hookSpeed = 0.5;
-    private static final double pinchSpeed = -1;
-    private boolean reverse = false;
+
+    /*
     private int soundID = 0;
     private boolean soundPlaying = false;
     private SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
 //    params.loopControl = 0;
 //    params.waitForNonLoopingSoundsToFinish = true;
+    */
 
+    @Override
     public final void init() {
+        
         // Initialize OpMode members.
-        Context myApp = hardwareMap.appContext;
         rfMotor = hardwareMap.dcMotor.get("rf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lfMotor = hardwareMap.dcMotor.get("lf");
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
+        wrist = hardwareMap.crservo.get("wrist");
+        arm = hardwareMap.servo.get("arm");
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap.crservo.get("hook2");
-        pinch = hardwareMap.crservo.get("pinch");
-        closer = hardwareMap.servo.get("closer");
-        // Stop all motion.
+        pin = hardwareMap.servo.get("pinch");
         stop();
+
+        /*
+        Context myApp = hardwareMap.appContext;
+
         soundID = myApp.getResources().getIdentifier("patentaudio.m4a", "raw", myApp.getPackageName());
         telemetry.addData("id",soundID);
         telemetry.update();
@@ -63,76 +69,101 @@ public final class FujiTeleOp extends OpMode {
 
             // Start playing, and also Create a callback that will clear the playing flag when the sound is complete.
             SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
-                    new Runnable() {
-                        public void run() {
-                            soundPlaying = false;
-                        }} );
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        soundPlaying = false;
+                    }
+                }
+            );
         }
         // Initialize relative layout to change the phone's background color.
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         relativeLayout = ((Activity)hardwareMap.appContext).findViewById(relativeLayoutId);
+        */
     }
 
+    @Override
     public final void start() {
     }
 
+    @Override
     public final void loop() {
+
         // Get input from the controller.
-        double forward = gamepad1.left_stick_y;
-        double sideways = gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
+        double forwardInput = gamepad1.left_stick_y;
+        double sidewaysInput = gamepad1.left_stick_x;
+        double turnInput = gamepad1.right_stick_x;
         double hingeInput = gamepad2.left_stick_y;
+        boolean armCloseInput = gamepad2.left_trigger > 0;
+        boolean armOpenInput = gamepad2.left_bumper;
         double hookInput = gamepad2.right_stick_y;
-        double pinchInput = 0;
+        boolean pinCloseInput = gamepad2.right_trigger > 0;
+        boolean pinOpenInput = gamepad2.right_bumper;
 
-        if (gamepad2.right_bumper) {pinchInput++;}
-        if (gamepad2.left_bumper) {pinchInput--;}
+        if (gamepad1.dpad_up){driveSpeedInput = 1;}
+        if (gamepad1.dpad_down) {driveSpeedInput = 0.25;}
+        if (gamepad1.dpad_left || gamepad1.dpad_right) {driveSpeedInput = 0.5;}
 
-        if (gamepad1.x) {reverse = true;}
-        if (gamepad1.y) {reverse = false;}
+        if (gamepad2.dpad_up) {hinSpeedInput = 1;}
+        if (gamepad2.dpad_down) {hinSpeedInput = 0.5;}
 
-        if (gamepad1.dpad_up){driveSpeed = 1;}
-        if (gamepad1.dpad_down) {driveSpeed = 0.3;}
-        if (gamepad1.dpad_left || gamepad1.dpad_right) {driveSpeed = 0.5;}
-
-        if (gamepad2.right_trigger > 0) {hingeSpeed = 0.3;
-        } else {hingeSpeed = 0.5;}
+        if (gamepad1.x) {reverseInput = true;}
+        if (gamepad1.y) {reverseInput = false;}
 
         // Add telemetry data.
-        telemetry.addData("Speed", driveSpeed);
-        telemetry.addData("Reverse", reverse);
+        telemetry.addData("Drive Speed", driveSpeedInput);
+        telemetry.addData("Hinge Speed", hinSpeedInput);
+        telemetry.addData("Reverse", reverseInput);
 
         // Declare drive motor speeds.
-        final double rfSpeed = (- forward - sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
-        final double rbSpeed = (- forward + sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
-        final double lfSpeed = (+ forward - sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
-        final double lbSpeed = (+ forward + sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
+        final double rfSpeed =
+                (+ forwardInput + sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                turnInput * turnSpeed * driveSpeedInput;
+        final double rbSpeed =
+                (+ forwardInput - sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                turnInput * turnSpeed * driveSpeedInput;
+        final double lfSpeed =
+                (- forwardInput + sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                turnInput * turnSpeed * driveSpeedInput;
+        final double lbSpeed =
+                (- forwardInput - sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                turnInput * turnSpeed * driveSpeedInput;
 
         // Set attachment motor speeds.
-        hin1.setPower(hingeInput * -hingeSpeed);
-        hin2.setPower(hingeInput * hingeSpeed);
+
+        hin1.setPower(hingeInput * hinSpeed * hinSpeedInput);
+        hin2.setPower(-hingeInput * hinSpeed * hinSpeedInput);
+        wrist.setPower(hingeInput * hinSpeed * hinSpeedInput);
+
+        if (armCloseInput) {arm.setPosition(1);}
+        if (armOpenInput) {arm.setPosition(-1);}
+
         hook1.setPower(hookInput * hookSpeed);
         hook2.setPower(hookInput * hookSpeed);
-        pinch.setPower(pinchInput * pinchSpeed);
-        if (gamepad2.left_bumper) {closer.setPosition(1);}
-        if (gamepad2.right_bumper) {closer.setPosition(-1);}
-        // Set drive motor speeds.
-        rfMotor.setPower(Math.max(Math.min(rfSpeed * driveSpeed, 1), -1));
-        rbMotor.setPower(Math.max(Math.min(rbSpeed * driveSpeed, 1), -1));
-        lfMotor.setPower(Math.max(Math.min(lfSpeed * driveSpeed, 1), -1));
-        lbMotor.setPower(Math.max(Math.min(lbSpeed * driveSpeed, 1), -1));
 
+        if (pinCloseInput) {pin.setPosition(1);}
+        if (pinOpenInput) {pin.setPosition(-1);}
+
+        // Set drive motor speeds.
+        rfMotor.setPower(Math.max(Math.min(rfSpeed, 1), -1));
+        rbMotor.setPower(Math.max(Math.min(rbSpeed, 1), -1));
+        lfMotor.setPower(Math.max(Math.min(lfSpeed, 1), -1));
+        lbMotor.setPower(Math.max(Math.min(lbSpeed, 1), -1));
+
+        /*
         // Set phone background color.
         relativeLayout.post(new Runnable() {public void run() {
             double totalSpeed = (rfSpeed + rbSpeed + lfSpeed + lbSpeed) / 4;
             relativeLayout.setBackgroundColor((int)(totalSpeed * 255));
         }});
+        */
 
         // Update telemetry.
         telemetry.update();
     }
 
-
+    @Override
     public final void stop() {
         // Stop all motion.
         rfMotor.setPower(0);
@@ -141,8 +172,10 @@ public final class FujiTeleOp extends OpMode {
         lbMotor.setPower(0);
         hin1.setPower(0);
         hin2.setPower(0);
+        wrist.setPower(0);
+        arm.setPosition(arm.getPosition());
         hook1.setPower(0);
         hook2.setPower(0);
-        pinch.setPower(0);
+        pin.setPosition(pin.getPosition());
     }
 }
