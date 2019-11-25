@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
@@ -21,6 +22,7 @@ public final class FujiTeleOp extends OpMode {
     private CRServo pinch;
     private CRServo hook1;
     private CRServo hook2;
+    private Servo closer;
     private View relativeLayout;
     // Declare speeds.
     private static double driveSpeed = 1;
@@ -47,6 +49,7 @@ public final class FujiTeleOp extends OpMode {
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap.crservo.get("hook2");
         pinch = hardwareMap.crservo.get("pinch");
+        closer = hardwareMap.servo.get("closer");
         // Stop all motion.
         stop();
         soundID = myApp.getResources().getIdentifier("patentaudio.m4a", "raw", myApp.getPackageName());
@@ -105,12 +108,14 @@ public final class FujiTeleOp extends OpMode {
         final double lfSpeed = (+ forward - sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
         final double lbSpeed = (+ forward + sideways) * (reverse ? -1 : 1) - turn * turnSpeed;
 
-        // Set arm motor speeds.
+        // Set attachment motor speeds.
         hin1.setPower(hingeInput * -hingeSpeed);
         hin2.setPower(hingeInput * hingeSpeed);
         hook1.setPower(hookInput * hookSpeed);
         hook2.setPower(hookInput * hookSpeed);
         pinch.setPower(pinchInput * pinchSpeed);
+        if (gamepad2.left_bumper) {closer.setPosition(1);}
+        if (gamepad2.right_bumper) {closer.setPosition(-1);}
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed * driveSpeed, 1), -1));
         rbMotor.setPower(Math.max(Math.min(rbSpeed * driveSpeed, 1), -1));

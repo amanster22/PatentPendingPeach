@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -24,7 +25,9 @@ abstract class FujiAuto extends LinearOpMode {
     DcMotor hin2;
     CRServo hook1;
     CRServo hook2;
-    CRServo pinch;
+//    Servo pinch;
+//    CRServo wrist;
+    Servo closer;
 
     // Declare constants.
     private static final double PI = 3.1415;
@@ -70,10 +73,10 @@ abstract class FujiAuto extends LinearOpMode {
         // Ensure that the OpMode is still active.
         if (opModeIsActive()) {
             // Set targets.
-            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH) + rfMotor.getCurrentPosition());
-            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH) + rbMotor.getCurrentPosition());
-            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH) + lfMotor.getCurrentPosition());
-            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH) + lbMotor.getCurrentPosition());
+            rfMotor.setTargetPosition((int)(rfInch * COUNT_PER_INCH));
+            rbMotor.setTargetPosition((int)(rbInch * COUNT_PER_INCH));
+            lfMotor.setTargetPosition((int)(lfInch * COUNT_PER_INCH));
+            lbMotor.setTargetPosition((int)(lbInch * COUNT_PER_INCH));
             // Set motors to RUN_TO_POSITION mode.
             rfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lfMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -99,6 +102,10 @@ abstract class FujiAuto extends LinearOpMode {
             rbMotor.setPower(0);
             lbMotor.setPower(0);
             // Turn off RUN_TO_POSITION mode.
+            rfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lfMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lfMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -150,28 +157,28 @@ abstract class FujiAuto extends LinearOpMode {
         lbMotor.setPower(0);
     }
 
-    final void upTo() {
-        // Get distance. Distance sensor goes from 5cm to 25cm, roughly 1.9in to 9.8in.
-        double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
-        telemetry.addData("Distance Sensor", senseD);
-        telemetry.update();
-        // Start motion.
-        rfMotor.setPower(DRIVE_SPEED * (reverse ? -1 : 1));
-        rbMotor.setPower(DRIVE_SPEED * (reverse ? -1 : 1));
-        lfMotor.setPower(-DRIVE_SPEED * (reverse ? -1 : 1));
-        lbMotor.setPower(-DRIVE_SPEED * (reverse ? -1 : 1));
-        // Wait until at correct distance.
-        while (senseD + 3 > SENSE_DISTANCE || Double.isNaN(senseD)) {
-            senseD = sensorDistance.getDistance(DistanceUnit.INCH);
-            telemetry.addData("Distance Sensor", senseD);
-            telemetry.update();
-        }
-        // Stop motion.
-        rfMotor.setPower(0);
-        rbMotor.setPower(0);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-    }
+//    final void upTo() {
+//        // Get distance. Distance sensor goes from 5cm to 25cm, roughly 1.9in to 9.8in.
+//        double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
+//        telemetry.addData("Distance Sensor", senseD);
+//        telemetry.update();
+//        // Start motion.
+//        rfMotor.setPower(DRIVE_SPEED * (reverse ? -1 : 1));
+//        rbMotor.setPower(DRIVE_SPEED * (reverse ? -1 : 1));
+//        lfMotor.setPower(-DRIVE_SPEED * (reverse ? -1 : 1));
+//        lbMotor.setPower(-DRIVE_SPEED * (reverse ? -1 : 1));
+//        // Wait until at correct distance.
+//        while (senseD + 3 > SENSE_DISTANCE || Double.isNaN(senseD)) {
+//            senseD = sensorDistance.getDistance(DistanceUnit.INCH);
+//            telemetry.addData("Distance Sensor", senseD);
+//            telemetry.update();
+//        }
+//        // Stop motion.
+//        rfMotor.setPower(0);
+//        rbMotor.setPower(0);
+//        lfMotor.setPower(0);
+//        lbMotor.setPower(0);
+//    }
 
     final boolean isSkystone() {
         // Declare BlockID and color.
@@ -202,8 +209,10 @@ abstract class FujiAuto extends LinearOpMode {
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
         hook1 = hardwareMap.crservo.get("hook1");
-        hook2 = hardwareMap.crservo.get("hook2");
-        pinch = hardwareMap.crservo.get("pinch");
+        hook2 = hardwareMap. crservo.get("hook2");
+//        pinch = hardwareMap.servo.get("pinch");
+        closer = hardwareMap.servo.get("closer");
+//        wrist = hardwareMap.crservo.get("wrist");
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "dist");
         // Reset encoders.
