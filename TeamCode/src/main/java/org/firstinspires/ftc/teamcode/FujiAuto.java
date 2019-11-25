@@ -205,7 +205,7 @@ abstract class FujiAuto extends LinearOpMode {
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap. crservo.get("hook2");
         pin = hardwareMap.servo.get("pinch");
-        telemetry.addData("postition" , pin.getPosition());
+        telemetry.addData("position" , pin.getPosition());
         sensorColor = hardwareMap.colorSensor.get("color");
         sensorDistance = hardwareMap.get(DistanceSensor.class, "dist");
         // Reset encoders.
@@ -219,6 +219,8 @@ abstract class FujiAuto extends LinearOpMode {
         rbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Motors", "encoders done resetting.");
+        telemetry.update();
+        pin.setPosition(0.5);
         // Wait for game to start (driver presses PLAY).
         waitForStart();
     }

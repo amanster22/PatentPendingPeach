@@ -40,7 +40,7 @@ public final class FujiTeleOp extends OpMode {
 
     @Override
     public final void init() {
-        
+
         // Initialize OpMode members.
         rfMotor = hardwareMap.dcMotor.get("rf");
         rbMotor = hardwareMap.dcMotor.get("rb");

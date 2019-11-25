@@ -84,6 +84,7 @@ public class StoneD2 extends FujiAuto {
         sleep(PINCH_WAIT);
         //0.5 in servo position is 90 degrees so it closes on the skystone
         pin.setPosition(pin.getPosition()-0.5);
+        sleep(500);
 
         hook1.setPower(-1);
         hook2.setPower(-1);
@@ -101,6 +102,7 @@ public class StoneD2 extends FujiAuto {
         sleep(PINCH_WAIT);
 
         pin.setPosition(pin.getPosition()+0.5);
+        sleep(500);
         hook1.setPower(-1);
         hook2.setPower(-1);
 
