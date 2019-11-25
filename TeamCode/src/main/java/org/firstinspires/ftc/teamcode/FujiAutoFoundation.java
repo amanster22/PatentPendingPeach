@@ -7,7 +7,7 @@ abstract class FujiAutoFoundation extends FujiAuto {
     private static final int PULL_ERROR_MARGIN = 15;
 
     final void main(boolean WALL_PARK, boolean RED) {
-        // Reverse the controlls if on red side.
+        // Reverse the controls if on red side.
         if (RED) {setReverse();}
 
         // Initialize OpMode.

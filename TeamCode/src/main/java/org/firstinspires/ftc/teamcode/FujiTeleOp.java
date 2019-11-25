@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 
 @TeleOp(name = "FujiTeleOp", group = "PatentPending")
@@ -21,15 +23,21 @@ public final class FujiTeleOp extends OpMode {
     private CRServo hook2;
     private View relativeLayout;
     // Declare speeds.
-    private static final double driveSpeed = 0.8;
+    private static double driveSpeed = 1;
+    private static double hingeSpeed;
     private static final double turnSpeed = 0.5;
-    private static final double hingeSpeed = 0.3;
     private static final double hookSpeed = 0.5;
-    private static final double pinchSpeed = 1;
+    private static final double pinchSpeed = -1;
     private boolean reverse = false;
+    private int soundID = 0;
+    private boolean soundPlaying = false;
+    private SoundPlayer.PlaySoundParams params = new SoundPlayer.PlaySoundParams();
+//    params.loopControl = 0;
+//    params.waitForNonLoopingSoundsToFinish = true;
 
     public final void init() {
         // Initialize OpMode members.
+        Context myApp = hardwareMap.appContext;
         rfMotor = hardwareMap.dcMotor.get("rf");
         rbMotor = hardwareMap.dcMotor.get("rb");
         lfMotor = hardwareMap.dcMotor.get("lf");
@@ -41,6 +49,22 @@ public final class FujiTeleOp extends OpMode {
         pinch = hardwareMap.crservo.get("pinch");
         // Stop all motion.
         stop();
+        soundID = myApp.getResources().getIdentifier("patentaudio.m4a", "raw", myApp.getPackageName());
+        telemetry.addData("id",soundID);
+        telemetry.update();
+
+        if (soundID != 0) {
+
+            // Signal that the sound is now playing.
+            soundPlaying = true;
+
+            // Start playing, and also Create a callback that will clear the playing flag when the sound is complete.
+            SoundPlayer.getInstance().startPlaying(myApp, soundID, params, null,
+                    new Runnable() {
+                        public void run() {
+                            soundPlaying = false;
+                        }} );
+        }
         // Initialize relative layout to change the phone's background color.
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         relativeLayout = ((Activity)hardwareMap.appContext).findViewById(relativeLayoutId);
@@ -64,7 +88,15 @@ public final class FujiTeleOp extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad1.y) {reverse = false;}
 
+        if (gamepad1.dpad_up){driveSpeed = 1;}
+        if (gamepad1.dpad_down) {driveSpeed = 0.3;}
+        if (gamepad1.dpad_left || gamepad1.dpad_right) {driveSpeed = 0.5;}
+
+        if (gamepad2.right_trigger > 0) {hingeSpeed = 0.3;
+        } else {hingeSpeed = 0.5;}
+
         // Add telemetry data.
+        telemetry.addData("Speed", driveSpeed);
         telemetry.addData("Reverse", reverse);
 
         // Declare drive motor speeds.
@@ -94,6 +126,7 @@ public final class FujiTeleOp extends OpMode {
         // Update telemetry.
         telemetry.update();
     }
+
 
     public final void stop() {
         // Stop all motion.

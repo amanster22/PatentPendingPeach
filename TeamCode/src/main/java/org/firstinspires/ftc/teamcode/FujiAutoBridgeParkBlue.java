@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
-abstract class FujiAutoPark extends FujiAuto {
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-    final void main(boolean RED) {
-        if (RED) {setReverse();}
+@Autonomous(name="FujiAutoBridgeParkBlue", group="PatentPending")
+public class FujiAutoBridgeParkBlue extends FujiAuto {
+
+    @Override
+    public void runOpMode() {
 
         initMotors();
         telemetry.addData("Path", "started.");
         telemetry.update();
 
+        encoderDrive(25, 0);
         encoderDrive(0, 30);
 
         telemetry.addData("Path", "complete.");
