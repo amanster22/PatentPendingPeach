@@ -79,16 +79,17 @@ public class StoneD2 extends FujiAuto {
 
     @Override
     final void startGrab() {
+        //this block moves to grab stone
         hook1.setPower(1);
         hook2.setPower(1);
-        sleep(PINCH_WAIT);
-        //0.5 in servo position is 90 degrees so it closes on the skystone
-        pin.setPosition(pin.getPosition()-0.5);
-        sleep(500);
+        pin.setPower(0.3);
+        sleep(1000);
 
+        //this block moves to pick it up and hold it
+        pin.setPower(0.2);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(PINCH_WAIT);
+        sleep(800);
         hook1.setPower(0);
         hook2.setPower(0);
 
@@ -99,14 +100,14 @@ public class StoneD2 extends FujiAuto {
 
         hook1.setPower(1);
         hook2.setPower(1);
-        sleep(PINCH_WAIT);
-
-        pin.setPosition(pin.getPosition()+0.5);
-        sleep(500);
+        sleep(750);
+        pin.setPower(-0.3);
+        sleep(250)
         hook1.setPower(-1);
         hook2.setPower(-1);
-
-        sleep(PINCH_WAIT);
+        sleep(750)
+        pin.setPower(0)
+        sleep(250)
         hook1.setPower(0);
         hook2.setPower(0);
     }
