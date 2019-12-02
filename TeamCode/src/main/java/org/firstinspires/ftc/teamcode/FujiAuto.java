@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -25,13 +26,13 @@ abstract class FujiAuto extends LinearOpMode {
     DcMotor hin2;
     CRServo hook1;
     CRServo hook2;
-    Servo pin;
+    CRServo pin;
 
     // Declare constants.
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     // Declare drive measurements.
-    private static final double DRIVE_SPEED = 0.8;
+    private static final double DRIVE_SPEED = 0.7;
     private static final double SENSE_DISTANCE = 1;
     private static final double DRIVE_ERROR_MARGIN = 1.2;
     private static final double TURN_ERROR_MARGIN = 1.15;
@@ -45,13 +46,14 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double ROBOT_DIAGONAL_INCH = 19;
     private static final double INCH_PER_ROBOT_REV = ROBOT_DIAGONAL_INCH * PI;
     // Declare non-private measurements.
-    static final double STONE_LENGTH_INCH = 8.7;
+    static final double STONE_LENGTH_INCH = 8.6;
     static final double ROBOT_EDGE_INCH = 18;
     static final double SKYSTONE_DISTANCE_STONES = 3;
     static final double FOUNDATION_LENGTH_INCH = 34.5;
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
     static final double BRIDGE_WALL_DISTANCE_INCH = 47;
+    static final double TILE_LENGTH = 25;
     // Declare non-final variables.
     private boolean reverse = false;
 
@@ -220,6 +222,7 @@ abstract class FujiAuto extends LinearOpMode {
         telemetry.addData("Motors", "encoders done resetting.");
         telemetry.update();
         pin.setPower(0);
+        pin.setDirection(DcMotor.Direction.REVERSE);
         // Wait for game to start (driver presses PLAY).
         waitForStart();
     }
