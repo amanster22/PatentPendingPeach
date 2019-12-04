@@ -55,8 +55,6 @@ For technical questions regarding the Control System or the FTC SDK, please visi
 # Release Information
 **************************************************************************************
 
-<<<<<<< HEAD
-=======
 Version 5.3 (20191004-112306)
 
 * Fixes external USB/UVC webcam support
@@ -89,7 +87,6 @@ Version 5.3 (20191004-112306)
 # Release Information
 **************************************************************************************
 
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 Version 5.2 (20190905-083227)
 
 * Fixes extra-wide margins on settings activities, and placement of the new configuration button
