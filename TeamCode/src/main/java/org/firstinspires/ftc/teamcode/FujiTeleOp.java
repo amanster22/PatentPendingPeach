@@ -21,6 +21,9 @@ public final class FujiTeleOp extends OpMode {
     private CRServo hook1; // pinch
     private CRServo hook2; // pinch
     private Servo pin; // pinch
+    private DcMotor rightlift;
+    private DcMotor leftlift;
+
     // Declare speeds.
     private double driveSpeedInput = 1;
     private double hinSpeedInput = 1;
@@ -29,6 +32,7 @@ public final class FujiTeleOp extends OpMode {
     private static final double turnSpeed = -0.5;
     private static final double hinSpeed = 0.5;
     private static final double hookSpeed = 0.5;
+    private static final double liftSpeed = 0.5;
 
     /*
     private int soundID = 0;
@@ -53,6 +57,8 @@ public final class FujiTeleOp extends OpMode {
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap.crservo.get("hook2");
         pin = hardwareMap.servo.get("pinch");
+        rightlift = hardwareMap.dcMotor.get("rl");
+        leftlift = hardwareMap.dcMotor.get("ll");
         stop();
 
         /*
@@ -110,6 +116,19 @@ public final class FujiTeleOp extends OpMode {
 
         if (gamepad1.x) {reverseInput = true;}
         if (gamepad1.y) {reverseInput = false;}
+        if (gamepad2.a){
+            rightlift.setPower(liftSpeed);
+            leftlift.setPower (-liftSpeed);
+        }
+
+        if (gamepad2.b){
+            rightlift.setPower(-liftSpeed);
+            leftlift.setPower (liftSpeed);
+        }
+        else {
+            rightlift.setPower(0);
+            leftlift.setPower(0);
+        }
 
         // Add telemetry data.
         telemetry.addData("Drive Speed", driveSpeedInput);
@@ -177,5 +196,7 @@ public final class FujiTeleOp extends OpMode {
         hook1.setPower(0);
         hook2.setPower(0);
         pin.setPosition(pin.getPosition());
+        leftlift.setPower(0);
+        rightlift.setPower(0);
     }
 }

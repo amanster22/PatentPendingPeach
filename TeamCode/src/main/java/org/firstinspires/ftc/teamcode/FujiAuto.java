@@ -52,7 +52,7 @@ abstract class FujiAuto extends LinearOpMode {
     static final double FOUNDATION_LENGTH_INCH = 34.5;
     static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
-    static final double BRIDGE_WALL_DISTANCE_INCH = 47;
+    static final double BRIDGE_WALL_DISTANCE_INCH = 47.1;
     static final double TILE_LENGTH = 25;
     // Declare non-final variables.
     private boolean reverse = false;

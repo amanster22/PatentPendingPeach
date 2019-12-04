@@ -33,9 +33,8 @@ public class StoneD2 extends FujiAuto {
             }
         }
 
-
         // Grab stone.
-        encoderDrive(-2.5, -1.25);
+        encoderDrive(-2.2, -1.25);
         startGrab();
 
 //        encoderTurn(0.25); save incase we need to migrate back to spinning and moving backwards
@@ -61,7 +60,7 @@ public class StoneD2 extends FujiAuto {
 //        encoderTurn(-0.01);
         encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.5));
 //      encoderTurn(-0.01);
-        nextStone(3 + currentStone);
+        nextStone(2.5 + currentStone);
 //        encoderDrive(3,0);
 
         //grab second stone
@@ -69,7 +68,7 @@ public class StoneD2 extends FujiAuto {
 //        encoderTurn(0.25);
         //bring stone to foundation
         encoderDrive(-3,0);
-        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3.5+currentStone)) - (TILE_LENGTH*1.5) - STONE_LENGTH_INCH);
+        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*1.5) - STONE_LENGTH_INCH);
         encoderDrive(3,  0);
 //        encoderTurn(-0.235);
         //drop stone
