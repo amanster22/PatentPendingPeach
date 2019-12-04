@@ -51,6 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     android:title="@string/configure_robot_menu_item"/>
 
   <item
+<<<<<<< HEAD
     android:id="@+id/action_blocks"
     android:orderInCategory="400"
     android:showAsAction="never"
@@ -65,6 +66,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     android:title="@string/programming_mode_menu_item"/>
 
   <item
+=======
+>>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
     android:id="@+id/action_program_and_manage"
     android:orderInCategory="550"
     android:showAsAction="never"

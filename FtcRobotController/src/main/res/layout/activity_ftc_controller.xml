@@ -180,6 +180,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:visibility="invisible"
       android:text="" />
 
+<<<<<<< HEAD
     <!-- invisible except when programming mode is activated from the DS -->
     <TextView
       android:id="@+id/textRemoteProgrammingMode"
@@ -193,6 +194,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:visibility="invisible"
       android:text="" />
 
+=======
+>>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
   </RelativeLayout>
 
   <WebView
