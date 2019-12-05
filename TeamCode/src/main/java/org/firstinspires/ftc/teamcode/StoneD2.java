@@ -67,9 +67,7 @@ public class StoneD2 extends FujiAuto {
         startGrab();
 //        encoderTurn(0.25);
         //bring stone to foundation
-        encoderDrive(-3,0);
         encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*1.5) - STONE_LENGTH_INCH);
-        encoderDrive(3,  0);
 //        encoderTurn(-0.235);
         //drop stone
         stopGrab();
