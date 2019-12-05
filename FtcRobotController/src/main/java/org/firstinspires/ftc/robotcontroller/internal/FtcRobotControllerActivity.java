@@ -60,12 +60,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-<<<<<<< HEAD
-import com.google.blocks.ftcrobotcontroller.BlocksActivity;
-import com.google.blocks.ftcrobotcontroller.ProgrammingModeActivity;
-import com.google.blocks.ftcrobotcontroller.ProgrammingModeControllerImpl;
-=======
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 import com.google.blocks.ftcrobotcontroller.ProgrammingWebHandlers;
 import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
 import com.qualcomm.ftccommon.ClassManagerFactory;
@@ -77,10 +71,6 @@ import com.qualcomm.ftccommon.FtcRobotControllerService.FtcRobotControllerBinder
 import com.qualcomm.ftccommon.FtcRobotControllerSettingsActivity;
 import com.qualcomm.ftccommon.LaunchActivityConstantsList;
 import com.qualcomm.ftccommon.LaunchActivityConstantsList.RequestCode;
-<<<<<<< HEAD
-import com.qualcomm.ftccommon.ProgrammingModeController;
-=======
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 import com.qualcomm.ftccommon.Restarter;
 import com.qualcomm.ftccommon.UpdateUI;
 import com.qualcomm.ftccommon.configuration.EditParameters;
@@ -123,10 +113,6 @@ import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import org.firstinspires.ftc.robotcore.internal.system.Assert;
 import org.firstinspires.ftc.robotcore.internal.system.PreferencesHelper;
 import org.firstinspires.ftc.robotcore.internal.system.ServiceController;
-<<<<<<< HEAD
-import org.firstinspires.ftc.robotcore.internal.ui.LocalByRefIntentExtraHolder;
-=======
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 import org.firstinspires.ftc.robotcore.internal.ui.ThemedActivity;
 import org.firstinspires.ftc.robotcore.internal.ui.UILocation;
 import org.firstinspires.ftc.robotcore.internal.webserver.RobotControllerWebInfo;
@@ -149,10 +135,6 @@ public class FtcRobotControllerActivity extends Activity
   protected RobotConfigFileManager cfgFileMgr;
 
   protected ProgrammingModeManager programmingModeManager;
-<<<<<<< HEAD
-  protected ProgrammingModeController programmingModeController;
-=======
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 
   protected UpdateUI.Callback callback;
   protected Context context;
@@ -374,11 +356,6 @@ public class FtcRobotControllerActivity extends Activity
     programmingModeManager = new ProgrammingModeManager();
     programmingModeManager.register(new ProgrammingWebHandlers());
     programmingModeManager.register(new OnBotJavaProgrammingMode());
-<<<<<<< HEAD
-    programmingModeController = new ProgrammingModeControllerImpl(
-            this, (TextView) findViewById(R.id.textRemoteProgrammingMode), programmingModeManager);
-=======
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 
     updateUI = createUpdateUI();
     callback = createUICallback(updateUI);
@@ -454,12 +431,6 @@ public class FtcRobotControllerActivity extends Activity
   protected void onPause() {
     super.onPause();
     RobotLog.vv(TAG, "onPause()");
-<<<<<<< HEAD
-    if (programmingModeController.isActive()) {
-      programmingModeController.stopProgrammingMode();
-    }
-=======
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
   }
 
   @Override
@@ -587,24 +558,7 @@ public class FtcRobotControllerActivity extends Activity
   public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
 
-<<<<<<< HEAD
-    if (id == R.id.action_programming_mode) {
-      if (cfgFileMgr.getActiveConfig().isNoConfig()) {
-        // Tell the user they must configure the robot before starting programming mode.
-        // TODO: as we are no longer truly 'modal' this warning should be adapted
-        AppUtil.getInstance().showToast(UILocation.BOTH, context.getString(R.string.toastConfigureRobotBeforeProgrammingMode));
-      } else {
-        Intent programmingModeIntent = new Intent(AppUtil.getDefContext(), ProgrammingModeActivity.class);
-        programmingModeIntent.putExtra(
-            LaunchActivityConstantsList.PROGRAMMING_MODE_ACTIVITY_PROGRAMMING_WEB_HANDLERS,
-            new LocalByRefIntentExtraHolder(programmingModeManager));
-        startActivity(programmingModeIntent);
-      }
-      return true;
-    } else if (id == R.id.action_program_and_manage) {
-=======
     if (id == R.id.action_program_and_manage) {
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
       if (isRobotRunning()) {
         Intent programmingModeIntent = new Intent(AppUtil.getDefContext(), ProgramAndManageActivity.class);
         RobotControllerWebInfo webInfo = programmingModeManager.getWebServer().getConnectionInformation();
@@ -617,17 +571,7 @@ public class FtcRobotControllerActivity extends Activity
       Intent inspectionModeIntent = new Intent(AppUtil.getDefContext(), RcInspectionActivity.class);
       startActivity(inspectionModeIntent);
       return true;
-<<<<<<< HEAD
-    }
-    else if (id == R.id.action_blocks) {
-      Intent blocksIntent = new Intent(AppUtil.getDefContext(), BlocksActivity.class);
-      startActivity(blocksIntent);
-      return true;
-    }
-    else if (id == R.id.action_restart_robot) {
-=======
     } else if (id == R.id.action_restart_robot) {
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
       dimmer.handleDimTimer();
       AppUtil.getInstance().showToast(UILocation.BOTH, context.getString(R.string.toastRestartingRobot));
       requestRobotRestart();
@@ -752,13 +696,8 @@ public class FtcRobotControllerActivity extends Activity
     }
 
     OpModeRegister userOpModeRegister = createOpModeRegister();
-<<<<<<< HEAD
-    eventLoop = new FtcEventLoop(hardwareFactory, userOpModeRegister, callback, this, programmingModeController);
-    FtcEventLoopIdle idleLoop = new FtcEventLoopIdle(hardwareFactory, userOpModeRegister, callback, this, programmingModeController);
-=======
     eventLoop = new FtcEventLoop(hardwareFactory, userOpModeRegister, callback, this);
     FtcEventLoopIdle idleLoop = new FtcEventLoopIdle(hardwareFactory, userOpModeRegister, callback, this);
->>>>>>> ca9a9696559f895f2efd285ea2b0fa984ad16048
 
     controllerService.setCallback(callback);
     controllerService.setupRobot(eventLoop, idleLoop, runOnComplete);
