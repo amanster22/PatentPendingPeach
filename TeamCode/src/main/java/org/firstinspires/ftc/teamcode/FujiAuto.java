@@ -32,7 +32,7 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     // Declare drive measurements.
-    private static final double DRIVE_SPEED = 0.65;
+    private static final double DRIVE_SPEED = 0.6;
     private static final double SENSE_DISTANCE = 1;
     private static final double DRIVE_ERROR_MARGIN = 1.2;
     private static final double TURN_ERROR_MARGIN = 1.15;
