@@ -117,12 +117,12 @@ public final class FujiTeleOp extends OpMode {
 
         if (gamepad1.x) {reverseInput = true;}
         if (gamepad1.y) {reverseInput = false;}
-        if (gamepad2.a){
+        if (gamepad2.dpad_up){
             rightlift.setPower(liftSpeed);
             leftlift.setPower (-liftSpeed);
         }
 
-        if (gamepad2.b){
+        if (gamepad2.dpad_down){
             rightlift.setPower(-liftSpeed);
             leftlift.setPower (liftSpeed);
         }

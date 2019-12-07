@@ -42,10 +42,10 @@ public class StoneD2 extends FujiAuto {
 
         //go to foundation
         // tile times 1.5 for foundation, you will need to change all of them
-        encoderDrive(-6,0);
-        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*0.25));
+        encoderDrive(-13,0);
+        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.5));
 
-       encoderDrive(6,0);
+       encoderDrive(10,0);
 
         // Drop stone.
         stopGrab();
@@ -58,16 +58,16 @@ public class StoneD2 extends FujiAuto {
         // go back to bridge and to stone line and to the next skystone
 //        encoderDrive(-3,0);
 //        encoderTurn(-0.01);
-        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*0.25));
+        encoderDrive(15, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.5));
 //      encoderTurn(-0.01);
-        nextStone(2.5 + currentStone);
+        nextStone(3.75 + currentStone);
 //        encoderDrive(3,0);
 
         //grab second stone
         startGrab();
 //        encoderTurn(0.25);
         //bring stone to foundation
-        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*0.25) - STONE_LENGTH_INCH);
+        encoderDrive(-5, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3.5+currentStone)) - (TILE_LENGTH*0.75) - STONE_LENGTH_INCH);
 //        encoderTurn(-0.235);
         //drop stone
         stopGrab();
@@ -76,7 +76,7 @@ public class StoneD2 extends FujiAuto {
 
         
         //park
-        encoderDrive(-1, (TILE_LENGTH*0.25) + STONE_LENGTH_INCH);
+        encoderDrive(0, (TILE_LENGTH*0.75) + STONE_LENGTH_INCH);
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
@@ -87,9 +87,9 @@ public class StoneD2 extends FujiAuto {
         //this block moves to grab stone
         hook1.setPower(1);
         hook2.setPower(1);
-        sleep(250);
+        sleep(200);
         pin.setPower(-1);
-        sleep(450);
+        sleep(500);
         pin.setPower(1);
         hook1.setPower(0);
         hook2.setPower(0);
@@ -101,8 +101,8 @@ public class StoneD2 extends FujiAuto {
         hook1.setPower(-1);
         hook2.setPower(-1);
         sleep(400);
-        hook1.setPower(0);
-        hook2.setPower(0);
+        hook1.setPower(0.05);
+        hook2.setPower(0.05);
 
     }
 
@@ -114,11 +114,12 @@ public class StoneD2 extends FujiAuto {
         sleep(400);
         hook1.setPower(0);
         hook2.setPower(0);
-        pin.setPower(-1);
+        pin.setPower(-0.6);
         sleep(450);
+        pin.setPower(0.9);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(1700);
+        sleep(750);
         hook1.setPower(0);
         hook2.setPower(0);
         pin.setPower(0);
