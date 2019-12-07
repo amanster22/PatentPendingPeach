@@ -107,7 +107,7 @@ public final class FujiTeleOp extends OpMode {
         double hookInput = gamepad2.right_stick_y;
         boolean pinCloseInput = gamepad2.right_trigger > 0;
         boolean pinOpenInput = gamepad2.right_bumper;
-
+//hi
         if (gamepad1.dpad_up){driveSpeedInput = 1;}
         if (gamepad1.dpad_down) {driveSpeedInput = 0.25;}
         if (gamepad1.dpad_left || gamepad1.dpad_right) {driveSpeedInput = 0.5;}
