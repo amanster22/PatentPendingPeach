@@ -21,7 +21,6 @@ public class StoneD2 extends FujiAuto {
         endLine(-1);
         // Drive to the middle of the first stone.
         nextStone(0.5);
-        encoderTurn(-0.01);
         // Start stone sensing.
         while (!isSkystone()) {
             currentStone++;
@@ -42,10 +41,10 @@ public class StoneD2 extends FujiAuto {
         //- (ROBOT_EDGE_INCH / 2) save for later if needed
 
         //go to foundation
-//        encoderDrive(-3,0);
+        encoderDrive(-6,0);
         encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.5));
 
-//        encoderDrive(3,0);
+       encoderDrive(6,0);
 
         // Drop stone.
         stopGrab();
@@ -87,16 +86,20 @@ public class StoneD2 extends FujiAuto {
         //this block moves to grab stone
         hook1.setPower(1);
         hook2.setPower(1);
+        sleep(250);
+        pin.setPower(-1);
+        sleep(450);
         pin.setPower(1);
-        sleep(1700);
+        hook1.setPower(0);
+        hook2.setPower(0);
+        sleep(300);
 
 
         //this block moves to pick it up and hold it
-        pin.setPower(1);
+        pin.setPower(0.3);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(1700);
-        pin.setPower(0.3);
+        sleep(400);
         hook1.setPower(0);
         hook2.setPower(0);
 
@@ -107,12 +110,14 @@ public class StoneD2 extends FujiAuto {
 
         hook1.setPower(1);
         hook2.setPower(1);
-        sleep(1000);
+        sleep(400);
+        hook1.setPower(0);
+        hook2.setPower(0);
         pin.setPower(-1);
-        sleep(500);
+        sleep(450);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(1000);
+        sleep(1700);
         hook1.setPower(0);
         hook2.setPower(0);
         pin.setPower(0);

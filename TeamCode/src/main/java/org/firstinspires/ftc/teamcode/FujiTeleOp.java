@@ -18,6 +18,7 @@ public final class FujiTeleOp extends OpMode {
     private DcMotor hin2; // arm
     private CRServo wrist; // arm
     private Servo arm; // arm
+
     private CRServo hook1; // pinch
     private CRServo hook2; // pinch
     private Servo pin; // pinch
