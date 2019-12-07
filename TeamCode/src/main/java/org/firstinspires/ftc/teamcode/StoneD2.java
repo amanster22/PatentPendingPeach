@@ -33,7 +33,7 @@ public class StoneD2 extends FujiAuto {
         }
 
         // Grab stone.
-        encoderDrive(-2.2, -1.25);
+        encoderDrive(-2.3, -1.25);
         startGrab();
 
 //        encoderTurn(0.25); save incase we need to migrate back to spinning and moving backwards
