@@ -41,8 +41,9 @@ public class StoneD2 extends FujiAuto {
         //- (ROBOT_EDGE_INCH / 2) save for later if needed
 
         //go to foundation
+        // tile times 1.5 for foundation, you will need to change all of them
         encoderDrive(-6,0);
-        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.5));
+        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*0.25));
 
        encoderDrive(6,0);
 
@@ -57,7 +58,7 @@ public class StoneD2 extends FujiAuto {
         // go back to bridge and to stone line and to the next skystone
 //        encoderDrive(-3,0);
 //        encoderTurn(-0.01);
-        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.5));
+        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*0.25));
 //      encoderTurn(-0.01);
         nextStone(2.5 + currentStone);
 //        encoderDrive(3,0);
@@ -66,7 +67,7 @@ public class StoneD2 extends FujiAuto {
         startGrab();
 //        encoderTurn(0.25);
         //bring stone to foundation
-        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*1.5) - STONE_LENGTH_INCH);
+        encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*0.25) - STONE_LENGTH_INCH);
 //        encoderTurn(-0.235);
         //drop stone
         stopGrab();
@@ -75,7 +76,7 @@ public class StoneD2 extends FujiAuto {
 
         
         //park
-        encoderDrive(-1, (TILE_LENGTH*1.5) + STONE_LENGTH_INCH);
+        encoderDrive(-1, (TILE_LENGTH*0.25) + STONE_LENGTH_INCH);
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
