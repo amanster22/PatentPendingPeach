@@ -16,8 +16,6 @@ public final class FujiTeleOp extends OpMode {
     private DcMotor lbMotor; // base
     private DcMotor hin1; // arm
     private DcMotor hin2; // arm
-    private CRServo wrist; // arm
-    private Servo arm; // arm
 
     private CRServo hook1; // pinch
     private CRServo hook2; // pinch
@@ -53,8 +51,6 @@ public final class FujiTeleOp extends OpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");
         hin2 = hardwareMap.dcMotor.get("hin2");
-        wrist = hardwareMap.crservo.get("wrist");
-        arm = hardwareMap.servo.get("arm");
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap.crservo.get("hook2");
         pin = hardwareMap.servo.get("pinch");
