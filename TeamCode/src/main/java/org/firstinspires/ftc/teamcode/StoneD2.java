@@ -114,7 +114,7 @@ public class StoneD2 extends FujiAuto {
         pin.setPower(0.7);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(500);
+        sleep(400);
         hook1.setPower(0);
         hook2.setPower(0);
         pin.setPower(0);
