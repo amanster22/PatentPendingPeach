@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="StoneD2", group="PatentPending")
 public class StoneD2 extends FujiAuto {
 
-    private static final long PINCH_WAIT = 1000;
-
     @Override
     public final void runOpMode() {
         // Initialize OpMode.
