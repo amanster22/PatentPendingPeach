@@ -150,10 +150,10 @@ public final class FujiTeleOp extends OpMode {
 
         hin1.setPower(hingeInput * hinSpeed * hinSpeedInput);
         hin2.setPower(-hingeInput * hinSpeed * hinSpeedInput);
-        wrist.setPower(hingeInput * hinSpeed * hinSpeedInput);
+       // wrist.setPower(hingeInput * hinSpeed * hinSpeedInput);
 
-        if (armCloseInput) {arm.setPosition(1);}
-        if (armOpenInput) {arm.setPosition(-1);}
+//        if (armCloseInput) {arm.setPosition(1);}
+//        if (armOpenInput) {arm.setPosition(-1);}
 
         hook1.setPower(hookInput * hookSpeed);
         hook2.setPower(hookInput * hookSpeed);
@@ -188,8 +188,8 @@ public final class FujiTeleOp extends OpMode {
         lbMotor.setPower(0);
         hin1.setPower(0);
         hin2.setPower(0);
-        wrist.setPower(0);
-        arm.setPosition(arm.getPosition());
+        //wrist.setPower(0);
+        //arm.setPosition(arm.getPosition());
         hook1.setPower(0);
         hook2.setPower(0);
         pin.setPosition(pin.getPosition());
