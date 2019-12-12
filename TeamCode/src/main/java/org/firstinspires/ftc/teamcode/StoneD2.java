@@ -54,13 +54,14 @@ public class StoneD2 extends FujiAuto {
 
         // go back to bridge and to stone line and to the next skystone
         encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.5));
-        encoderDrive(2, 0);
+        upTo(3);
         nextStone(3 + currentStone);
+        upTo(3); //make sure it is correct after moving in case of tilt
 
         //grab second stone
         startGrab();
         //bring stone to foundation
-        upTo(3);
+        encoderDrive(-5, 0)
         encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*0.75) - STONE_LENGTH_INCH);
         //drop stone
         stopGrab();
