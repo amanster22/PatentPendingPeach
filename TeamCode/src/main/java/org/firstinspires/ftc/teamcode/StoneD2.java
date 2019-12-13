@@ -39,10 +39,10 @@ public class StoneD2 extends FujiAuto {
 
         //go to foundation
         // tile times 1.5 for foundation, you will need to change all of them
-        encoderDrive(-7,0);
+        encoderDrive(-5,0);
         encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.5));
 
-       encoderDrive(5,0);
+       encoderDrive(3,0);
 
         // Drop stone.
         stopGrab();
