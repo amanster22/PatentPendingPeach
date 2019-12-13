@@ -87,7 +87,7 @@ public class StoneD2 extends FujiAuto {
         pin.setPower(1);
         hook1.setPower(0);
         hook2.setPower(0);
-        sleep(300);
+        sleep(500);
 
 
         //this block moves to pick it up and hold it
