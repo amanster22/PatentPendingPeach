@@ -179,11 +179,9 @@ public final class FujiTeleOp extends OpMode {
         lbMotor.setPower(0);
         hin1.setPower(0);
         hin2.setPower(0);
-        //wrist.setPower(0);
         //arm.setPosition(arm.getPosition());
         hook1.setPower(0);
         hook2.setPower(0);
-        pin.setPosition(pin.getPosition());
         leftlift.setPower(0);
         rightlift.setPower(0);
     }

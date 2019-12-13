@@ -32,7 +32,7 @@ abstract class FujiAuto extends LinearOpMode {
     private static final double PI = 3.1415;
     private static final double ROOT_TWO = 1.4142;
     // Declare drive measurements.
-    private static final double DRIVE_SPEED = 0.75;
+    private static final double DRIVE_SPEED = 0.70;
     private static final double SENSE_DISTANCE = 1;
     private static final double DRIVE_ERROR_MARGIN = 1.2;
     private static final double TURN_ERROR_MARGIN = 1.15;
@@ -153,28 +153,14 @@ abstract class FujiAuto extends LinearOpMode {
         lbMotor.setPower(0);
     }
 
-//    final void upTo() {
-//        // Get distance. Distance sensor goes from 5cm to 25cm, roughly 1.9in to 9.8in.
-//        double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
-//        telemetry.addData("Distance Sensor", senseD);
-//        telemetry.update();
-//        // Start motion.
-//        rfMotor.setPower(DRIVE_SPEED * (reverse ? -1 : 1));
-//        rbMotor.setPower(DRIVE_SPEED * (reverse ? -1 : 1));
-//        lfMotor.setPower(-DRIVE_SPEED * (reverse ? -1 : 1));
-//        lbMotor.setPower(-DRIVE_SPEED * (reverse ? -1 : 1));
-//        // Wait until at correct distance.
-//        while (senseD + 3 > SENSE_DISTANCE || Double.isNaN(senseD)) {
-//            senseD = sensorDistance.getDistance(DistanceUnit.INCH);
-//            telemetry.addData("Distance Sensor", senseD);
-//            telemetry.update();
-//        }
-//        // Stop motion.
-//        rfMotor.setPower(0);
-//        rbMotor.setPower(0);
-//        lfMotor.setPower(0);
-//        lbMotor.setPower(0);
-//    }
+   final void upTo(double dist) {
+       // Get distance. Distance sensor goes from 5cm to 25cm, roughly 1.9in to 9.8in.
+       double senseD = sensorDistance.getDistance(DistanceUnit.INCH);
+       telemetry.addData("Distance Sensor", senseD);
+       telemetry.update();
+       // Start motion.
+       encoderDrive(senseD-dist, 0);
+   }
 
     final boolean isSkystone() {
         // Declare BlockID and color.
