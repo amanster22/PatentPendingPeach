@@ -19,7 +19,7 @@ public final class FujiTeleOp extends OpMode {
 
     private CRServo hook1; // pinch
     private CRServo hook2; // pinch
-    private Servo pin; // pinch
+    private CRServo pin; // pinch
     private DcMotor rightlift;
     private DcMotor leftlift;
 
@@ -53,7 +53,7 @@ public final class FujiTeleOp extends OpMode {
         hin2 = hardwareMap.dcMotor.get("hin2");//moves the arm
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap.crservo.get("hook2");
-        pin = hardwareMap.servo.get("pin");
+        pin = hardwareMap.crservo.get("pinch");
         rightlift = hardwareMap.dcMotor.get("rl");//moves tower
         leftlift = hardwareMap.dcMotor.get("ll");//moves tower
         stop();
@@ -105,15 +105,29 @@ public final class FujiTeleOp extends OpMode {
         boolean pinCloseInput = gamepad2.right_trigger > 0;
         boolean pinOpenInput = gamepad2.right_bumper;
 
-        if (gamepad1.dpad_up){driveSpeedInput = 1;}
-        if (gamepad1.dpad_down) {driveSpeedInput = 0.25;}
-        if (gamepad1.dpad_left || gamepad1.dpad_right) {driveSpeedInput = 0.5;}
+        if (gamepad1.dpad_up) {
+            driveSpeedInput = 1;
+        }
+        if (gamepad1.dpad_down) {
+            driveSpeedInput = 0.25;
+        }
+        if (gamepad1.dpad_left || gamepad1.dpad_right) {
+            driveSpeedInput = 0.5;
+        }
 
-        if (gamepad2.dpad_up) {hinSpeedInput = 1;}
-        if (gamepad2.dpad_down) {hinSpeedInput = 0.5;}
+        if (gamepad2.dpad_up) {
+            hinSpeedInput = 1;
+        }
+        if (gamepad2.dpad_down) {
+            hinSpeedInput = 0.5;
+        }
 
-        if (gamepad1.x) {reverseInput = true;}
-        if (gamepad1.y) {reverseInput = false;}
+        if (gamepad1.x) {
+            reverseInput = true;
+        }
+        if (gamepad1.y) {
+            reverseInput = false;
+        }
 
         // Add telemetry data.
         telemetry.addData("Drive Speed", driveSpeedInput);
@@ -122,35 +136,37 @@ public final class FujiTeleOp extends OpMode {
 
         // Declare drive motor speeds.
         final double rfSpeed =
-                (+ forwardInput + sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
-                turnInput * turnSpeed * driveSpeedInput;
+                (+forwardInput + sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                        turnInput * turnSpeed * driveSpeedInput;
         final double rbSpeed =
-                (+ forwardInput - sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
-                turnInput * turnSpeed * driveSpeedInput;
+                (+forwardInput - sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                        turnInput * turnSpeed * driveSpeedInput;
         final double lfSpeed =
-                (- forwardInput + sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
-                turnInput * turnSpeed * driveSpeedInput;
+                (-forwardInput + sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                        turnInput * turnSpeed * driveSpeedInput;
         final double lbSpeed =
-                (- forwardInput - sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
-                turnInput * turnSpeed * driveSpeedInput;
+                (-forwardInput - sidewaysInput) * (reverseInput ? -1 : 1) * driveSpeed * driveSpeedInput +
+                        turnInput * turnSpeed * driveSpeedInput;
 
         // Set attachment motor speeds.
 
         hin1.setPower(hingeInput * hinSpeed * hinSpeedInput);
-        hin2.setPower(-hingeInput * hinSpeed * hinSpeedInput);
-       // wrist.setPower(hingeInput * hinSpeed * hinSpeedInput);
+        hin2.setPower(hingeInput * hinSpeed * hinSpeedInput);
+        // wrist.setPower(hingeInput * hinSpeed * hinSpeedInput);
 
 //        if (armCloseInput) {arm.setPosition(1);}
 //        if (armOpenInput) {arm.setPosition(-1);}
 
         rightlift.setPower(-liftSpeed * liftInput);
-        leftlift.setPower (liftSpeed * liftInput);
+        leftlift.setPower(liftSpeed * liftInput);
 
         hook1.setPower(hookInput * hookSpeed);
         hook2.setPower(hookInput * hookSpeed);
 
-        if (pinCloseInput) {pin.setPosition(1);}
-        if (pinOpenInput) {pin.setPosition(-1);}
+        if (pinCloseInput) {pin.setPower(-1);
+        } else if (pinOpenInput) {pin.setPower(1);
+        } else {pin.setPower(0);}
+
 
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed, 1), -1));
@@ -184,5 +200,6 @@ public final class FujiTeleOp extends OpMode {
         hook2.setPower(0);
         leftlift.setPower(0);
         rightlift.setPower(0);
+        pin.setPower(0);
     }
 }

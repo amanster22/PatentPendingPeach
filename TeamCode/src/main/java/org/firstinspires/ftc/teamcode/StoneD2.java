@@ -39,10 +39,10 @@ public class StoneD2 extends FujiAuto {
 
         //go to foundation
         // tile times 1.5 for foundation, you will need to change all of them
-        encoderDrive(-5,0);
-        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.5));
+        encoderDrive(-7,0);
+        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.75));
 
-       encoderDrive(3,0);
+       encoderDrive(6,0);
 
         // Drop stone.
         stopGrab();
@@ -53,15 +53,14 @@ public class StoneD2 extends FujiAuto {
 
 
         // go back to bridge and to stone line and to the next skystone
-        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.5));
-        upTo(3);
+        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.75));
         nextStone(3 + currentStone);
-        upTo(3); //make sure it is correct after moving in case of tilt
+        upTo(5.5); //make sure it is correct after moving in case of tilt
 
         //grab second stone
         startGrab();
         //bring stone to foundation
-        encoderDrive(-5, 0)
+        encoderDrive(-6, 0);
         encoderDrive(0, -STONE_BRIDGE_DISTANCE_INCH - (STONE_LENGTH_INCH * (3+currentStone)) - (TILE_LENGTH*0.75) - STONE_LENGTH_INCH);
         //drop stone
         stopGrab();
@@ -94,7 +93,7 @@ public class StoneD2 extends FujiAuto {
         pin.setPower(0.3);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(300);
+        sleep(400);
         hook1.setPower(-0.1);
         hook2.setPower(-0.1);
 
