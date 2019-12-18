@@ -69,7 +69,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            "AfIg72b/////AAABmbgDBWvRcUvHqKNBuomofGtMqN5uaMDRcJL0KVjYweqzwaPWeSEmX9Zu2rXvDQ975QDYs6ofxGz+uEIVl0JDMl+7LLlVuFs9BixIxxKHiWFYC/ZCeQAwfxvETg+0FDiuCalGTEYDi0U5elH9eFUkHeYIj40aLS/8sb6P27TOqkYnlRS70LJILjz/jSuzy+hP63evGwyoIsHtkIp9Fl7SHaTH8zrMu1EXmTyF4nVHuZB4+bxG6AZ+jpbp8i54N2UESIvAcyrbl/JgDjavPkCeVzDzrXHzaKfmg80l9EiCjEG9XmbZEa134BZebPUFbniyCXWlmAe2Q7fJJqm/9Y8CLsm4BAStgkeJPCm5QbyxjYzz";
+            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
