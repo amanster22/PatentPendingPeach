@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 @Autonomous(name="Drive Avoid Imu", group="Exercises")
 //@Disabled
-public class DriveAvoidImu extends LinearOpMode
+public class IMUtest extends LinearOpMode
 {
     BNO055IMU               imu;
     Orientation             lastAngles = new Orientation();
@@ -135,7 +135,6 @@ public class DriveAvoidImu extends LinearOpMode
 
         return correction;
     }
-
     /**
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
      * @param degrees Degrees to turn, + is left - is right

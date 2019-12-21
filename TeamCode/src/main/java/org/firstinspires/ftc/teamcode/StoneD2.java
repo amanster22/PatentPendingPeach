@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="StoneD2", group="PatentPending")
+@Autonomous(name="StoneD2Blue", group="PatentPending")
 public class StoneD2 extends FujiAuto {
 
     @Override
-    public final void runOpMode() {
+    public void runOpMode() {
         // Initialize OpMode.
         int currentStone = 0;
         initMotors();
@@ -17,10 +17,13 @@ public class StoneD2 extends FujiAuto {
         prepSense(BRIDGE_WALL_DISTANCE_INCH);
         // Drive sideways until the robot reaches the end of the stone line.
         endLine(-1);
+        if (getReverse()) {encoderDrive(0,  5);}
         // Drive to the middle of the first stone.
         nextStone(0.5);
         // Start stone sensing.
+//        encoderTurn(-0.02 * (getReverse() ? -1 : 1));
         while (!isSkystone()) {
+            upTo(2);
             currentStone++;
             if (currentStone >= SKYSTONE_DISTANCE_STONES) {
                 nextStone(-SKYSTONE_DISTANCE_STONES + 1);
@@ -32,7 +35,7 @@ public class StoneD2 extends FujiAuto {
 
         // Grab stone.
         encoderDrive(-2.2, 0);
-        encoderDrive(0,-2.5);
+        encoderDrive(0,-2.5 * (getReverse() ? -1 : 1));
         startGrab();
 
         //- (ROBOT_EDGE_INCH / 2) save for later if needed
@@ -40,7 +43,7 @@ public class StoneD2 extends FujiAuto {
         //go to foundation
         // tile times 1.5 for foundation, you will need to change all of them
         encoderDrive(-7,0);
-        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*1.75));
+        encoderDrive(0,-STONE_BRIDGE_DISTANCE_INCH - (currentStone * STONE_LENGTH_INCH) - (TILE_LENGTH*0.75));
 
        encoderDrive(6,0);
 
@@ -53,9 +56,9 @@ public class StoneD2 extends FujiAuto {
 
 
         // go back to bridge and to stone line and to the next skystone
-        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*1.75));
+        encoderDrive(0, STONE_BRIDGE_DISTANCE_INCH + (TILE_LENGTH*0.75));
         nextStone(3 + currentStone);
-        upTo(5.5); //make sure it is correct after moving in case of tilt
+        upTo(2.5); //make sure it is correct after moving in case of tilt
 
         //grab second stone
         startGrab();
@@ -67,9 +70,9 @@ public class StoneD2 extends FujiAuto {
 
 
 
-        
+        //change tile multiplier based on where you, if you are done with second, put it to 0.75, if done with first, put to 1.75
         //park
-        encoderDrive(0, (TILE_LENGTH*0.75) + STONE_LENGTH_INCH);
+        encoderDrive(0, (TILE_LENGTH*0.70) + STONE_LENGTH_INCH);
 
         telemetry.addData("Path", "complete.");
         telemetry.update();
@@ -80,7 +83,7 @@ public class StoneD2 extends FujiAuto {
         //this block moves to grab stone
         hook1.setPower(1);
         hook2.setPower(1);
-        sleep(200);
+        sleep(600);
         pin.setPower(-1);
         sleep(500);
         pin.setPower(1);
@@ -109,10 +112,10 @@ public class StoneD2 extends FujiAuto {
         hook2.setPower(0);
         pin.setPower(-0.6);
         sleep(450);
-        pin.setPower(0.7);
+        pin.setPower(1);
         hook1.setPower(-1);
         hook2.setPower(-1);
-        sleep(400);
+        sleep(650);
         hook1.setPower(0);
         hook2.setPower(0);
         pin.setPower(0);

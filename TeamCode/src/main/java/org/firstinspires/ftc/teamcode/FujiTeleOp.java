@@ -16,7 +16,7 @@ public final class FujiTeleOp extends OpMode {
     private DcMotor lbMotor; // base
     private DcMotor hin1; // arm
     private DcMotor hin2; // arm
-
+    private CRServo arm;
     private CRServo hook1; // pinch
     private CRServo hook2; // pinch
     private CRServo pin; // pinch
@@ -29,9 +29,10 @@ public final class FujiTeleOp extends OpMode {
     private boolean reverseInput = false;
     private static final double driveSpeed = -1;
     private static final double turnSpeed = -0.5;
-    private static final double hinSpeed = 0.5;
+    private static final double hinSpeed = 0.25;
     private static final double hookSpeed = 0.5;
     private static final double liftSpeed = 0.5;
+    boolean hold = false;
 
     /*
     private int soundID = 0;
@@ -51,6 +52,7 @@ public final class FujiTeleOp extends OpMode {
         lbMotor = hardwareMap.dcMotor.get("lb");
         hin1 = hardwareMap.dcMotor.get("hin1");//moves the arm
         hin2 = hardwareMap.dcMotor.get("hin2");//moves the arm
+        arm = hardwareMap.crservo.get("arm");
         hook1 = hardwareMap.crservo.get("hook1");
         hook2 = hardwareMap.crservo.get("hook2");
         pin = hardwareMap.crservo.get("pinch");
@@ -98,12 +100,12 @@ public final class FujiTeleOp extends OpMode {
         double sidewaysInput = gamepad1.left_stick_x;
         double turnInput = gamepad1.right_stick_x;
         double hingeInput = gamepad2.left_stick_y;
-        boolean armCloseInput = gamepad2.left_trigger > 0;
-        boolean armOpenInput = gamepad2.left_bumper;
+        boolean armCloseInput = gamepad2.left_bumper;
+        boolean armOpenInput = gamepad2.right_bumper;
         int liftInput = (gamepad2.dpad_up ? 1 : 0) + (gamepad2.dpad_down ? -1 : 0);
         double hookInput = gamepad2.right_stick_y;
         boolean pinCloseInput = gamepad2.right_trigger > 0;
-        boolean pinOpenInput = gamepad2.right_bumper;
+        boolean pinOpenInput = gamepad2.left_trigger > 0;
 
         if (gamepad1.dpad_up) {
             driveSpeedInput = 1;
@@ -116,10 +118,10 @@ public final class FujiTeleOp extends OpMode {
         }
 
         if (gamepad2.dpad_up) {
-            hinSpeedInput = 1;
+            hinSpeedInput = 0.5;
         }
         if (gamepad2.dpad_down) {
-            hinSpeedInput = 0.5;
+            hinSpeedInput = 0.125;
         }
 
         if (gamepad1.x) {
@@ -127,6 +129,12 @@ public final class FujiTeleOp extends OpMode {
         }
         if (gamepad1.y) {
             reverseInput = false;
+        }
+
+        if (gamepad2.a) {
+            hold = true;}
+        if (gamepad2.b) {
+            hold = false;
         }
 
         // Add telemetry data.
@@ -167,6 +175,17 @@ public final class FujiTeleOp extends OpMode {
         } else if (pinOpenInput) {pin.setPower(1);
         } else {pin.setPower(0);}
 
+        if (hold){
+            arm.setPower(-1);
+        } else {
+            if (armCloseInput) {
+                arm.setPower(-1);
+            } else if (armOpenInput) {
+                arm.setPower(1);
+            } else {
+                arm.setPower(0);
+            }
+        }
 
         // Set drive motor speeds.
         rfMotor.setPower(Math.max(Math.min(rfSpeed, 1), -1));
@@ -195,7 +214,7 @@ public final class FujiTeleOp extends OpMode {
         lbMotor.setPower(0);
         hin1.setPower(0);
         hin2.setPower(0);
-        //arm.setPosition(arm.getPosition());
+        arm.setPower(0);
         hook1.setPower(0);
         hook2.setPower(0);
         leftlift.setPower(0);
