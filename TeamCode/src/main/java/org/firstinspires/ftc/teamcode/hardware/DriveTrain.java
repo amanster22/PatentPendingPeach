@@ -47,7 +47,17 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
-			this.sum = this.hori.value + this.vert.value + this.turn.value;
+			this.sum = 0;
+			// this makes a sum that gives a proper divisor for the speeds method and
+			if (hori.value > 0) {
+				this.sum += 1;
+			}
+			if (vert.value > 0) {
+				this.sum += 1;
+			}
+			if (turn.value > 0) {
+				this.sum += 1;
+			}
 			if (this.sum == 0) {
 				this.sum = 3;
 			}
