@@ -60,6 +60,16 @@ public final class Fuji {
         this.drive(0,0,0);
 
     }
+
+    public void GryoTurnTo(double orientation, boolean right){
+        double current = this.gyro.measure().value; // value bewteen 0 and 1 around the circle
+        double tolerance = 0.02; // 8 degress tolerance (move somewhere else later)
+        if (right) {
+            //fill in later
+        } else {
+            //fill in later
+        }
+    }
     /*
     Rest of this class is for high level robot functions, no logic.
     Put logic in Teleop and autonomous
