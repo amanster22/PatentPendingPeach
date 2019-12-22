@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.general.ServoM;
 import org.firstinspires.ftc.teamcode.hardware.type.Device;
+import org.firstinspires.ftc.teamcode.hardware.type.Input;
 
 public final class Fuji {
     final private HardwareMap hardwaremap;
@@ -43,6 +44,21 @@ public final class Fuji {
                 new Device.Range(forward), // forwards
                 new Device.Range(turn) // turn
         ).speeds());
+    }
+    //used to go upto something with the distance sensor, or until it senses nothing in front if far is true
+    public void Upto(double distance, double side, double forward, double turn, boolean Far) {
+        this.drive(side, forward, turn);
+        if (Far) {
+            while (sensorDistance.measure() < distance) {
+                //telemetry logging or something
+            }
+        } else {
+            while (sensorDistance.measure() > distance) {
+                //telemetry logging or something
+            }
+        }
+        this.drive(0,0,0);
+
     }
     /*
     Rest of this class is for high level robot functions, no logic.
