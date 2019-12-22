@@ -40,21 +40,23 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		public Device.Range hori;
 		public Device.Range vert;
 		public Device.Range turn;
+		public double sum;
 
 		// initialize speeds
 		public Vector(Device.Range hori, Device.Range vert, Device.Range turn) {
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
+			this.sum = this.hori.value + this.vert.value + this.turn.value;
 		}
 
 		// get wheel speeds
 		public Square<Device.Range> speeds() {
 			return new Square<Device.Range>(
-				new Device.Range((- hori.value - vert.value - turn.value) / 3),
-				new Device.Range((+ hori.value - vert.value - turn.value) / 3),
-				new Device.Range((- hori.value + vert.value - turn.value) / 3),
-				new Device.Range((+ hori.value + vert.value - turn.value) / 3));
+				new Device.Range((- hori.value - vert.value - turn.value) / this.sum),
+				new Device.Range((+ hori.value - vert.value - turn.value) / this.sum),
+				new Device.Range((- hori.value + vert.value - turn.value) / this.sum),
+				new Device.Range((+ hori.value + vert.value - turn.value) / this.sum));
 		}
 	}
 
