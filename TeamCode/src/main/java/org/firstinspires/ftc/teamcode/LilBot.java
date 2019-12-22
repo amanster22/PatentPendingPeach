@@ -28,9 +28,9 @@ public final class LilBot extends OpMode {
     @Override
     public final void loop() {
         robot.start(new DriveTrain.Vector(
-                new Device.Range(gamepad1.left_stick_x),
-                new Device.Range(gamepad1.left_stick_y),
-                new Device.Range(gamepad1.right_stick_x)
+                new Device.Range(gamepad1.left_stick_x), // sideways
+                new Device.Range(gamepad1.left_stick_y), // forwards
+                new Device.Range(gamepad1.right_stick_x) // turn
         ).speeds());
     }
 

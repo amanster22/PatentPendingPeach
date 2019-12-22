@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 @Autonomous(name="Drive Avoid Imu", group="Exercises")
-//@Disabled
 public class IMUtest extends LinearOpMode
 {
     BNO055IMU               imu;
