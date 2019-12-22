@@ -48,6 +48,9 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 			this.vert = vert;
 			this.turn = turn;
 			this.sum = this.hori.value + this.vert.value + this.turn.value;
+			if (this.sum == 0) {
+				this.sum = 3;
+			}
 		}
 
 		// get wheel speeds
