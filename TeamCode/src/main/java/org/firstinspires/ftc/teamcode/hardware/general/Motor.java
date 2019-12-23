@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware.general;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.hardware.type.Device;
@@ -21,6 +22,11 @@ public class Motor extends Device<DcMotor> implements Input<Double>, Output<Devi
 		this.tpr = tpr;
 		this.gr = gr;
 		c = d * Math.PI;
+		if (this.device instanceof DcMotorEx) {
+			this.device = DcMotorEx.class.cast(this.device);
+		} else {
+			throw new IllegalArgumentException("cant cast dcmotor to DcMotorEx, cant use target pos. tol. sorry");
+		}
 	}
 
 	// initialize motor with default diameter
@@ -31,6 +37,10 @@ public class Motor extends Device<DcMotor> implements Input<Double>, Output<Devi
 
 	// sense position
 	@Override public Double measure() {return (device.getCurrentPosition() / tpr) * gr * c;}
+
+	public void setAutoPosition(int target) {device.setTargetPosition(target);}
+
+	public void mode(DcMotor.RunMode mode) {device.setMode(mode);}
 
 	// start motion
 	@Override public void start(Device.Range motion) {device.setPower(motion.value);}

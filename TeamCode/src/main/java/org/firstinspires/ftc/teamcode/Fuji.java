@@ -45,6 +45,7 @@ public final class Fuji {
                 new Device.Range(turn) // turn
         ).speeds());
     }
+
     //used to go upto something with the distance sensor, or until it senses nothing in front if far is true
     public void Upto(double distance, double side, double forward, double turn, boolean Far) {
         this.drive(side, forward, turn);
@@ -60,7 +61,7 @@ public final class Fuji {
         this.drive(0,0,0);
 
     }
-
+    //used to turn accurately
     public void GryoTurnTo(double orientation, boolean right){
         double current = this.gyro.measure().value; // value bewteen 0 and 1 around the circle
         double tolerance = 0.02; // 8 degress tolerance (move somewhere else later)
@@ -69,6 +70,11 @@ public final class Fuji {
         } else {
             //fill in later
         }
+    }
+
+    //used to move and turn robot using encoders, may not be the most accurate so consistent testing is necessary
+    public void EncoderMove(double forward, double side, double turn) {
+
     }
     /*
     Rest of this class is for high level robot functions, no logic.
