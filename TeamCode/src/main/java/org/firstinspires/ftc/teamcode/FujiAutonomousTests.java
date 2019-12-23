@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+@Autonomous(name="FujiTests", group="PatentPending")
 public class FujiAutonomousTests extends FujiAutonomous {
     //class that run autonomous tests for movement, turning, and sensors
     public void runOpMode() {
