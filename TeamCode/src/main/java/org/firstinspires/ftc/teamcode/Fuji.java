@@ -98,8 +98,8 @@ public final class Fuji {
         // calculate error in -179 to +180 range
         // value bewteen 0 and 1 around the circle
         robotError = targetAngle - current;
-        while (robotError > 0.5)  robotError -= 1;
-        while (robotError <= -0.5) robotError += 1;
+        if (robotError > 0.5) robotError -= 1;
+        if (robotError <= -0.5) robotError += 1;
         return robotError;
     }
     /*
