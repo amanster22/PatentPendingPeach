@@ -6,10 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="FujiTele", group="Patentpending")
 public final class FujiTele extends OpMode {
     private Fuji robot;
+
     @Override
     public final void init() {
         robot = new Fuji(hardwareMap);
     }
+
     @Override
     public final void loop() {
         double forward = gamepad1.left_stick_y;
@@ -23,8 +25,10 @@ public final class FujiTele extends OpMode {
         }
         robot.drive(side, forward, turn);
     }
+
     @Override
     public final void start() {}
+
     @Override
     public final void stop() {
         robot.drive(0,0,0);

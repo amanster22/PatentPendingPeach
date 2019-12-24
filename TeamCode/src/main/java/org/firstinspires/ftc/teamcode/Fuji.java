@@ -47,34 +47,60 @@ public final class Fuji {
     }
 
     //used to go upto something with the distance sensor, or until it senses nothing in front if far is true
-    public void Upto(double distance, double side, double forward, double turn, boolean Far) {
-        this.drive(side, forward, turn);
+    //gyro stabilize in the while loop
+    public void Upto(double distance, double orientation, double side, double forward, boolean Far) {
+        this.drive(side, forward, 0);
         if (Far) {
             while (sensorDistance.measure() < distance) {
                 //telemetry logging or something
+                double tolerance = 0.02;
+                double error = this.getError(orientation);
+                if  (Math.abs(error) > tolerance) {
+                    error = this.getError(orientation);
+                    double speed = error * 2; //error will be between -0.5 and 0.5, so this scales that to motor powers
+                    this.drive(side, forward, -speed);
+                }
             }
         } else {
             while (sensorDistance.measure() > distance) {
-                //telemetry logging or something
+                double tolerance = 0.02;
+                double error = this.getError(orientation);
+                if  (Math.abs(error) > tolerance) {
+                    error = this.getError(orientation);
+                    double speed = error * 2; //error will be between -0.5 and 0.5, so this scales that to motor powers
+                    this.drive(side, forward, -speed);
+                }
             }
         }
         this.drive(0,0,0);
 
     }
-    //used to turn accurately
-    public void GryoTurnTo(double orientation, boolean right){
-        double current = this.gyro.measure().value; // value bewteen 0 and 1 around the circle
+    //used to turn accurately with gyro
+    public void GryoTurnTo(double orientation){
         double tolerance = 0.02; // 8 degress tolerance (move somewhere else later)
-        if (right) {
-            //fill in later
-        } else {
-            //fill in later
+        double error = this.getError(orientation);
+        while (Math.abs(error) > tolerance) {
+            error = this.getError(orientation);
+            double speed = error * 2; //error will be between -0.5 and 0.5, so this scales that to motor powers
+            this.drive(0, 0, -speed);
         }
     }
 
     //used to move and turn robot using encoders, may not be the most accurate so consistent testing is necessary
     public void EncoderMove(double forward, double side, double turn) {
 
+    }
+
+    public double getError(double targetAngle) {
+
+        double robotError;
+        double current = gyro.measure().value;
+        // calculate error in -179 to +180 range
+        // value bewteen 0 and 1 around the circle
+        robotError = targetAngle - current;
+        while (robotError > 0.5)  robotError -= 1;
+        while (robotError <= -0.5) robotError += 1;
+        return robotError;
     }
     /*
     Rest of this class is for high level robot functions, no logic.
