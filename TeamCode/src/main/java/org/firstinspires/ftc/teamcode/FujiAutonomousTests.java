@@ -19,13 +19,15 @@ public class FujiAutonomousTests extends FujiAutonomous {
         this.robot.EncoderMove(10, 0, 0);
         this.robot.EncoderMove(-10, 10, 0);
 
-        //test stationary turning
-        this.robot.EncoderMove(0, 0, 0.25);
-        this.robot.EncoderMove(0, 0, -0.25);
-        this.robot.EncoderMove(0, 0, 0.5);
-        this.robot.EncoderMove(0, 0, -0.5);
-        this.robot.EncoderMove(0, 0, 0.75);
-        this.robot.EncoderMove(0, 0, -0.75);
-
+        //test stationary turning with gyro
+        this.robot.GryoTurnTo(0.5);
+        this.robot.GryoTurnTo(0.25);
+        this.robot.GryoTurnTo(0.5);
+        this.robot.GryoTurnTo(0);
+        this.robot.GryoTurnTo(0.5);
+        this.robot.GryoTurnTo(0.75);
+        this.robot.GryoTurnTo(0.5);
+        this.robot.GryoTurnTo(1);
+        this.robot.GryoTurnTo(0.5);
     }
 }

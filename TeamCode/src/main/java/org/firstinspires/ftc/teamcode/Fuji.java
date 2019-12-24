@@ -22,6 +22,7 @@ public final class Fuji {
     final public Motor spin2;
     final public Color sensorColor;
     final public Distance sensorDistance;
+    final double tolerance = 0.02; // 8 degress tolerance
 
     //this is the constructor, pass in a hardware map to create a fuji robot instance
     public Fuji(HardwareMap map) {
@@ -53,7 +54,6 @@ public final class Fuji {
         if (Far) {
             while (sensorDistance.measure() < distance) {
                 //telemetry logging or something
-                double tolerance = 0.02;
                 double error = this.getError(orientation);
                 if  (Math.abs(error) > tolerance) {
                     error = this.getError(orientation);
@@ -63,11 +63,12 @@ public final class Fuji {
             }
         } else {
             while (sensorDistance.measure() > distance) {
-                double tolerance = 0.02;
                 double error = this.getError(orientation);
                 if  (Math.abs(error) > tolerance) {
                     error = this.getError(orientation);
                     double speed = error * 2; //error will be between -0.5 and 0.5, so this scales that to motor powers
+                    // by keeping the speed proportional to the error, the robot will be less likely
+                    // to over-correct
                     this.drive(side, forward, -speed);
                 }
             }
@@ -77,7 +78,6 @@ public final class Fuji {
     }
     //used to turn accurately with gyro
     public void GryoTurnTo(double orientation){
-        double tolerance = 0.02; // 8 degress tolerance (move somewhere else later)
         double error = this.getError(orientation);
         while (Math.abs(error) > tolerance) {
             error = this.getError(orientation);
