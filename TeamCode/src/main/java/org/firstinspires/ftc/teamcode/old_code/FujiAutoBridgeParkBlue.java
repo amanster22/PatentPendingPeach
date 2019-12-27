@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.old_code;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="FujiAutoBridgeParkBlue", group="PatentPending")
+@Disabled
 public class FujiAutoBridgeParkBlue extends FujiAuto {
 
     @Override

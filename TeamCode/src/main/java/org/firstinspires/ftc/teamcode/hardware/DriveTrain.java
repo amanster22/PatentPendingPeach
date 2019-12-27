@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.type.Device;
 import org.firstinspires.ftc.teamcode.hardware.type.Input;
@@ -33,43 +35,52 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		lb.start(motion.lb);
 	}
 
+	public void setTarget(Square<Double> inches) {
+		rf.setTarget(inches.rf);
+		rb.setTarget(inches.rb);
+		lf.setTarget(inches.lf);
+		lb.setTarget(inches.lb);
+	}
+
+	public void setMode(DcMotor.RunMode mode) {
+		rf.setMode(mode);
+		rb.setMode(mode);
+		lf.setMode(mode);
+		lb.setMode(mode);
+	}
+
 	// vector for x, y, and turn
-	public static class Vector {
+	public static class Vector<T extends Device.DevDouble> {
 
 		// directional speeds
-		public Device.Range hori;
-		public Device.Range vert;
-		public Device.Range turn;
-		public double sum;
+		public T hori;
+		public T vert;
+		public T turn;
 
 		// initialize speeds
-		public Vector(Device.Range hori, Device.Range vert, Device.Range turn) {
+		public Vector(T hori, T vert, T turn) {
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
-			this.sum = 0;
-			// this makes a sum that gives a proper divisor for the speeds method and
-			if (Math.abs(hori.value) > 0) {
-				this.sum += 1;
-			}
-			if (Math.abs(vert.value) > 0) {
-				this.sum += 1;
-			}
-			if (Math.abs(turn.value) > 0) {
-				this.sum += 1;
-			}
-			if (this.sum == 0) {
-				this.sum = 3;
-			}
 		}
 
 		// get wheel speeds
-		public Square<Device.Range> speeds() {
+		public Square<Device.Range> speeds(double) {
 			return new Square<Device.Range>(
-				new Device.Range((- hori.value - vert.value - turn.value) / this.sum),
-				new Device.Range((+ hori.value - vert.value - turn.value) / this.sum),
-				new Device.Range((- hori.value + vert.value - turn.value) / this.sum),
-				new Device.Range((+ hori.value + vert.value - turn.value) / this.sum));
+				new Device.Range((- hori.value - vert.value - turn.value) / sum),
+				new Device.Range((+ hori.value - vert.value - turn.value) / sum),
+				new Device.Range((- hori.value + vert.value - turn.value) / sum),
+				new Device.Range((+ hori.value + vert.value - turn.value) / sum));
+		}
+	}
+
+	public static class Speeds extends Vector<Device.Range> {
+
+		public Speeds(Device.Range hori, Device.Range vert, Device.Range turn) {
+			sum = 0;
+			if (hori.value != 0 || vert.value != 0) {sum += 2;}
+			if (turn.value != 0) {sum += 1;}
+			if (sum == 0) {sum = 3;}
 		}
 	}
 

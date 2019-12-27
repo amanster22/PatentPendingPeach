@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.type.Input;
 import org.firstinspires.ftc.teamcode.hardware.type.Output;
 
 // rev motor
-public class Motor extends Device<DcMotor> implements Input<Double>, Output<Device.Range> {
+public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Device.Range> {
 
 	// motor information
 	private final double tpr;
@@ -18,15 +18,10 @@ public class Motor extends Device<DcMotor> implements Input<Double>, Output<Devi
 
 	// initialize motor
 	public Motor(String name, double tpr, double gr, double d, HardwareMap map) {
-		super(map.dcMotor.get(name));
+		super((DcMotorEx)map.dcMotor.get(name));
 		this.tpr = tpr;
 		this.gr = gr;
 		c = d * Math.PI;
-		if (this.device instanceof DcMotorEx) {
-			this.device = DcMotorEx.class.cast(this.device);
-		} else {
-			throw new IllegalArgumentException("cant cast dcmotor to DcMotorEx, cant use target pos. tol. sorry");
-		}
 	}
 
 	// initialize motor with default diameter
@@ -38,10 +33,10 @@ public class Motor extends Device<DcMotor> implements Input<Double>, Output<Devi
 	// sense position
 	@Override public Double measure() {return (device.getCurrentPosition() / tpr) * gr * c;}
 
-	public void setAutoPosition(int target) {device.setTargetPosition(target);}
-
-	public void mode(DcMotor.RunMode mode) {device.setMode(mode);}
-
 	// start motion
 	@Override public void start(Device.Range motion) {device.setPower(motion.value);}
+
+	public void setTarget(double inches) {device.setTargetPosition((int)((inches * tpr) / (gr * c)));}
+
+	public void setMode(DcMotor.RunMode mode) {device.setMode(mode);}
 }

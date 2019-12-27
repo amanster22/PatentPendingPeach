@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.old_code;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+@Disabled
 abstract class FujiAutoFoundation extends FujiAuto {
 
     private static final long HOOK_WAIT = 2000;

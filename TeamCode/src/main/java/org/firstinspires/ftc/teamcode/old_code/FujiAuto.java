@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.old_code;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Disabled
 abstract class FujiAuto extends LinearOpMode {
 
     // Declare timer.

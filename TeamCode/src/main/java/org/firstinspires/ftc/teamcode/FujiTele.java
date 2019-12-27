@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="FujiTele", group="Patentpending")
+import org.firstinspires.ftc.teamcode.hardware.Fuji;
+
+@TeleOp(name="FujiTele", group="PatentPending")
 public final class FujiTele extends OpMode {
     private Fuji robot;
 
     @Override
     public final void init() {
-        robot = new Fuji(hardwareMap);
+        robot = new Fuji(hardwareMap, telemetry);
     }
 
     @Override
