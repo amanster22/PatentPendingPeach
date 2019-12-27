@@ -17,8 +17,8 @@ public final class Fuji {
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
     public final DriveTrain driveTrain;
-//    public final Motor spin1;
-//    public final Motor spin2;
+    public final Motor spin1;
+    public final Motor spin2;
     public final Gyro gyro;
     public final Color color;
     public final Distance distance;
@@ -37,8 +37,8 @@ public final class Fuji {
         Motor lf = new Motor("lf", 1440, 1, 3, hardwareMap);
         Motor lb = new Motor("lb", 1440, 1, 3, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
-//        spin1 = new Motor("spin1", 1440, hardwareMap);
-//        spin2 = new Motor("spin2", 1440, hardwareMap);
+        spin1 = new Motor("spin1", 1440, hardwareMap);
+        spin2 = new Motor("spin2", 1440, hardwareMap);
         gyro = new Gyro("imu", hardwareMap);
         color = new Color("color", hardwareMap);
         distance = new Distance("distance", hardwareMap);
@@ -122,6 +122,36 @@ public final class Fuji {
         if (robotError > 0.5) robotError -= 1;
         if (robotError <= -0.5) robotError += 1;
         return robotError;
+    }
+
+    public void SpinInward() {
+        spin1.start(new Device.Range(1));
+        spin2.start(new Device.Range(-1));
+    }
+
+    public void SpinOutward() {
+        spin1.start(new Device.Range(-1));
+        spin2.start(new Device.Range(1));
+    }
+
+    public void SpinOff() {
+        spin1.start(new Device.Range(0));
+        spin2.start(new Device.Range(0));
+    }
+
+    public boolean testSkystone() {
+        boolean blockID;
+        // Get HSV value.
+        telemetry.addData("Color Sensor", "sensing block.");
+        Color.HSV sight = color.measure();
+
+        telemetry.addData("Hue", sight.h);
+        // Check which stone is sensed.
+        blockID = sight.h.value <= 60;
+        telemetry.addData("Block ID", blockID);
+        // Return sensed stone.
+        telemetry.update();
+        return blockID;
     }
     /*
     Rest of this class is for high level robot functions, no logic.
