@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
+@Autonomous(name = "FujiFoundation", group = "PatentPending")
 public class FujiAutonomousFoundation extends FujiAutonomous {
     @Override
     public final void runOpMode() {

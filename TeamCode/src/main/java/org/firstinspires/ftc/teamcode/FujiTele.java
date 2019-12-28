@@ -21,12 +21,15 @@ public final class FujiTele extends OpMode {
         double forward = gamepad1.left_stick_y;
         double side = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
+
         if (Math.abs(forward) < 0.1) {
             forward = 0;
         }
+
         if (Math.abs(side) < 0.1) {
             side = 0;
         }
+
         robot.drive(side, forward, turn);
     }
 
