@@ -20,22 +20,27 @@ public class Color extends Device<ColorSensor> implements Input<Color.HSV> {
 			255 * device.green(),
 			255 * device.blue(),
 		hsv);
-		return new HSV(new Percent((double)hsv[0] / 360), new Percent((double)hsv[1]), new Percent((double)hsv[2]));
+		return new HSV((double)hsv[0] / 360, (double)hsv[1], (double)hsv[2]);
 	}
 
 	// color value stored in hsv
 	public static class HSV {
 
 		// hsv values
-		public Percent h;
-		public Percent s;
-		public Percent v;
+		private final double h;
+		private final double s;
+		private final double v;
 
 		// initialize color
-		public HSV(Percent h, Percent s, Percent v) {
-			this.h = h;
-			this.s = s;
-			this.v = v;
+		public HSV(double h, double s, double v) {
+			this.h = checkRange(h, 0, 1);
+			this.s = checkRange(s, 0, 1);
+			this.v = checkRange(v, 0, 1);
 		}
+
+		// get values
+		public final double h() {return h;}
+		public final double s() {return s;}
+		public final double v() {return v;}
 	}
 }

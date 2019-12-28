@@ -8,14 +8,14 @@ import org.firstinspires.ftc.teamcode.hardware.type.Input;
 import org.firstinspires.ftc.teamcode.hardware.type.Output;
 
 // rev servo
-public class ServoM extends Device<Servo> implements Input<Device.Percent>, Output<Device.Percent> {
+public class ServoM extends Device<Servo> implements Input<Double>, Output<Double> {
 
 	// initialize servo
 	public ServoM(String name, HardwareMap map) {super(map.servo.get(name));}
 
 	// sense position
-	@Override public Device.Percent measure() {return new Percent(device.getPosition());}
+	@Override public Double measure() {return device.getPosition();}
 
 	// start motion
-	@Override public void start(Device.Percent motion) {device.setPosition(motion.value);}
+	@Override public void start(Double motion) {device.setPosition(checkRange(motion, 0, 1));}
 }

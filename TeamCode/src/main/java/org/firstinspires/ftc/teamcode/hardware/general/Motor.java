@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.type.Input;
 import org.firstinspires.ftc.teamcode.hardware.type.Output;
 
 // rev motor
-public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Device.Range> {
+public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Double> {
 
 	// motor information
 	private final double tpr;
@@ -19,8 +19,7 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<De
 	// initialize motor
 	public Motor(String name, double tpr, double gr, double d, HardwareMap map) {
 		super((DcMotorEx)map.dcMotor.get(name));
-        setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.device.setTargetPositionTolerance(25); // *very* roughly 25 ticks = 1/5 inches of possible error. Change accordingly
+        device.setTargetPositionTolerance(25); // roughly 25 ticks = 1/5 inches of possible error
 		this.tpr = tpr;
 		this.gr = gr;
 		c = d * Math.PI;
@@ -36,13 +35,13 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<De
 	@Override public Double measure() {return (device.getCurrentPosition() / tpr) * gr * c;}
 
 	// start motion
-	@Override public void start(Device.Range motion) {device.setPower(motion.value);}
+	@Override public void start(Double motion) {device.setPower(checkRange(motion, -1, 1));}
 
 	public void setTarget(double inches) {device.setTargetPosition((int)((inches * tpr) / (gr * c)));}
 
 	public void setMode(DcMotor.RunMode mode) {device.setMode(mode);}
 
-    public void setZeroBehavior(DcMotor.ZeroPowerBehavior behavior) {
-        device.setZeroPowerBehavior(behavior);
-    }
+    public void setZeroBehavior(DcMotor.ZeroPowerBehavior behavior) {device.setZeroPowerBehavior(behavior);}
+
+	public boolean isBusy() {return device.isBusy();}
 }

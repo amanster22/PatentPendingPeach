@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
 @TeleOp(name="FujiTele", group="PatentPending")
 public final class FujiTele extends OpMode {
+
     private Fuji robot;
 
     @Override

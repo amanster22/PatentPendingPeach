@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.hardware.type.Input;
 import org.firstinspires.ftc.teamcode.hardware.type.Output;
 
 // quad-omni drive train
-public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<DriveTrain.Square<Device.Range>> {
+public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<DriveTrain.Square<Double>> {
 
 	// motors
 	private final Motor rf;
@@ -28,7 +28,7 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 	@Override public Square<Double> measure() {return new Square<Double>(rf.measure(), rb.measure(), lf.measure(), lb.measure());}
 
 	// start motion
-	@Override public void start(Square<Device.Range> motion) {
+	@Override public void start(Square<Double> motion) {
 		rf.start(motion.rf);
 		rb.start(motion.rb);
 		lf.start(motion.lf);
@@ -54,41 +54,55 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		rb.setZeroBehavior(behavior);
 		lf.setZeroBehavior(behavior);
 		lb.setZeroBehavior(behavior);
+	}
 
+	public boolean isBusy() {
+		return rf.isBusy() && rb.isBusy() && lf.isBusy() && lb.isBusy();
 	}
 
 	// vector for x, y, and turn
-	public static class Vector<T extends Device.DevDouble> {
+	public static class Direction {
 
-		// directional speeds
-		public T hori;
-		public T vert;
-		public T turn;
+		// distances
+		public final double hori;
+		public final double vert;
+		public final double turn;
 
-		// initialize speeds
-		public Vector(T hori, T vert, T turn) {
+		// initialize distances
+		public Direction(double hori, double vert, double turn) {
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
 		}
 
-		// get wheel speeds
-		public Square<Device.Range> speeds(double) {
-			return new Square<Device.Range>(
-				new Device.Range((- hori.value - vert.value - turn.value) / sum),
-				new Device.Range((+ hori.value - vert.value - turn.value) / sum),
-				new Device.Range((- hori.value + vert.value - turn.value) / sum),
-				new Device.Range((+ hori.value + vert.value - turn.value) / sum));
+		// get wheel distances
+		public Square<Double> speeds() {
+			return new Square<Double>(
+				- hori - vert - turn,
+				+ hori - vert - turn,
+				- hori + vert - turn,
+				+ hori + vert - turn);
 		}
 	}
 
-	public static class Speeds extends Vector<Device.Range> {
+	public static class Vector extends Direction {
 
-		public Speeds(Device.Range hori, Device.Range vert, Device.Range turn) {
-			sum = 0;
-			if (hori.value != 0 || vert.value != 0) {sum += 2;}
-			if (turn.value != 0) {sum += 1;}
-			if (sum == 0) {sum = 3;}
+		// initialize speeds
+		public Vector(double hori, double vert, double turn) {
+			super(
+				Device.checkRange(hori, -1, 1),
+				Device.checkRange(vert, -1, 1),
+				Device.checkRange(turn, -1, 1));
+		}
+
+		@Override
+		public Square<Double> speeds() {
+			Square<Double> supers = super.speeds();
+			return new Square<Double>(
+				supers.rf / 3,
+				supers.rb / 3,
+				supers.lf / 3,
+				supers.lb / 3);
 		}
 	}
 

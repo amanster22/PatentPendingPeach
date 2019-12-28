@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
-
 @Autonomous(name = "FujiStones", group = "PatentPending")
 public class FujiAutonomousStones extends FujiAutonomous {
+
     @Override
-    public final void runOpMode() {
+    public void runOpMode() {
         double skystone1;
         double current;
         robot = new Fuji(hardwareMap, telemetry);
@@ -40,6 +40,5 @@ public class FujiAutonomousStones extends FujiAutonomous {
         // then move robot until it sees blue tape until bridge
         // after that turn around and drop off stone a little past the bridge
         // stop/return for second stone
-
     }
 }
