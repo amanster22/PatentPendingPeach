@@ -49,6 +49,14 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		lb.setMode(mode);
 	}
 
+	public void setZeroBehavior(DcMotor.ZeroPowerBehavior behavior) {
+		rf.setZeroBehavior(behavior);
+		rb.setZeroBehavior(behavior);
+		lf.setZeroBehavior(behavior);
+		lb.setZeroBehavior(behavior);
+
+	}
+
 	// vector for x, y, and turn
 	public static class Vector<T extends Device.DevDouble> {
 

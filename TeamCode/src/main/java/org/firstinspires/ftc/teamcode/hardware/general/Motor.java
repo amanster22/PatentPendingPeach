@@ -41,4 +41,8 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<De
 	public void setTarget(double inches) {device.setTargetPosition((int)((inches * tpr) / (gr * c)));}
 
 	public void setMode(DcMotor.RunMode mode) {device.setMode(mode);}
+
+    public void setZeroBehavior(DcMotor.ZeroPowerBehavior behavior) {
+        device.setZeroPowerBehavior(behavior);
+    }
 }

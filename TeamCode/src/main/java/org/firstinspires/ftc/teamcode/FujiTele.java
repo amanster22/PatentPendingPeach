@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
@@ -12,6 +13,7 @@ public final class FujiTele extends OpMode {
     @Override
     public final void init() {
         robot = new Fuji(hardwareMap, telemetry);
+        robot.driveTrain.setZeroBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
