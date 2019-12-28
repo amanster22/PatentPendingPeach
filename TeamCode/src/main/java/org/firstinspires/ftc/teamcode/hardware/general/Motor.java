@@ -19,6 +19,8 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<De
 	// initialize motor
 	public Motor(String name, double tpr, double gr, double d, HardwareMap map) {
 		super((DcMotorEx)map.dcMotor.get(name));
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.device.setTargetPositionTolerance(25); // *very* roughly 25 ticks = 1/5 inches of possible error. Change accordingly
 		this.tpr = tpr;
 		this.gr = gr;
 		c = d * Math.PI;

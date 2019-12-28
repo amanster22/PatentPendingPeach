@@ -22,7 +22,10 @@ public final class Fuji {
     public final Gyro gyro;
     public final Color color;
     public final Distance distance;
-    private final double tolerance = 0.02; // 8 degrees
+    private final double tolerance = 0.01; // 3.6 degrees (1% of 360)
+    //math constants
+    private static final double ROOT_TWO = 1.4142;
+    private static final double PI = 3.1415;
 
     // initialize robot
     public Fuji(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -43,7 +46,7 @@ public final class Fuji {
         color = new Color("color", hardwareMap);
         distance = new Distance("distance", hardwareMap);
 
-        telemetry.addData("init", "start");
+        telemetry.addData("init", "done");
         telemetry.update();
     }
 
@@ -59,7 +62,7 @@ public final class Fuji {
     //used to go upto something with the distance sensor, or until it senses nothing in front if far is true
     //gyro stabilize in the while loop
     public void Upto(double target, double orientation, double side, double forward, boolean Far) {
-        this.drive(side, forward, 0);
+        drive(side, forward, 0);
         if (Far) {
             while (distance.measure() < target) {
                 //telemetry logging or something
@@ -67,7 +70,7 @@ public final class Fuji {
                 if  (Math.abs(error) > tolerance) {
                     error = this.getError(orientation);
                     double speed = error * 2; //error will be between -0.5 and 0.5, so this scales that to motor powers
-                    this.drive(side, forward, -speed);
+                    drive(side, forward, -speed);
                 }
             }
         } else {
@@ -78,24 +81,24 @@ public final class Fuji {
                     double speed = error * 2; //error will be between -0.5 and 0.5, so this scales that to motor powers
                     // by keeping the speed proportional to the error, the robot will be less likely
                     // to over-correct
-                    this.drive(side, forward, -speed);
+                    drive(side, forward, -speed);
                 }
             }
         }
-        this.drive(0,0,0);
+        drive(0, 0, 0);
 
     }
     //used to turn accurately with gyro
     public void GryoTurnTo(double orientation){
-        double error = this.getError(orientation);
+        double error = getError(orientation);
         telemetry.addData("error:", error);
         telemetry.update();
         while (Math.abs(error) > tolerance) {
-            error = this.getError(orientation);
+            error = getError(orientation);
             telemetry.addData("error:", error);
             telemetry.update();
             double speed = error; //error will be between -0.5 and 0.5, so this scales that to motor powers
-            this.drive(0, 0, -speed);
+            drive(0, 0, -speed);
         }
     }
 
