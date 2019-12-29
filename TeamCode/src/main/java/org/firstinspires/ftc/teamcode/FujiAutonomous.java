@@ -15,5 +15,6 @@ public abstract class FujiAutonomous extends LinearOpMode {
     public static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     public static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
     public static final double BRIDGE_WALL_DISTANCE_INCH = 47;
-    public static final double TILE_LENGTH = 25;
+    public static final double TILE_LENGTH = 24;
+    public static final double FOUNDATION_LENGTH_INCH = 34.5;
 }

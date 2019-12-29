@@ -72,23 +72,31 @@ public final class Fuji {
         telemetry.addData("Vertical", vert);
         telemetry.update();
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         double length = Math.sqrt(vert * vert + hori * hori);
         double angle = Math.atan2(vert, hori);
+
         double lf = length * Math.cos(angle - Math.PI * 0.25);
         double lb = length * Math.cos(angle - Math.PI * 0.75);
         double rf = length * Math.cos(angle - Math.PI * 1.75);
         double rb = length * Math.cos(angle - Math.PI * 1.25);
+
         driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
+
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        driveTrain.start(new DriveTrain.Vector(1, 1, 0).speeds());
+
+        driveTrain.start(new DriveTrain.Square<Double>(1.0, 1.0, 1.0, 1.0));
+
         while (driveTrain.isBusy()) {};
-        driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
+
+        driveTrain.start(new DriveTrain.Square<Double>(0.0, 0.0, 0.0, 0.0));
+
         driveTrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     // run dual linear slide
     public void spin(double speed) {
-        telemetry.addData("DLS", "started");
+        telemetry.addData("Intake", "started");
         telemetry.addData("Speed", speed);
         telemetry.update();
         spin1.start(1 * speed);

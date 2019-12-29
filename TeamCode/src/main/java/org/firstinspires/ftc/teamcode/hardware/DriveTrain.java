@@ -67,12 +67,14 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		public final double hori;
 		public final double vert;
 		public final double turn;
+        public double divisor;
 
 		// initialize distances
 		public Direction(double hori, double vert, double turn) {
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
+            double divisor = Math.ceil(hori + vert + turn);
 		}
 
 		// get wheel distances
@@ -99,10 +101,10 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		public Square<Double> speeds() {
 			Square<Double> supers = super.speeds();
 			return new Square<Double>(
-				supers.rf / 3,
-				supers.rb / 3,
-				supers.lf / 3,
-				supers.lb / 3);
+                    supers.rf / this.divisor,
+                    supers.rb / this.divisor,
+                    supers.lf / this.divisor,
+                    supers.lb / this.divisor);
 		}
 	}
 
