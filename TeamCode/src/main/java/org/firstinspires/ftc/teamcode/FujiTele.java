@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
 @TeleOp(name="FujiTele", group="PatentPending")
@@ -31,7 +32,7 @@ public final class FujiTele extends OpMode {
             side = 0;
         }
 
-        robot.drive(side, forward, turn);
+        robot.driveTrain.start(new DriveTrain.Vector(side, forward, turn).speeds());
     }
 
     @Override
@@ -39,6 +40,7 @@ public final class FujiTele extends OpMode {
 
     @Override
     public final void stop() {
-        robot.drive(0,0,0);
+        robot.driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
+        ;
     }
 }
