@@ -13,25 +13,25 @@ public final class FujiAutonomousTests extends FujiAutonomous {
         robot = new Fuji(hardwareMap, telemetry);
 
         // square, tests linear movement
-        robot.move(10, 0, 0);
+        robot.move(10, 0);
         sleep(1000);
-        robot.move(0, -10, 0);
+        robot.move(0, -10);
         sleep(1000);
-        robot.move(-10, 0, 0);
+        robot.move(-10, 0);
         sleep(1000);
-        robot.move(0, 10, 0);
+        robot.move(0, 10);
         sleep(1000);
 
         // zig zag, tests diagonal movement
-        robot.move(10, -10, 0);
+        robot.move(10, -10);
         sleep(1000);
-        robot.move(0, 10, 0);
+        robot.move(0, 10);
         sleep(1000);
-        robot.move(-10, -10, 0);
+        robot.move(-10, -10);
         sleep(1000);
-        robot.move(10, 10, 0);
+        robot.move(10, 10);
         sleep(1000);
-        robot.move(-10, 10, 0);
+        robot.move(-10, 10);
         sleep(1000);
 
         // turns, tests gyro sensor

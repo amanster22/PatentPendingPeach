@@ -66,14 +66,19 @@ public final class Fuji {
     }
 
     // drive with encoders
-    public void move(double hori, double vert, double turn) {
+    public void move(double hori, double vert) {
         telemetry.addData("Encoders", "moving");
         telemetry.addData("Horizontal", hori);
         telemetry.addData("Vertical", vert);
-        telemetry.addData("Turn", turn);
         telemetry.update();
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
+        double length = Math.sqrt(vert * vert + hori * hori);
+        double angle = Math.atan2(vert, hori);
+        double lf = length * Math.cos(angle - Math.PI * 0.25);
+        double lb = length * Math.cos(angle - Math.PI * 0.75);
+        double rf = length * Math.cos(angle - Math.PI * 1.75);
+        double rb = length * Math.cos(angle - Math.PI * 1.25);
+        driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveTrain.start(new DriveTrain.Vector(1, 1, 0).speeds());
         while (driveTrain.isBusy()) {};
