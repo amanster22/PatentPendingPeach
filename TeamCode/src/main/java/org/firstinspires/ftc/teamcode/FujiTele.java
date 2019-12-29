@@ -20,9 +20,17 @@ public final class FujiTele extends OpMode {
 
     @Override
     public final void loop() {
-        double forward = gamepad1.left_stick_y;
-        double side = gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
+
+        double forward;
+        double side;
+        double turn;
+
+
+        forward = gamepad1.left_stick_y;
+
+        side = gamepad1.left_stick_x;
+
+        turn = gamepad1.right_stick_x;
 
         if (Math.abs(forward) < 0.1) {
             forward = 0;
