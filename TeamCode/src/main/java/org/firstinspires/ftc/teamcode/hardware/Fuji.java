@@ -54,7 +54,7 @@ public final class Fuji {
         driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
     }
 
-    // drive with distance
+    // drive with distance, ORIENTATION IS ONLY FOR KEEPING A HEADING, NOT FOR GOING TO A SPECIFIC HEADING
     public void drive(double hori, double vert, double target, double orientation, boolean far) {
         while (far ? distance.measure() < target : distance.measure() > target) {
             telemetry.addData("Distance Sensor", "driving");

@@ -32,11 +32,11 @@ public class FujiAutonomousStones extends FujiAutonomous {
             }
         }
 
-        robot.move(((skystone1 - 1) * STONE_LENGTH - ROBOT_EDGE_LENGTH) - (0.5 + (current - 1) * STONE_LENGTH), 0); //final minus initial
-        robot.turn(0.25, 0.5);
-        robot.move(-10, 0);
-        robot.move(0, 0.5 * STONE_LENGTH);
-        robot.move(10, 0);
+//        robot.move(((skystone1 - 1) * STONE_LENGTH - ROBOT_EDGE_LENGTH) - (0.5 + (current - 1) * STONE_LENGTH), 0); //final minus initial
+//        robot.turn(0.25, 0.5);
+//        robot.move(-10, 0);
+//        robot.move(0, 0.5 * STONE_LENGTH);
+//        robot.move(10, 0);
         // then move robot until it sees blue tape until bridge
         // after that turn around and drop off stone a little past the bridge
         // stop/return for second stone

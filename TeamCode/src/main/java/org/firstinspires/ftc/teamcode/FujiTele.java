@@ -10,10 +10,17 @@ import org.firstinspires.ftc.teamcode.hardware.Fuji;
 @TeleOp(name="FujiTele", group="PatentPending")
 public final class FujiTele extends OpMode {
 
+
+    //teleop variables
     private Fuji robot;
+    private boolean spinOn;
+    private double forward;
+    private double side;
+    private double turn;
 
     @Override
     public final void init() {
+        //initialize and set robot behavior
         robot = new Fuji(hardwareMap, telemetry);
         robot.driveTrain.setZeroBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
@@ -21,17 +28,21 @@ public final class FujiTele extends OpMode {
     @Override
     public final void loop() {
 
-        double forward;
-        double side;
-        double turn;
-
-
+        //receive gamepad inputs and store
         forward = gamepad1.left_stick_y;
 
         side = gamepad1.left_stick_x;
 
         turn = gamepad1.right_stick_x;
 
+        if (gamepad1.a) {
+            spinOn = true;
+        } else {
+            spinOn = false;
+        }
+
+
+        //process variables and inputs
         if (Math.abs(forward) < 0.1) {
             forward = 0;
         }
@@ -40,6 +51,12 @@ public final class FujiTele extends OpMode {
             side = 0;
         }
 
+        //start robot functions
+        if (spinOn) {
+            robot.spin(1.0);
+        } else {
+            robot.spin(0.0);
+        }
         robot.driveTrain.start(new DriveTrain.Vector(side, forward, turn).speeds());
     }
 
