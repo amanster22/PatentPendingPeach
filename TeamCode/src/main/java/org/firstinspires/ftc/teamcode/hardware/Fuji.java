@@ -75,6 +75,9 @@ public final class Fuji {
 
         double length = Math.sqrt(vert * vert + hori * hori);
         double angle = Math.atan2(vert, hori);
+        if (length == 0) {
+            return;
+        }
 
         double lf = length * Math.cos(angle - Math.PI * 0.25);
         double lb = length * Math.cos(angle - Math.PI * 0.75);

@@ -26,7 +26,6 @@ public class SplineTest extends LinearOpMode {
         Trajectory test = drive.trajectoryBuilder()
                 .splineTo(new Pose2d(30, 30, 0))
                 .build();
-        Trajectory skystone = TrajectoryLoader.load(new File("skystone.yaml")); // put yaml file in
         drive.followTrajectorySync(test);
 
         sleep(2000);
