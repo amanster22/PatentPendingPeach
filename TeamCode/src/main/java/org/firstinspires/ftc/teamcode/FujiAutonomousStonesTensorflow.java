@@ -30,9 +30,10 @@ public class FujiAutonomousStonesTensorflow extends FujiAutonomous {
                 // step through the list of recognitions and display boundary info.
                 int i = 0;
                 for (Recognition recognition : updatedRecognitions) {
+                    telemetry.addData("confidence: ", recognition.getConfidence());
                     telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                    telemetry.addData(String.format("  center x coordinate (%d)", i), "%.03f",
-                            recognition.getLeft() + recognition.getRight() / 2);
+                    telemetry.addData(String.format("center x coordinate (%d)", i), "%.03f",
+                            (recognition.getLeft() + recognition.getRight()) / 2);
                 }
                 telemetry.update();
             }
