@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
 import java.util.List;
 
-@Autonomous(name = "FujiStones", group = "PatentPending")
+@Autonomous(name = "FujiStonesTensorflow", group = "PatentPending")
 public class FujiAutonomousStonesTensorflow extends FujiAutonomous {
 
     @Override
@@ -17,9 +17,11 @@ public class FujiAutonomousStonesTensorflow extends FujiAutonomous {
         double skystone;
         double current;
         current = 1; //robot always begins its plans thinking its on the first stone
-        robot = new Fuji(hardwareMap, telemetry);
+//        robot = new Fuji(hardwareMap, telemetry); this is the code to init robot, but since we are testing on the phone it isnt needed
+
         initVuforia();
         initTfod();
+
         tfod.activate(); //may throw exception that tfod is null, meaning that the phones dont support tensorflow
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
 
@@ -36,8 +38,9 @@ public class FujiAutonomousStonesTensorflow extends FujiAutonomous {
                             (recognition.getLeft() + recognition.getRight()) / 2);
                 }
                 telemetry.update();
+
             }
         }
-
+        //once the opmode starts, we should know what stone is the skystone, so we can immediate race off to it
     }
 }

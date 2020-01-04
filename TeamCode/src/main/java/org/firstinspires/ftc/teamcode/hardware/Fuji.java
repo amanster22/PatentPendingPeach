@@ -17,8 +17,9 @@ public final class Fuji {
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
     public final DriveTrain driveTrain;
-    public final Motor spin1;
-    public final Motor spin2;
+    public final Motor lift;
+    //    public final Motor spin1;
+//    public final Motor spin2;
     public final Gyro gyro;
     public final Color tape;
     public final Color stone;
@@ -35,8 +36,9 @@ public final class Fuji {
         Motor lf = new Motor("lf", 1120, 1, 3, hardwareMap);
         Motor lb = new Motor("lb", 1120, 1, 3, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
-        spin1 = new Motor("spin1", 1120, hardwareMap);
-        spin2 = new Motor("spin2", 1120, hardwareMap);
+//        spin1 = new Motor("spin1", 1120, hardwareMap);
+//        spin2 = new Motor("spin2", 1120, hardwareMap);
+        lift = new Motor("lift", 1120, hardwareMap);
         gyro = new Gyro("imu", hardwareMap);
         tape = new Color("colorDown", hardwareMap);
         stone = new Color("colorFor", hardwareMap);
@@ -45,7 +47,10 @@ public final class Fuji {
 
     // turn with gyro
     public void turn(double orientation, double speed) {
-        while (speed > 0 ? orientation > gyro.measure() : orientation < gyro.measure()) {
+        while (Math.abs(headingError(orientation)) > 0.01) {
+            if (headingError(orientation) > 0) {
+                speed = -speed;
+            }
             telemetry.addData("Gyro Sensor", "turning");
             telemetry.addData("Angle", gyro.measure());
             telemetry.update();
@@ -60,7 +65,7 @@ public final class Fuji {
             telemetry.addData("Distance Sensor", "driving");
             telemetry.addData("Distance", distance.measure());
             telemetry.update();
-            driveTrain.start(new DriveTrain.Vector(hori, vert, (orientation - gyro.measure()) * gyroAdjust).speeds());
+            driveTrain.start(new DriveTrain.Vector(hori, vert, (-headingError(orientation)) * gyroAdjust).speeds());
         }
         driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
     }
@@ -102,8 +107,8 @@ public final class Fuji {
         telemetry.addData("Intake", "started");
         telemetry.addData("Speed", speed);
         telemetry.update();
-        spin1.start(1 * speed);
-        spin2.start(-1 * speed);
+//        spin1.start(1 * speed);
+//        spin2.start(-1 * speed);
     }
 
     // if the color sensor sees a skystone
@@ -116,5 +121,18 @@ public final class Fuji {
         telemetry.addData("Block", block);
         telemetry.update();
         return block;
+    }
+
+    //there is a reason to have this function william, don't delete it
+    public double headingError(double orientation) {
+        double rawError = orientation - gyro.measure();
+
+        if (rawError < -0.5) {
+            rawError += 1;
+        }
+        if (rawError > 0.5) {
+            rawError -= 1;
+        }
+        return rawError;
     }
 }

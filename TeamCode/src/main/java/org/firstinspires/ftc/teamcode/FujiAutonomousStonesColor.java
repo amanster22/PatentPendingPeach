@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.hardware.Fuji;
 public class FujiAutonomousStonesColor extends FujiAutonomous {
     @Override
     public void runOpMode() throws InterruptedException {
+        //don't put claw movements in yet, just test color sensor and movements
         double skystone;
         double current;
         current = 1; //robot always begins its plans thinking its on the first stone
@@ -27,12 +28,13 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
                 skystone = 3;
             }
         }
-
-        robot.move(((skystone - 1 + 0.5) * STONE_LENGTH) - ((current - 1 + 0.5) * STONE_LENGTH), 0); //final minus initial
-        robot.spin(1);
-        robot.move(0, 10);
-        robot.move(0, -10);
+        robot.move(((skystone) * STONE_LENGTH) - ((current) * STONE_LENGTH), 5); //final minus initial
+        //bring down the claw and pick up stone
+        robot.move(0, -5);
         robot.move(-skystone * STONE_LENGTH - STONE_BRIDGE_DISTANCE_INCH, 0);
-        //drop stone now
+//        robot.move(- FOUNDATION_BRIDGE_DISTANCE_INCH - FOUNDATION_LENGTH_INCH/2, 5);
+        //run to position on the arm, NO WHILE LOOP so it can be parallel
+        //then drop stone
+        //repeat
     }
 }
