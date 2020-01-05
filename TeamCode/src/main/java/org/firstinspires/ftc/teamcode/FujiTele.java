@@ -13,7 +13,7 @@ public final class FujiTele extends OpMode {
 
     //teleop variables
     private Fuji robot;
-    private boolean spinOn;
+    private int liftDirection;
     private double forward;
     private double side;
     private double turn;
@@ -36,9 +36,11 @@ public final class FujiTele extends OpMode {
         turn = gamepad1.right_stick_x;
 
         if (gamepad1.a) {
-            spinOn = true;
+            liftDirection = 1;
+        } else if (gamepad1.b) {
+            liftDirection = -1;
         } else {
-            spinOn = false;
+            liftDirection = 0;
         }
 
 
@@ -51,12 +53,6 @@ public final class FujiTele extends OpMode {
             side = 0;
         }
 
-        //start robot functions
-        if (spinOn) {
-            robot.spin(1.0);
-        } else {
-            robot.spin(0.0);
-        }
         robot.driveTrain.start(new DriveTrain.Vector(side, forward, turn).speeds());
     }
 

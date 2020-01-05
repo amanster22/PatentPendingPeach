@@ -45,7 +45,7 @@ public final class Fuji {
         distance = new Distance("distance", hardwareMap);
     }
 
-    // turn with gyro
+    // turn with gyro, speed should be positive
     public void turn(double orientation, double speed) {
         while (Math.abs(headingError(orientation)) > 0.01) {
             if (headingError(orientation) > 0) {
@@ -95,7 +95,10 @@ public final class Fuji {
 
         driveTrain.start(new DriveTrain.Square<Double>(1.0, 1.0, 1.0, 1.0));
 
-        while (driveTrain.isBusy()) {};
+        //do gyro adjustment in here |
+        //                           v
+        while (driveTrain.isBusy()) {
+        }
 
         driveTrain.start(new DriveTrain.Square<Double>(0.0, 0.0, 0.0, 0.0));
 

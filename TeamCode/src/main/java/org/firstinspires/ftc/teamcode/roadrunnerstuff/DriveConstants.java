@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.roadrunnerstuff;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
 import com.qualcomm.hardware.motors.NeveRest20Gearmotor;
@@ -17,7 +18,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
  * These are not the only parameters; some are located in the localizer classes, drive base classes,
  * and op modes themselves.
  */
-
+@Config
 public class DriveConstants {
 
     /*
@@ -35,6 +36,7 @@ public class DriveConstants {
      */
     public static final boolean RUN_USING_ENCODER = true;
     public static final PIDCoefficients MOTOR_VELO_PID = null;
+    //new PIDCoefficients(value, value, value)
 
     /*
      * These are physical constants that can be determined from your robot (including the track
