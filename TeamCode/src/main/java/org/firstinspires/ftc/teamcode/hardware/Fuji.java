@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,6 +25,8 @@ public final class Fuji {
     public final Color tape;
     public final Color stone;
     public final Distance distance;
+    boolean autoSoundFound = false;
+    int soundAutonomous;
     // robot constants
     private static final double gyroAdjust = 4; // turn at full speed when off by 45 degrees
 
@@ -35,9 +38,17 @@ public final class Fuji {
         Motor rb = new Motor("rb", 1120, 1, 3, hardwareMap);
         Motor lf = new Motor("lf", 1120, 1, 3, hardwareMap);
         Motor lb = new Motor("lb", 1120, 1, 3, hardwareMap);
+        soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("autonomous", "raw", hardwareMap.appContext.getPackageName());
+        if (soundAutonomous != 0)
+            autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
+
+
+        // Display sound status
+        telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
+        telemetry.update();
+
         driveTrain = new DriveTrain(rf, rb, lf, lb);
-//        spin1 = new Motor("spin1", 1120, hardwareMap);
-//        spin2 = new Motor("spin2", 1120, hardwareMap);
+
         lift = new Motor("lift", 1120, hardwareMap);
         gyro = new Gyro("imu", hardwareMap);
         tape = new Color("colorDown", hardwareMap);
@@ -137,5 +148,13 @@ public final class Fuji {
             rawError -= 1;
         }
         return rawError;
+    }
+
+    public void playAutoSound() {
+        if (autoSoundFound) {
+            SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous);
+            telemetry.addData("Playing", "Auto Sound");
+            telemetry.update();
+        }
     }
 }
