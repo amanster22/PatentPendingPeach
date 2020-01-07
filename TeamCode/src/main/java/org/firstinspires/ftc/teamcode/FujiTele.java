@@ -70,6 +70,8 @@ public final class FujiTele extends OpMode {
         }
 
         robot.driveTrain.start(new DriveTrain.Vector(side * driveSpeed, forward * driveSpeed, turn * driveSpeed).speeds());
+        robot.slide.start(slideSpeed * slide);
+        robot.lift.start(lift * liftSpeed);
     }
 
     @Override
