@@ -69,7 +69,7 @@ public final class FujiTele extends OpMode {
             //do nothing, don't move pinch
         }
 
-        robot.driveTrain.start(new DriveTrain.Vector(side, forward, turn).speeds());
+        robot.driveTrain.start(new DriveTrain.Vector(side * driveSpeed, forward * driveSpeed, turn * driveSpeed).speeds());
     }
 
     @Override
