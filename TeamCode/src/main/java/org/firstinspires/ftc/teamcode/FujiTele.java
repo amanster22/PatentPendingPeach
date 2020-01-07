@@ -13,10 +13,15 @@ public final class FujiTele extends OpMode {
 
     //teleop variables
     private Fuji robot;
-    private int liftDirection;
     private double forward;
     private double side;
     private double turn;
+    private double slide;
+    private double lift;
+    //change these speeds later
+    final private double driveSpeed = 0.9;
+    final private double slideSpeed = 0.3;
+    final private double liftSpeed = 0.6;
 
     @Override
     public final void init() {
@@ -35,14 +40,9 @@ public final class FujiTele extends OpMode {
 
         turn = gamepad1.right_stick_x;
 
-        if (gamepad1.a) {
-            liftDirection = 1;
-        } else if (gamepad1.b) {
-            liftDirection = -1;
-        } else {
-            liftDirection = 0;
-        }
+        slide = gamepad2.right_stick_y;
 
+        lift = gamepad2.left_stick_y;
 
         //process variables and inputs
         if (Math.abs(forward) < 0.1) {
@@ -51,6 +51,22 @@ public final class FujiTele extends OpMode {
 
         if (Math.abs(side) < 0.1) {
             side = 0;
+        }
+
+        if (gamepad2.a) {
+            //move lift up one stone
+        } else if (gamepad2.b) {
+            //move lift down one stone
+        } else {
+            //dont do anything
+        }
+
+        if (gamepad2.left_bumper) {
+            //close pinch
+        } else if (gamepad2.right_bumper) {
+            //open pinch
+        } else {
+            //do nothing, don't move pinch
         }
 
         robot.driveTrain.start(new DriveTrain.Vector(side, forward, turn).speeds());

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.hardware.general.ServoM;
 import org.firstinspires.ftc.teamcode.hardware.type.Device;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.general.Gyro;
@@ -19,7 +20,8 @@ public final class Fuji {
     private final Telemetry telemetry;
     public final DriveTrain driveTrain;
     public final Motor lift;
-    //    public final Motor spin1;
+    public final Motor slide;
+    public final ServoM pinch;
 //    public final Motor spin2;
     public final Gyro gyro;
     public final Color tape;
@@ -38,6 +40,7 @@ public final class Fuji {
         Motor rb = new Motor("rb", 1120, 1, 3, hardwareMap);
         Motor lf = new Motor("lf", 1120, 1, 3, hardwareMap);
         Motor lb = new Motor("lb", 1120, 1, 3, hardwareMap);
+
         soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("autonomous", "raw", hardwareMap.appContext.getPackageName());
         if (soundAutonomous != 0)
             autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
@@ -50,6 +53,8 @@ public final class Fuji {
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
         lift = new Motor("lift", 1120, hardwareMap);
+        slide = new Motor("slide", 1120, hardwareMap);
+        pinch = new ServoM("pinch", hardwareMap);
         gyro = new Gyro("imu", hardwareMap);
         tape = new Color("colorDown", hardwareMap);
         stone = new Color("colorFor", hardwareMap);
