@@ -7,6 +7,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Autonomous(name = "FujiStonesTensorflow", group = "PatentPending")
@@ -23,24 +27,73 @@ public class FujiAutonomousStonesTensorflow extends FujiAutonomous {
         initTfod();
 
         tfod.activate(); //may throw exception that tfod is null, meaning that the phones dont support tensorflow
-        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+
+        class RecognitionPair {
+            String label;
+            Float xcoordinate;
+
+            public RecognitionPair(String label, Float xcoordinate) {
+                this.label = label;
+                this.xcoordinate = xcoordinate;
+            }
+        }
+
 
         while (!isStarted()) {
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            List<RecognitionPair> objects = new ArrayList<RecognitionPair>();
+
+            // CHANGED JAVA VERSION AND API VERSION, EXPERIMENTAL CODE
             if (updatedRecognitions != null) {
+
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
 
                 // step through the list of recognitions and display boundary info.
                 int i = 0;
                 for (Recognition recognition : updatedRecognitions) {
+                    //telemetry updates
+
+                    String label = recognition.getLabel();
+                    Float coordinate = (recognition.getLeft() + recognition.getRight()) / 2;
+
                     telemetry.addData("confidence: ", recognition.getConfidence());
-                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("label (%d)", i), label);
                     telemetry.addData(String.format("center x coordinate (%d)", i), "%.03f",
-                            (recognition.getLeft() + recognition.getRight()) / 2);
+                            coordinate);
+
+                    //add to list
+                    objects.add(new RecognitionPair(label, coordinate));
+
+
+                    i += 1;
                 }
                 telemetry.update();
+
+                // really terrible code just to sort on x-coordinate
+                Collections.sort(objects, new Comparator<RecognitionPair>() {
+                    @Override
+                    public int compare(RecognitionPair r1, RecognitionPair r2) {
+                        return r1.xcoordinate.compareTo(r2.xcoordinate);
+                    }
+                });
+
+                ArrayList<String> labels = new ArrayList<String>();
+
+                objects.forEach((recog) -> labels.add(recog.label));
+
+
+                // SKYSTONE IS SET HERE
+                if (labels.contains("skystone")) {
+                    skystone = labels.indexOf("skystone");
+                } else {
+                    skystone = 3;
+                }
+
+
 
             }
         }
         //once the opmode starts, we should know what stone is the skystone, so we can immediate race off to it
+        //
     }
 }
