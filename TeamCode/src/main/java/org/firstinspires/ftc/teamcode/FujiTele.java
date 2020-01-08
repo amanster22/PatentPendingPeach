@@ -35,38 +35,30 @@ public final class FujiTele extends OpMode {
 
         //receive gamepad inputs and store
         forward = gamepad1.left_stick_y;
-
         side = gamepad1.left_stick_x;
-
         turn = gamepad1.right_stick_x;
-
         slide = gamepad2.right_stick_y;
-
         lift = gamepad2.left_stick_y;
 
         //process variables and inputs
-        if (Math.abs(forward) < 0.1) {
-            forward = 0;
-        }
 
-        if (Math.abs(side) < 0.1) {
-            side = 0;
-        }
+        if (Math.abs(forward) < 0.1) {forward = 0;}
+        if (Math.abs(side) < 0.1) {side = 0;}
 
         if (gamepad2.a) {
-            //move lift up one stone
+            // move lift up one stone
         } else if (gamepad2.b) {
-            //move lift down one stone
+            // move lift down one stone
         } else {
-            //dont do anything
+            // dont do anything
         }
 
         if (gamepad2.left_bumper) {
-            //close pinch
+            // close pinch
         } else if (gamepad2.right_bumper) {
-            //open pinch
+            // open pinch
         } else {
-            //do nothing, don't move pinch
+            // do nothing, don't move pinch
         }
 
         robot.driveTrain.start(new DriveTrain.Vector(side * driveSpeed, forward * driveSpeed, turn * driveSpeed).speeds());
@@ -80,6 +72,5 @@ public final class FujiTele extends OpMode {
     @Override
     public final void stop() {
         robot.driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
-        ;
     }
 }
