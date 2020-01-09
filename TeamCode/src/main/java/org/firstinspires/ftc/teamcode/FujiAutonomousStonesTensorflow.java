@@ -83,8 +83,8 @@ public class FujiAutonomousStonesTensorflow extends FujiAutonomous {
 
 
                 // SKYSTONE IS SET HERE
-                if (labels.contains("skystone")) {
-                    skystone = labels.indexOf("skystone");
+                if (labels.contains("Skystone")) {
+                    skystone = labels.indexOf("Skystone");
                 } else {
                     skystone = 3;
                 }
