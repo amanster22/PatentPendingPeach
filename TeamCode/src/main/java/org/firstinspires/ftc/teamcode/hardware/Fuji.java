@@ -151,4 +151,9 @@ public final class Fuji {
             telemetry.update();
         }
     }
+
+    public void hook(double target) {
+        hook1.start(target);
+        hook2.start(target);
+    }
 }

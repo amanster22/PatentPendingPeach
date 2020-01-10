@@ -11,94 +11,68 @@ import org.firstinspires.ftc.teamcode.hardware.Fuji;
 public final class FujiTele extends OpMode {
 
 
-    //teleop variables
+    // robot
     private Fuji robot;
-    private double forward;
-    private double side;
-    private double turn;
-    private double slide;
-    private double lift;
-    //change these speeds later
-    final private double driveSpeed = 0.9;
-    final private double slideSpeed = 0.3;
-    final private double liftSpeed = 0.6;
+    // speeds
+    private static final double driveSpeed = 0.9;
+    private static final double slideSpeed = 0.3;
+    private static final double liftSpeed = 0.6;
+    private static final double liftMax = 6;
+    private static final double slideMax = 5;
+    // target positions
+    private double liftPos = 0;
+    private boolean slideOut = false;
+    // field measurements
+    private static final double stoneHeight = 4;
 
     @Override
     public final void init() {
         //initialize and set robot behavior
         robot = new Fuji(hardwareMap, telemetry);
         robot.driveTrain.setZeroBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        stop();
     }
 
     @Override
     public final void loop() {
 
-        //receive gamepad inputs and store
-        forward = gamepad1.left_stick_y;
-        side = gamepad1.left_stick_x;
-        turn = gamepad1.right_stick_x;
-        lift = gamepad2.right_stick_y;
+        // get gamepad input
+        double vert = gamepad1.left_stick_y;
+        double hori = gamepad1.left_stick_x;
+        double turn = gamepad1.right_stick_x;
+        boolean liftUp = gamepad2.a;
+        boolean liftDown = gamepad2.b;
+        boolean slideUp = gamepad2.dpad_up;
+        boolean slideDown = gamepad2.dpad_down;
+        boolean hookUp = gamepad2.left_bumper;
+        boolean hookDown = gamepad2.right_bumper;
 
-        //process variables and inputs
+        // declare output values
+        double lift = 0;
+        double slide = 0;
 
-        if (Math.abs(forward) < 0.1) {forward = 0;}
-        if (Math.abs(side) < 0.1) {side = 0;}
+        // process input
 
+        if (Math.abs(vert) < 0.1) {vert = 0;}
+        if (Math.abs(hori) < 0.1) {hori = 0;}
 
-        //LIFT CODE
-        if (gamepad2.a) {
-            // move lift up one stone
-        } else if (gamepad2.b) {
-            // move lift down one stone
-        } else {
-            // dont do anything
-        }
+        if (liftUp && liftPos > 0) {liftPos += stoneHeight;}
+        if (liftDown && liftPos < liftMax) {liftPos -= stoneHeight;}
 
+        if (liftPos < robot.slide.measure()) {lift = 1;}
+        if (liftPos > robot.slide.measure()) {lift = -1;}
 
-        //PINCH CODE
-        if (gamepad2.left_bumper) {
-            // close pinch
-        } else if (gamepad2.right_bumper) {
-            // open pinch
-        } else {
-            // do nothing, don't move pinch
-        }
+        if (slideUp) {slideOut = true;}
+        if (slideDown) {slideOut = false;}
 
+        if (slideOut && robot.slide.measure() > 0) {slide = 1;}
+        if (!slideOut && robot.slide.measure() < slideMax) {slide = -1;}
 
-        //FOUNDATION HOOK CODE
-        if (gamepad1.left_bumper) {
-            // move foundation hooks?
-        } else if (gamepad1.right_bumper) {
-            // move foundation hooks?
-        } else {
-            // move foundation hooks?
-        }
-
-
-        // FOUNDATION HOOK CODE
-        if (gamepad1.left_bumper) {
-        } // move
-        else if (gamepad1.right_bumper) {
-        } else {
-        }
-
-        //SLIDE CODE
-        if (gamepad2.dpad_up) {
-            slide = 1;
-        } // move slide forwards
-
-        else if (gamepad2.dpad_down) {
-            slide = -1;
-        }// move slide backwards
-
-        else {
-            slide = 0;
-        } // dont move slide
-
-
-        robot.driveTrain.start(new DriveTrain.Vector(side * driveSpeed, forward * driveSpeed, turn * driveSpeed).speeds());
-        robot.slide.start(slideSpeed * slide);
+        robot.driveTrain.start(new DriveTrain.Vector(hori * driveSpeed, vert * driveSpeed, turn * driveSpeed).speeds());
+        robot.slide.start(slide * slideSpeed);
         robot.lift.start(lift * liftSpeed);
+        if (hookUp) {robot.hook(1);}
+        if (hookDown) {robot.hook(0);}
     }
 
     @Override
@@ -109,5 +83,6 @@ public final class FujiTele extends OpMode {
         robot.driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
         robot.slide.start(0.0);
         robot.lift.start(0.0);
+        robot.hook(robot.hook1.measure());
     }
 }
