@@ -48,7 +48,9 @@ public final class Fuji {
         Motor lf = new Motor("lf", 1120, 1, 3, hardwareMap);
         Motor lb = new Motor("lb", 1120, 1, 3, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
-        lift = new Motor("lift", 1120, hardwareMap);
+
+        //CHECK THESE VALUES **************************************************
+        lift = new Motor("lift", 1120, 1, 2, hardwareMap);
         slide = new Motor("slide", 1120, 2, hardwareMap);
         pinch = new ServoM("pinch", hardwareMap);
         hook1 = new ServoM("hook1", hardwareMap);

@@ -13,17 +13,17 @@ public final class FujiTele extends OpMode {
 
     // robot
     private Fuji robot;
+    // field measurements
+    private static final double stoneHeight = 4;
     // speeds
     private static final double driveSpeed = 0.9;
     private static final double slideSpeed = 0.3;
     private static final double liftSpeed = 0.6;
-    private static final double liftMax = 6;
+    private static final double liftMax = 6 * stoneHeight;
     private static final double slideMax = 5;
     // target positions
     private double liftPos = 0;
     private boolean slideOut = false;
-    // field measurements
-    private static final double stoneHeight = 4;
 
     @Override
     public final void init() {
@@ -56,8 +56,12 @@ public final class FujiTele extends OpMode {
         if (Math.abs(vert) < 0.1) {vert = 0;}
         if (Math.abs(hori) < 0.1) {hori = 0;}
 
-        if (liftUp && liftPos > 0) {liftPos += stoneHeight;}
-        if (liftDown && liftPos < liftMax) {liftPos -= stoneHeight;}
+        if (liftUp && liftPos < liftMax) {
+            liftPos += stoneHeight;
+        }
+        if (liftDown && liftPos > 0) {
+            liftPos -= stoneHeight;
+        }
 
         if (liftPos < robot.slide.measure()) {lift = 1;}
         if (liftPos > robot.slide.measure()) {lift = -1;}
