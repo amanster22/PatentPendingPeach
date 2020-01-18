@@ -20,11 +20,12 @@ public final class Fuji {
     public final DriveTrain driveTrain;
     public final Motor lift;
     public final Motor slide;
+    public final ServoM dropStone;
     public final ServoM pinch;
     public final ServoM hook1;
     public final ServoM hook2;
     public final Gyro gyro;
-    public final Color tape;
+//    public final Color tape;
     public final Color stone;
     public final Distance distance;
     boolean autoSoundFound = false;
@@ -49,6 +50,7 @@ public final class Fuji {
         Motor lb = new Motor("lb", 1120, 1, 3, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
+
         //CHECK THESE VALUES **************************************************
         lift = new Motor("lift", 1120, 1, 2, hardwareMap);
         slide = new Motor("slide", 1120, 2, hardwareMap);
@@ -56,7 +58,8 @@ public final class Fuji {
         hook1 = new ServoM("hook1", hardwareMap);
         hook2 = new ServoM("hook2", hardwareMap);
         gyro = new Gyro("imu", hardwareMap);
-        tape = new Color("colorDown", hardwareMap);
+        dropStone = new ServoM("drop", hardwareMap);
+//        tape = new Color("colorDown", hardwareMap);
         stone = new Color("colorFor", hardwareMap);
         distance = new Distance("distance", hardwareMap);
     }
