@@ -15,10 +15,12 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Do
 	private final double tpr;
 	private final double gr;
 	private final double c;
+	private final String name;
 
 	// initialize motor
 	public Motor(String name, double tpr, double gr, double d, HardwareMap map) {
 		super((DcMotorEx)map.dcMotor.get(name));
+		this.name = name;
         device.setTargetPositionTolerance(25); // roughly 25 ticks = 1/5 inches of possible error
 		this.tpr = tpr;
 		this.gr = gr;
@@ -35,7 +37,7 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Do
 	@Override public Double measure() {return (device.getCurrentPosition() / tpr) * gr * c;}
 
 	// start motion
-	@Override public void start(Double motion) {device.setPower(checkRange(motion, -1, 1));}
+	@Override public void start(Double motion) {device.setPower(checkRange(motion, -1, 1, this.name));}
 
 	public void setTarget(double inches) {device.setTargetPosition((int)((inches * tpr) / (gr * c)));}
 

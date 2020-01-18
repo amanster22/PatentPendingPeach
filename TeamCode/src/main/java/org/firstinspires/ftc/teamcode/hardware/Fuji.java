@@ -38,16 +38,16 @@ public final class Fuji {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
 
-        soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("autonomous", "raw", hardwareMap.appContext.getPackageName());
-        if (soundAutonomous != 0)
-            autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
+//        soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("autonomous", "raw", hardwareMap.appContext.getPackageName());
+//        if (soundAutonomous != 0)
+//            autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
         telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
         telemetry.update();
 
-        Motor rf = new Motor("rf", 1120, 1, 3, hardwareMap);
-        Motor rb = new Motor("rb", 1120, 1, 3, hardwareMap);
-        Motor lf = new Motor("lf", 1120, 1, 3, hardwareMap);
-        Motor lb = new Motor("lb", 1120, 1, 3, hardwareMap);
+        Motor rf = new Motor("rf", 1760, 1, 3, hardwareMap);
+        Motor rb = new Motor("rb", 1760, 1, 3, hardwareMap);
+        Motor lf = new Motor("lf", 1760, 1, 3, hardwareMap);
+        Motor lb = new Motor("lb", 1760, 1, 3, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
 
@@ -92,7 +92,6 @@ public final class Fuji {
         telemetry.addData("Encoders", "moving");
         telemetry.addData("Horizontal", hori);
         telemetry.addData("Vertical", vert);
-        telemetry.update();
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         double length = Math.sqrt(vert * vert + hori * hori);
@@ -100,11 +99,14 @@ public final class Fuji {
         if (length == 0) {
             return;
         }
+        telemetry.addData("operation", "length: %.8f, angle: %.8f", length, angle);
 
         double lf = length * Math.cos(angle - Math.PI * 0.25);
         double lb = length * Math.cos(angle - Math.PI * 0.75);
         double rf = length * Math.cos(angle - Math.PI * 1.75);
         double rb = length * Math.cos(angle - Math.PI * 1.25);
+        telemetry.addData("drives", "lf: %.8f, lb: %.8f, rf: %.8f, rb: %.8f", lf, lb, rf, rb);
+        telemetry.update();
 
         driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -112,22 +114,11 @@ public final class Fuji {
 
         // do gyro adjustment in here |
         //                            v
-        while (driveTrain.isBusy()) {driveTrain.start(new DriveTrain.Vector(hori, vert, (-headingError(angle)) * gyroAdjust).speeds());}
-
+        while (driveTrain.isBusy()) {}
+        //turn (-headingError(angle)) * gyroAdjust)
         driveTrain.start(new DriveTrain.Square<Double>(0.0, 0.0, 0.0, 0.0));
         driveTrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
-    /*
-    // run dual linear slide
-    public void spin(double speed) {
-        telemetry.addData("Intake", "started");
-        telemetry.addData("Speed", speed);
-        telemetry.update();
-//        spin1.start(1 * speed);
-//        spin2.start(-1 * speed);
-    }
-    */
 
     // if the color sensor sees a skystone
     public boolean isSkystone() {

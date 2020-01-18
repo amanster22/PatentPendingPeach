@@ -18,7 +18,7 @@ public final class FujiTele extends OpMode {
     // speeds
     private static final double driveSpeed = 1;
     private static final double slideSpeed = 0.3;
-    private static final double liftSpeed = 0.6;
+    private static final double liftSpeed = 0.5;
     private static final double liftMax = 6 * stoneHeight;
     private static final double slideMax = 5;
     // target positions
@@ -40,16 +40,14 @@ public final class FujiTele extends OpMode {
         double vert = gamepad1.left_stick_y;
         double hori = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
-        boolean liftUp = gamepad2.a;
-        boolean liftDown = gamepad2.b;
-        boolean dropstone = gamepad2.x;
+        double lift = gamepad2.right_stick_y;
+        boolean dropStone = gamepad2.x;
         boolean slideUp = gamepad2.dpad_up;
         boolean slideDown = gamepad2.dpad_down;
         boolean hookUp = gamepad2.left_bumper;
         boolean hookDown = gamepad2.right_bumper;
 
         // declare output values
-        double lift = 0;
         double slide = 0;
 
         // process input
@@ -57,26 +55,28 @@ public final class FujiTele extends OpMode {
         if (Math.abs(vert) < 0.1) {vert = 0;}
         if (Math.abs(hori) < 0.1) {hori = 0;}
 
-        if (liftUp && liftPos < liftMax) {
-            liftPos += stoneHeight;
-        }
-        if (liftDown && liftPos > 0) {
-            liftPos -= stoneHeight;
-        }
+//        if (liftUp && liftPos < liftMax) {
+//            liftPos += stoneHeight;
+//        }
+//        if (liftDown && liftPos > 0) {
+//            liftPos -= stoneHeight;
+//        }
 
 //        if (liftPos < robot.slide.measure()) {lift = 1;}
 //        if (liftPos > robot.slide.measure()) {lift = -1;}
-        if (liftUp) {lift=1;}
-        if (liftDown) {lift = -1;}
-        if (slideUp) {slideOut = true;}
-        if (slideDown) {slideOut = false;}
+        if (slideUp) {slide = 1;}
+        if (slideDown) {slide = -1;}
 
 //        if (slideOut && robot.slide.measure() > 0) {slide = 1;}
-        if (slideOut) {slide=1;}
-        if (!slideOut) {slide=-1;}
+
 //        if (!slideOut && robot.slide.measure() < slideMax) {slide = -1;}
 
-        if (dropstone) {}
+       if (dropStone) {
+           robot.dropStone.start(0.5);
+           robot.dropStone.start(0.7);
+       }
+
+
 
         try {
             robot.driveTrain.start(new DriveTrain.Vector(hori * driveSpeed, vert * driveSpeed, turn * driveSpeed).speeds());
@@ -86,7 +86,7 @@ public final class FujiTele extends OpMode {
             if (hookDown) {robot.hook(0);}
         } catch (Exception e) {
             telemetry.addData("Error", e.getMessage());
-            telemetry.addData("info", e.getStackTrace());
+            telemetry.addData("info", e.getStackTrace()[0].toString());
             telemetry.update();
         }
     }

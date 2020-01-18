@@ -20,7 +20,7 @@ public class Color extends Device<ColorSensor> implements Input<Color.HSV> {
 			255 * device.green(),
 			255 * device.blue(),
 		hsv);
-		return new HSV((double)hsv[0] / 360, (double)hsv[1], (double)hsv[2]);
+		return new HSV((double)hsv[0] / 360, (double)hsv[1], (double)hsv[2], "hsvClass");
 	}
 
 	// color value stored in hsv
@@ -32,10 +32,10 @@ public class Color extends Device<ColorSensor> implements Input<Color.HSV> {
 		private final double v;
 
 		// initialize color
-		public HSV(double h, double s, double v) {
-			this.h = checkRange(h, 0, 1);
-			this.s = checkRange(s, 0, 1);
-			this.v = checkRange(v, 0, 1);
+		public HSV(double h, double s, double v, String name) {
+			this.h = checkRange(h, 0, 1, name);
+			this.s = checkRange(s, 0, 1, name);
+			this.v = checkRange(v, 0, 1, name);
 		}
 
 		// get values

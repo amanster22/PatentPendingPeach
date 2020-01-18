@@ -13,9 +13,11 @@ import org.firstinspires.ftc.teamcode.hardware.type.Input;
 // rev expansion hub used as a gyro sensor
 public class Gyro extends Device<BNO055IMU> implements Input<Double> {
 
+	private String name;
 	// initialize sensor
 	public Gyro(String name, HardwareMap map) {
 		super(map.get(BNO055IMU.class, name));
+		this.name = name;
 		BNO055IMU.Parameters params = new BNO055IMU.Parameters();
 		params.mode = BNO055IMU.SensorMode.IMU;
 		params.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -28,6 +30,6 @@ public class Gyro extends Device<BNO055IMU> implements Input<Double> {
 	// sense angle
 	@Override public Double measure() {
 		Orientation angles = device.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-		return checkRange((angles.firstAngle + 180) / 360, 0, 1);
+		return checkRange((angles.firstAngle + 180) / 360, 0, 1, name);
 	}
 }

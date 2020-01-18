@@ -10,8 +10,8 @@ public class Device<T> {
 	public Device(T device) {this.device = device;}
 
 	// check if double is in specified range
-	public static final double checkRange(double value, double min, double max) {
-		if (value < min || value > max) {throw new IllegalArgumentException("double out of range");}
+	public static final double checkRange(double value, double min, double max, String varname) {
+		if (value < min || value > max) {throw new IllegalArgumentException("double "+varname+" out of range: " + value + " min: " + min + " max: " + max);}
 		return value;
 	}
 }

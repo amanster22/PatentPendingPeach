@@ -36,23 +36,23 @@ public final class FujiAutonomousTests extends FujiAutonomous {
         sleep(1000);
 
         // turns, tests gyro sensor
-        robot.turn(0.5, 0.5);
-        sleep(1000);
-        robot.turn(.25, 0.5);
-        sleep(1000);
-        robot.turn(0.5, -0.5);
-        sleep(1000);
-        robot.turn(0, 0.5);
-        sleep(1000);
-        robot.turn(0.5, -0.5);
-        sleep(1000);
-        robot.turn(0.75, -0.5);
-        sleep(1000);
-        robot.turn(0.5, 0.5);
-        sleep(1000);
-        robot.turn(1, -0.5);
-        sleep(1000);
-        robot.turn(0.5, 0.5);
-        sleep(1000);
+//        robot.turn(0.5, 0.5);
+//        sleep(1000);
+//        robot.turn(.25, 0.5);
+//        sleep(1000);
+//        robot.turn(0.5, -0.5);
+//        sleep(1000);
+//        robot.turn(0, 0.5);
+//        sleep(1000);
+//        robot.turn(0.5, -0.5);
+//        sleep(1000);
+//        robot.turn(0.75, -0.5);
+//        sleep(1000);
+//        robot.turn(0.5, 0.5);
+//        sleep(1000);
+//        robot.turn(1, -0.5);
+//        sleep(1000);
+//        robot.turn(0.5, 0.5);
+//        sleep(1000);
     }
 }

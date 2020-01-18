@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.type.Device;
 import org.firstinspires.ftc.teamcode.hardware.type.Input;
@@ -75,7 +76,19 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
-            double divisor = Math.ceil(hori + vert + turn);
+            if (this.hori != 0) {
+            	this.divisor += 1;
+			}
+            if (this.vert != 0) {
+				this.divisor += 1;
+			}
+            if (this.turn != 0) {
+				this.divisor += 1;
+			}
+            if (divisor == 0) {
+            	divisor = 1;
+			}
+
 		}
 
 		// get wheel distances
@@ -93,14 +106,15 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		// initialize speeds
 		public Vector(double hori, double vert, double turn) {
 			super(
-				Device.checkRange(hori, -1, 1),
-				Device.checkRange(vert, -1, 1),
-				Device.checkRange(turn, -1, 1));
+				Device.checkRange(hori, -1, 1, "hori"),
+				Device.checkRange(vert, -1, 1, "vert"),
+				Device.checkRange(turn, -1, 1, "turn"));
 		}
 
 		@Override
 		public Square<Double> speeds() {
 			Square<Double> supers = super.speeds();
+
 			return new Square<Double>(
                     supers.rf / this.divisor,
                     supers.rb / this.divisor,
