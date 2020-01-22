@@ -19,7 +19,6 @@ public final class Fuji {
     private final Telemetry telemetry;
     public final DriveTrain driveTrain;
     public final Motor lift;
-    public final Motor slide;
     public final ServoM dropStone;
     public final ServoM pinch;
     public final ServoM hook1;
@@ -53,7 +52,6 @@ public final class Fuji {
 
         //CHECK THESE VALUES **************************************************
         lift = new Motor("lift", 1120, 1, 2, hardwareMap);
-        slide = new Motor("slide", 1120, 2, hardwareMap);
         pinch = new ServoM("pinch", hardwareMap);
         hook1 = new ServoM("hook1", hardwareMap);
         hook2 = new ServoM("hook2", hardwareMap);
