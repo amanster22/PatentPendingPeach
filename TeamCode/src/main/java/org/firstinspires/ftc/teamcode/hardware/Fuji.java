@@ -43,10 +43,10 @@ public final class Fuji {
         telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
         telemetry.update();
 
-        Motor rf = new Motor("rf", 1760, 1, 3, hardwareMap);
-        Motor rb = new Motor("rb", 1760, 1, 3, hardwareMap);
-        Motor lf = new Motor("lf", 1760, 1, 3, hardwareMap);
-        Motor lb = new Motor("lb", 1760, 1, 3, hardwareMap);
+        Motor rf = new Motor("rf", 1120, 1, 2.95, hardwareMap);
+        Motor rb = new Motor("rb", 1120, 1, 2.95, hardwareMap);
+        Motor lf = new Motor("lf", 1120, 1, 2.95, hardwareMap);
+        Motor lb = new Motor("lb", 1120, 1, 2.95, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
 
@@ -92,21 +92,24 @@ public final class Fuji {
         telemetry.addData("Vertical", vert);
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        double length = Math.sqrt(vert * vert + hori * hori);
-        double angle = Math.atan2(vert, hori);
+        /*
+        double length = Math.hypot(vert, hori);
+        double angle = Math.atan2(vert, -hori);
         if (length == 0) {
             return;
         }
         telemetry.addData("operation", "length: %.8f, angle: %.8f", length, angle);
 
-        double lf = length * Math.cos(angle - Math.PI * 0.25);
-        double lb = length * Math.cos(angle - Math.PI * 0.75);
-        double rf = length * Math.cos(angle - Math.PI * 1.75);
-        double rb = length * Math.cos(angle - Math.PI * 1.25);
+        double lf = length * -Math.sin(angle - Math.PI*0.25);
+        double lb = length * -Math.cos(angle - Math.PI*0.25);
+        double rf = length * Math.cos(angle - Math.PI*0.25);
+        double rb = length * Math.sin(angle - Math.PI*0.25);
+
         telemetry.addData("drives", "lf: %.8f, lb: %.8f, rf: %.8f, rb: %.8f", lf, lb, rf, rb);
         telemetry.update();
+        */
 
-        driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
+        driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveTrain.start(new DriveTrain.Square<Double>(1.0, 1.0, 1.0, 1.0));
 

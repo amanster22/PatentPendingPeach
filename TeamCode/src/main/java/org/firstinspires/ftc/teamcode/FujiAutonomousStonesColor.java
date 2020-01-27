@@ -4,12 +4,14 @@ import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
 public class FujiAutonomousStonesColor extends FujiAutonomous {
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         //don't put claw movements in yet, just test color sensor and movements
         double skystone;
         double current;
         current = 1; //robot always begins its plans thinking its on the first stone
         robot = new Fuji(hardwareMap, telemetry);
+
+        waitForStart();
 
         robot.drive(5, 0.5, 0, 1, false); //drive up to the stone line with a dist of 5 away
         robot.drive(7, 0.5, -1, 0, true); // drive sideways until the the distance is greater than 7

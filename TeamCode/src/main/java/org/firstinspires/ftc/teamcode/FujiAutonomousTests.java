@@ -11,6 +11,7 @@ public final class FujiAutonomousTests extends FujiAutonomous {
     public final void runOpMode() {
         // UNCOMMENT THIS WHEN ENCODER MOVE WORKS
         robot = new Fuji(hardwareMap, telemetry);
+        waitForStart();
         robot.playAutoSound();
 
         // square, tests linear movement
