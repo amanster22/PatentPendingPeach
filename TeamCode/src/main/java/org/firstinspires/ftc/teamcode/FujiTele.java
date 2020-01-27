@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
@@ -19,6 +20,11 @@ public final class FujiTele extends OpMode {
     private static final double driveSpeed = 1;
     private static final double liftUpSpeed = 0.7;
     private static final double liftDownSpeed = 0.3;
+    private double previousX = 0;
+    private double previousY = 0;
+    private ElapsedTime timer = new ElapsedTime();
+
+    private static final double maxAcceleration = 0.3;
 
     @Override
     public final void init() {
@@ -47,6 +53,18 @@ public final class FujiTele extends OpMode {
 
         if (Math.abs(vert) < 0.1) {vert = 0;}
         if (Math.abs(hori) < 0.1) {hori = 0;}
+
+        double secs = timer.seconds();
+
+        double Xchange = (hori - previousX) / secs;
+        double Ychange = (vert - previousY) / secs;
+
+        double length = Math.hypot(Xchange, Ychange);
+        double angle = Math.atan2(Xchange, Ychange);
+        double newlength = Math.min(length, maxAcceleration);
+
+        hori = newlength * Math.cos(angle);
+        vert = newlength * Math.sin(angle);
 
         try {
             //output values for robot movement
