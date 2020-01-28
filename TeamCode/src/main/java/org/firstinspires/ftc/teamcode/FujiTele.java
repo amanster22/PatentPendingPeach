@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Pair;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +9,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 @TeleOp(name="FujiTele", group="PatentPending")
 public final class FujiTele extends OpMode {
@@ -54,18 +60,6 @@ public final class FujiTele extends OpMode {
         if (Math.abs(vert) < 0.1) {vert = 0;}
         if (Math.abs(hori) < 0.1) {hori = 0;}
 
-        double secs = timer.seconds();
-
-        double Xchange = (hori - previousX) / secs;
-        double Ychange = (vert - previousY) / secs;
-
-        double length = Math.hypot(Xchange, Ychange);
-        double angle = Math.atan2(Xchange, Ychange);
-        double newlength = Math.min(length, maxAcceleration);
-
-        hori = newlength * Math.cos(angle);
-        vert = newlength * Math.sin(angle);
-
         try {
             //output values for robot movement
             robot.driveTrain.start(new DriveTrain.Vector(hori * driveSpeed, vert * driveSpeed, turn * driveSpeed).speeds());
@@ -102,5 +96,23 @@ public final class FujiTele extends OpMode {
         if (speed < 0) {return speed * liftUpSpeed;
         } else if (speed > 0) {return speed * liftDownSpeed;
         } else {return 0;}
+    }
+
+    private double[] capAcceleration(double horizontal, double vertical) {
+        double secs = timer.seconds();
+
+        double Xchange = (horizontal - previousX) / secs;
+        double Ychange = (vertical - previousY) / secs;
+
+        double length = Math.hypot(Xchange, Ychange);
+        double angle = Math.atan2(Xchange, Ychange);
+        double newlength = Math.min(length, maxAcceleration);
+
+        horizontal = (newlength * Math.cos(angle)) + previousX;
+        vertical = (newlength * Math.sin(angle)) + previousY;
+        double[] output = new double[2];
+        output[0] = horizontal;
+        output[1] = vertical;
+        return output;
     }
 }
