@@ -59,7 +59,7 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 
 
     public boolean isBusy() {
-		return rf.isBusy() && rb.isBusy() && lf.isBusy() && lb.isBusy();
+		return rf.isBusy() || rb.isBusy() || lf.isBusy() || lb.isBusy();
 	}
 
 	// vector for x, y, and turn
