@@ -30,7 +30,7 @@ public final class FujiTele extends OpMode {
     private double previousY = 0;
     private ElapsedTime timer = new ElapsedTime();
 
-    private static final double maxAcceleration = 0.3;
+    private static final double maxAcceleration = 0.75;
 
     @Override
     public final void init() {
@@ -48,6 +48,7 @@ public final class FujiTele extends OpMode {
         double hori = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
         double lift = gamepad2.right_stick_y;
+
         boolean hookUp = gamepad1.left_bumper;
         boolean hookDown = gamepad1.right_bumper;
         boolean pinchDown = gamepad2.right_bumper;
@@ -55,7 +56,18 @@ public final class FujiTele extends OpMode {
 
         // process input
 
-        if (gamepad2.right_trigger > 0) {robot.dropStone.start(0.6);}
+        if (gamepad2.right_trigger > 0) {
+            robot.dropStone.start(0.7);
+        }
+
+        double[] vector = capAcceleration(hori, vert);
+
+        hori = vector[0];
+        vert = vector[1];
+
+        timer.reset();
+        previousY = vert;
+        previousX = hori;
 
         if (Math.abs(vert) < 0.1) {vert = 0;}
         if (Math.abs(hori) < 0.1) {hori = 0;}
@@ -105,7 +117,7 @@ public final class FujiTele extends OpMode {
         double Ychange = (vertical - previousY) / secs;
 
         double length = Math.hypot(Xchange, Ychange);
-        double angle = Math.atan2(Xchange, Ychange);
+        double angle = Math.atan2(Ychange, Xchange);
         double newlength = Math.min(length, maxAcceleration);
 
         horizontal = (newlength * Math.cos(angle)) + previousX;

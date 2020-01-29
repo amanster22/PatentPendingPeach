@@ -30,7 +30,7 @@ public final class Fuji {
     boolean autoSoundFound = false;
     int soundAutonomous;
     // robot constants
-    private static final double gyroAdjust = 4;
+    private static final double gyroAdjust = 3;
 
     // initialize robot
     public Fuji(HardwareMap hardwareMap, Telemetry telemetry) {
