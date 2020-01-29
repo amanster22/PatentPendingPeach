@@ -19,11 +19,11 @@ public abstract class FujiAutonomous extends LinearOpMode {
 
     // field constants.
     public static final double STONE_LENGTH = 8;
-    public static final double ROBOT_EDGE_LENGTH = 17;
+    public static final double ROBOT_EDGE_LENGTH = 18;
     public static final double STONE_BRIDGE_DISTANCE_INCH = 23.3;
     public static final double FOUNDATION_BRIDGE_DISTANCE_INCH = 34;
     public static final double BRIDGE_WALL_DISTANCE_INCH = 47;
-    public static final double TILE_LENGTH = 24;
+    public static final double TILE_LENGTH = 23;
     public static final double FOUNDATION_LENGTH_INCH = 34.5;
 
     VuforiaLocalizer vuforia;
