@@ -94,20 +94,22 @@ public final class Fuji {
 
         /*
         double length = Math.hypot(vert, hori);
-        double angle = Math.atan2(vert, -hori);
+        double angle = Math.atan2(vert, hori) - Math.PI/4;
         if (length == 0) {
             return;
         }
-        telemetry.addData("operation", "length: %.8f, angle: %.8f", length, angle);
+        telemetry.addData("operation", "length: %.8f, angle: %.8f", length, angle + Math.PI/4);
 
-        double lf = length * -Math.sin(angle - Math.PI*0.25);
-        double lb = length * -Math.cos(angle - Math.PI*0.25);
-        double rf = length * Math.cos(angle - Math.PI*0.25);
-        double rb = length * Math.sin(angle - Math.PI*0.25);
+        double lf = length * -Math.cos(angle);
+        double lb = length * -Math.sin(angle);
+        double rf = length * Math.sin(angle);
+        double rb = length * Math.cos(angle);
 
         telemetry.addData("drives", "lf: %.8f, lb: %.8f, rf: %.8f, rb: %.8f", lf, lb, rf, rb);
         telemetry.update();
+        driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
         */
+
 
         driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
