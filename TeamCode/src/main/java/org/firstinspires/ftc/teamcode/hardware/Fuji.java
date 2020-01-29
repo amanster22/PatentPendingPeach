@@ -92,7 +92,7 @@ public final class Fuji {
         telemetry.addData("Vertical", vert);
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        /*
+//        /*
         double length = Math.hypot(vert, hori);
         double angle = Math.atan2(vert, hori) - Math.PI/4;
         if (length == 0) {
@@ -108,10 +108,10 @@ public final class Fuji {
         telemetry.addData("drives", "lf: %.8f, lb: %.8f, rf: %.8f, rb: %.8f", lf, lb, rf, rb);
         telemetry.update();
         driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
-        */
+//        */
 
 
-        driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
+//        driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveTrain.start(new DriveTrain.Square<Double>(1.0, 1.0, 1.0, 1.0));
 
