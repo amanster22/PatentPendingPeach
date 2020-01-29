@@ -64,13 +64,13 @@ public final class Fuji {
     }
 
     // turn with gyro, speed should be positive
-    public void turn(double orientation, double speed) {
+    public void turn(double orientation) {
         while (Math.abs(headingError(orientation)) > 0.02) {
-            if (headingError(orientation) > 0) {speed = -speed;}
             telemetry.addData("Gyro Sensor", "turning");
             telemetry.addData("Angle", gyro.measure());
             telemetry.update();
-            driveTrain.start(new DriveTrain.Vector(0, 0, speed).speeds());
+            double turn = Range.clip(-headingError(orientation) * gyroAdjust, -1, 1);
+            driveTrain.start(new DriveTrain.Vector(0, 0, turn).speeds());
         }
         driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
     }

@@ -12,16 +12,17 @@ public class FujiAutonomousFoundation extends FujiAutonomous {
         robot = new Fuji(hardwareMap, telemetry);
         waitForStart();
 
-        robot.drive(0, -0.4, 3, 0.5, false); // drive upto the stone line with a dist of 5 away
+        robot.drive(0, -0.3, 2, 0.5, false); // drive upto the stone line with a dist of 5 away
+//        robot.
         robot.drive(0.3, 0, 7, 0.5, true); // drive sideways until the the distance is greater than 7
 
-        robot.move(-FOUNDATION_LENGTH_INCH / 2, 0);
+        robot.move(-FOUNDATION_LENGTH_INCH / 2, 3.0);
         robot.hook(1);  //lower servo holders
         sleep(500);
 
         //move it to the correct position with gyro/distance
         robot.move(0, -TILE_LENGTH);
-        robot.turn(0.25, 0.25);
+        robot.turn(0.75);
         robot.move(0, 10);
 
         robot.hook(0);

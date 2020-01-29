@@ -15,45 +15,43 @@ public final class FujiAutonomousTests extends FujiAutonomous {
         robot.playAutoSound();
 
         // square, tests linear movement
-        robot.move(10, 0);
+        robot.move(TILE_LENGTH, 0);
         sleep(1000);
-        robot.move(0, -10);
+        robot.move(0, -TILE_LENGTH);
         sleep(1000);
-        robot.move(-10, 0);
+        robot.move(-TILE_LENGTH, 0);
         sleep(1000);
-        robot.move(0, 10);
+        robot.move(0, TILE_LENGTH);
         sleep(1000);
 
         // zig zag, tests diagonal movement
-        robot.move(10, -10);
+        robot.move(TILE_LENGTH, -TILE_LENGTH);
         sleep(1000);
-        robot.move(0, 10);
+        robot.move(-TILE_LENGTH, -TILE_LENGTH);
         sleep(1000);
-        robot.move(-10, -10);
+        robot.move(TILE_LENGTH, TILE_LENGTH);
         sleep(1000);
-        robot.move(10, 10);
-        sleep(1000);
-        robot.move(-10, 10);
+        robot.move(-TILE_LENGTH, TILE_LENGTH);
         sleep(1000);
 
         // turns, tests gyro sensor
-//        robot.turn(0.5, 0.5);
-//        sleep(1000);
-//        robot.turn(.25, 0.5);
-//        sleep(1000);
-//        robot.turn(0.5, -0.5);
-//        sleep(1000);
-//        robot.turn(0, 0.5);
-//        sleep(1000);
-//        robot.turn(0.5, -0.5);
-//        sleep(1000);
-//        robot.turn(0.75, -0.5);
-//        sleep(1000);
-//        robot.turn(0.5, 0.5);
-//        sleep(1000);
-//        robot.turn(1, -0.5);
-//        sleep(1000);
-//        robot.turn(0.5, 0.5);
-//        sleep(1000);
+        robot.turn(0.5);
+        sleep(1000);
+        robot.turn(.25);
+        sleep(1000);
+        robot.turn(0.5);
+        sleep(1000);
+        robot.turn(0);
+        sleep(1000);
+        robot.turn(0.5);
+        sleep(1000);
+        robot.turn(0.75);
+        sleep(1000);
+        robot.turn(0.5);
+        sleep(1000);
+        robot.turn(1);
+        sleep(1000);
+        robot.turn(0.5);
+        sleep(1000);
     }
 }
