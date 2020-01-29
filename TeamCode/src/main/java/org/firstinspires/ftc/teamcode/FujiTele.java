@@ -60,14 +60,14 @@ public final class FujiTele extends OpMode {
             robot.dropStone.start(0.7);
         }
 
-        double[] vector = capAcceleration(hori, vert);
-
-        hori = vector[0];
-        vert = vector[1];
-
-        timer.reset();
-        previousY = vert;
-        previousX = hori;
+//        double[] vector = capAcceleration(hori, vert);
+//
+//        hori = vector[0];
+//        vert = vector[1];
+//
+//        timer.reset();
+//        previousY = vert;
+//        previousX = hori;
 
         if (Math.abs(vert) < 0.1) {vert = 0;}
         if (Math.abs(hori) < 0.1) {hori = 0;}

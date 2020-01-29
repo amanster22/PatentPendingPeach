@@ -13,7 +13,7 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
 
         waitForStart();
 
-        robot.drive(5, 0.5, 0, 1, false); //drive up to the stone line with a dist of 5 away
+        robot.drive(5, -0.5, 0, 1, false); //drive up to the stone line with a dist of 5 away
         robot.drive(7, 0.5, -1, 0, true); // drive sideways until the the distance is greater than 7
 
         robot.move(0.5 * STONE_LENGTH, 0);
@@ -32,13 +32,13 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
         }
         robot.move(((skystone) * STONE_LENGTH) - ((current) * STONE_LENGTH), 5); //final minus initial
         //bring down the claw and pick up stone
-        robot.hook(1);
+        robot.pinch.start(1.0);
         robot.move(0, -5);
         robot.move(-skystone * STONE_LENGTH - STONE_BRIDGE_DISTANCE_INCH, 0);
 //        robot.move(- FOUNDATION_BRIDGE_DISTANCE_INCH - FOUNDATION_LENGTH_INCH/2, 5);
         //run to position on the arm, NO WHILE LOOP so it can be parallel
         //then drop stone
-        robot.hook(0);
+        robot.pinch.start(0.0);
         //repeat
     }
 }

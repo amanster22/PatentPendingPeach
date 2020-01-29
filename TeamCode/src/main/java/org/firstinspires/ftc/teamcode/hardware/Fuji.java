@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware.general.ServoM;
@@ -30,7 +31,7 @@ public final class Fuji {
     boolean autoSoundFound = false;
     int soundAutonomous;
     // robot constants
-    private static final double gyroAdjust = 3;
+    private static final double gyroAdjust = 10;
 
     // initialize robot
     public Fuji(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -43,10 +44,10 @@ public final class Fuji {
         telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
         telemetry.update();
 
-        Motor rf = new Motor("rf", 1120, 1, 2.95, hardwareMap);
-        Motor rb = new Motor("rb", 1120, 1, 2.95, hardwareMap);
-        Motor lf = new Motor("lf", 1120, 1, 2.95, hardwareMap);
-        Motor lb = new Motor("lb", 1120, 1, 2.95, hardwareMap);
+        Motor rf = new Motor("rf", 1440, 1, 2.95, hardwareMap);
+        Motor rb = new Motor("rb", 1440, 1, 2.95, hardwareMap);
+        Motor lf = new Motor("lf", 1440, 1, 2.95, hardwareMap);
+        Motor lb = new Motor("lb", 1440, 1, 2.95, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
 
@@ -64,7 +65,7 @@ public final class Fuji {
 
     // turn with gyro, speed should be positive
     public void turn(double orientation, double speed) {
-        while (Math.abs(headingError(orientation)) > 0.01) {
+        while (Math.abs(headingError(orientation)) > 0.02) {
             if (headingError(orientation) > 0) {speed = -speed;}
             telemetry.addData("Gyro Sensor", "turning");
             telemetry.addData("Angle", gyro.measure());
@@ -79,8 +80,10 @@ public final class Fuji {
         while (far ? distance.measure() < target : distance.measure() > target) {
             telemetry.addData("Distance Sensor", "driving");
             telemetry.addData("Distance", distance.measure());
+            telemetry.addData("head error:", -headingError(orientation));
             telemetry.update();
-            driveTrain.start(new DriveTrain.Vector(hori, vert, (-headingError(orientation)) * gyroAdjust).speeds());
+            double turn = Range.clip(-headingError(orientation) * gyroAdjust, -1, 1);
+            driveTrain.start(new DriveTrain.Vector(hori, vert, turn).speeds());
         }
         driveTrain.start(new DriveTrain.Vector(0, 0, 0).speeds());
     }
@@ -113,7 +116,7 @@ public final class Fuji {
 
 //        driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        driveTrain.start(new DriveTrain.Square<Double>(1.0, 1.0, 1.0, 1.0));
+        driveTrain.start(new DriveTrain.Square<Double>(0.8, 0.8, 0.8, 0.8));
 
         // do gyro adjustment in here |
         //                            v
