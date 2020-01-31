@@ -23,7 +23,7 @@ public final class FujiTele extends OpMode {
     // field measurements
     private static final double stoneHeight = 4;
     // speeds
-    private static final double driveSpeed = 1;
+    private static final double driveSpeed = 0.7;
     private static final double liftUpSpeed = 0.7;
     private static final double liftDownSpeed = 0.3;
     private double previousX = 0;

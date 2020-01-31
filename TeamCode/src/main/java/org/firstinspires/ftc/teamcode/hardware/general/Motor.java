@@ -39,7 +39,9 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Do
 	// start motion
 	@Override public void start(Double motion) {device.setPower(checkRange(motion, -1, 1, this.name));}
 
-	public void setTarget(double inches) {device.setTargetPosition((int)((inches * tpr) / (gr * c)));}
+	public void setTarget(double inches) {
+		device.setTargetPosition((int) ((inches * tpr) / (gr * c)) + device.getCurrentPosition());
+	}
 
 	public void setMode(DcMotor.RunMode mode) {device.setMode(mode);}
 

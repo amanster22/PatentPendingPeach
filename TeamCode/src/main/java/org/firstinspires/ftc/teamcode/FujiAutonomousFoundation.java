@@ -16,17 +16,19 @@ public class FujiAutonomousFoundation extends FujiAutonomous {
 //        robot.drive(0.3, 0, 7, 0.5, true); // drive sideways until the the distance is greater than 7
 
         robot.move(-FOUNDATION_LENGTH_INCH / 2, TILE_LENGTH * 2 - ROBOT_EDGE_LENGTH);
+        robot.turn(0.50);
         robot.hook(1);  //lower servo holders
         sleep(500);
 
         //move it to the correct position with gyro/distance
-        robot.move(0, -TILE_LENGTH);
+        robot.move(0, -TILE_LENGTH / 2);
         robot.turn(0.75);
         robot.move(0, 10);
+        robot.turn(0.75);
 
         robot.hook(0);
         sleep(500);
 
-        robot.move(0.5 * TILE_LENGTH, -2 * TILE_LENGTH);
+        robot.move(0, -2 * TILE_LENGTH);
     }
 }

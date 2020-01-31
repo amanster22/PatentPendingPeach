@@ -13,10 +13,12 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
 
         waitForStart();
 
-        robot.drive(5, -0.5, 0, 1, false); //drive up to the stone line with a dist of 5 away
-        robot.drive(7, 0.5, -1, 0, true); // drive sideways until the the distance is greater than 7
+//        robot.drive(5, -0.5, 0, 1, false); //drive up to the stone line with a dist of 5 away
+//        robot.drive(7, 0.5, -1, 0, true); // drive sideways until the the distance is greater than 7
+//
+//        robot.move(0.5 * STONE_LENGTH, 0);
 
-        robot.move(0.5 * STONE_LENGTH, 0);
+        robot.move(0, 2 * TILE_LENGTH - ROBOT_EDGE_LENGTH);
 
         //get the stone
         if (robot.isSkystone()) {

@@ -44,10 +44,10 @@ public final class Fuji {
         telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
         telemetry.update();
 
-        Motor rf = new Motor("rf", 1440, 1, 2.95, hardwareMap);
-        Motor rb = new Motor("rb", 1440, 1, 2.95, hardwareMap);
-        Motor lf = new Motor("lf", 1440, 1, 2.95, hardwareMap);
-        Motor lb = new Motor("lb", 1440, 1, 2.95, hardwareMap);
+        Motor rf = new Motor("rf", 1120, 1, 2.95, hardwareMap);
+        Motor rb = new Motor("rb", 1120, 1, 2.95, hardwareMap);
+        Motor lf = new Motor("lf", 1120, 1, 2.95, hardwareMap);
+        Motor lb = new Motor("lb", 1120, 1, 2.95, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
 
