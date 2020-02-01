@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.roadrunnerstuff;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.path.heading.LinearInterpolator;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryLoader;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -24,7 +25,7 @@ public class SplineTest extends LinearOpMode {
 
         if (isStopRequested()) return;
         Trajectory test = drive.trajectoryBuilder()
-                .splineTo(new Pose2d(30, 30, 0))
+                .splineTo(new Pose2d(30, 30, 0), new LinearInterpolator(180, 180))
                 .build();
         drive.followTrajectorySync(test);
 
@@ -33,7 +34,7 @@ public class SplineTest extends LinearOpMode {
         drive.followTrajectorySync(
                 drive.trajectoryBuilder()
                         .reverse()
-                        .splineTo(new Pose2d(0, 0, 0))
+                        .splineTo(new Pose2d(0, 0, 180))
                         .build()
         );
     }

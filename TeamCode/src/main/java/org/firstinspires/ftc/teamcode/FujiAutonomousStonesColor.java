@@ -40,7 +40,7 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
         robot.pinch.start(1.0);
         robot.move(0, -5);
         robot.move(-skystone * STONE_LENGTH - STONE_BRIDGE_DISTANCE_INCH, 0);
-//        robot.move(- FOUNDATION_BRIDGE_DISTANCE_INCH - FOUNDATION_LENGTH_INCH/2, 5);
+        robot.move(-FOUNDATION_BRIDGE_DISTANCE_INCH - FOUNDATION_LENGTH_INCH / 2, 5);
         //run to position on the arm, NO WHILE LOOP so it can be parallel
         //then drop stone
         robot.pinch.start(0.0);
