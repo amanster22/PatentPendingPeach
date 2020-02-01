@@ -23,9 +23,9 @@ public final class FujiTele extends OpMode {
     // field measurements
     private static final double stoneHeight = 4;
     // speeds
-    private static final double driveSpeed = 0.7;
-    private static final double liftUpSpeed = 0.7;
-    private static final double liftDownSpeed = 0.3;
+    private double driveSpeed = 0.7;
+    private static final double liftUpSpeed = 1;
+    private static final double liftDownSpeed = 0.5;
     private double previousX = 0;
     private double previousY = 0;
     private ElapsedTime timer = new ElapsedTime();
@@ -63,6 +63,9 @@ public final class FujiTele extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad2.y) {reverse = false;}
 
+        if (gamepad1.dpad_down) {driveSpeed = 0.5;}
+        if(gamepad1.dpad_up) {driveSpeed = 1;}
+
 //        double[] vector = capAcceleration(hori, vert);
 //
 //        hori = vector[0];
@@ -98,6 +101,7 @@ public final class FujiTele extends OpMode {
             telemetry.update();
         }
     }
+
 
     @Override
     public final void start() {}

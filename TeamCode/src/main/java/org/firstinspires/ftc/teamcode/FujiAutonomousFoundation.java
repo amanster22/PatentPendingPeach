@@ -22,14 +22,11 @@ public class FujiAutonomousFoundation extends FujiAutonomous {
         sleep(500);
 
         //move it to the correct position with gyro/distance
-        robot.move(0, -TILE_LENGTH / 2);
-        robot.turn(0.5);
-        robot.move(0, 10);
-//        robot.turn(1);
-
+        robot.move(0, -TILE_LENGTH * 1.5);
         robot.hook(0);
         sleep(500);
-
-        robot.move(0, -2 * TILE_LENGTH);
+        robot.move(FOUNDATION_LENGTH_INCH * 0.5, 0.0);
+        robot.move(0.0, TILE_LENGTH * 0.1);
+        robot.move(TILE_LENGTH * 1.5, 0.0);
     }
 }
