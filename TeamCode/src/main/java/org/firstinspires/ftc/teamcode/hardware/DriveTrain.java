@@ -89,28 +89,37 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 
 	public static class Vector extends Direction {
 
-		public double divisor = 0;
-
 		// initialize speeds
 		public Vector(double hori, double vert, double turn) {
 			super(
 				Device.checkRange(hori, -1, 1, "hori"),
 				Device.checkRange(vert, -1, 1, "vert"),
 				Device.checkRange(turn, -1, 1, "turn"));
-			if (this.hori != 0 || this.vert != 0) {this.divisor += 1.5;}
+			/*
+			if (this.hori != 0 || this.vert != 0) {this.divisor += 2;}
 			if (this.turn != 0) {this.divisor += 1;}
 			if (divisor == 0) {divisor = 1;}
+			*/
 		}
 
 		@Override
 		public Square<Double> speeds() {
 			Square<Double> supers = super.speeds();
-
+			double divisor = Math.max(
+				Math.max(
+					Math.abs(supers.rf),
+					Math.abs(supers.rb)
+				),
+				Math.max(
+					Math.abs(supers.lf),
+					Math.abs(supers.lb)
+				)
+			);
 			return new Square<Double>(
-                    supers.rf / this.divisor,
-                    supers.rb / this.divisor,
-                    supers.lf / this.divisor,
-                    supers.lb / this.divisor);
+                    supers.rf / divisor,
+                    supers.rb /divisor,
+                    supers.lf / divisor,
+                    supers.lb / divisor);
 		}
 	}
 
