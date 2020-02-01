@@ -9,7 +9,7 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
         double skystone;
         double current;
         current = 1; //robot always begins its plans thinking its on the first stone
-        robot = new Fuji(hardwareMap, telemetry);
+        robot = new Fuji(hardwareMap, telemetry, this);
 
         waitForStart();
 

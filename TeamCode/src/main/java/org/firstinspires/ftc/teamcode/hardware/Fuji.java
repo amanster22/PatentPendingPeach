@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.FujiAutonomous;
 import org.firstinspires.ftc.teamcode.hardware.general.ServoM;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.general.Gyro;
@@ -18,6 +20,7 @@ public final class Fuji {
     // OpMode members
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
+    private final FujiAutonomous opMode;
     public final DriveTrain driveTrain;
     public final Motor lift;
     public final ServoM dropStone;
@@ -31,16 +34,17 @@ public final class Fuji {
     boolean autoSoundFound = false;
     int soundAutonomous;
     // robot constants
-    private static final double gyroAdjust = 5;
+    private static final double gyroAdjust = 4;
 
     // initialize robot
-    public Fuji(HardwareMap hardwareMap, Telemetry telemetry) {
+    public Fuji(HardwareMap hardwareMap, Telemetry telemetry, FujiAutonomous opMode) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
+        this.opMode = opMode;
 
-//        soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("autonomous", "raw", hardwareMap.appContext.getPackageName());
-//        if (soundAutonomous != 0)
-//            autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
+        soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("fujispeaking", "raw", hardwareMap.appContext.getPackageName());
+        if (soundAutonomous != 0)
+            autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
         telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
         telemetry.update();
 
@@ -65,7 +69,7 @@ public final class Fuji {
 
     // turn with gyro, speed should be positive
     public void turn(double orientation) {
-        while (Math.abs(headingError(orientation)) > 0.02) {
+        while (Math.abs(headingError(orientation)) > 0.02 && opMode.opModeIsActive()) {
             telemetry.addData("Gyro Sensor", "turning");
             telemetry.addData("Angle", gyro.measure());
             telemetry.update();
@@ -77,7 +81,7 @@ public final class Fuji {
 
     // drive with distance, ORIENTATION IS ONLY FOR KEEPING A HEADING, NOT FOR GOING TO A HEADING
     public void drive(double hori, double vert, double target, double orientation, boolean far) {
-        while (far ? distance.measure() < target : distance.measure() > target) {
+        while (far ? distance.measure() < target : distance.measure() > target && opMode.opModeIsActive()) {
             telemetry.addData("Distance Sensor", "driving");
             telemetry.addData("Distance", distance.measure());
             telemetry.addData("head error:", -headingError(orientation));
@@ -95,7 +99,7 @@ public final class Fuji {
         telemetry.addData("Vertical", vert);
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-//        /*
+        /*
         double length = Math.hypot(vert, hori);
         double angle = Math.atan2(vert, hori) - Math.PI/4;
         if (length == 0) {
@@ -111,16 +115,16 @@ public final class Fuji {
         telemetry.addData("drives", "lf: %.8f, lb: %.8f, rf: %.8f, rb: %.8f", lf, lb, rf, rb);
         telemetry.update();
         driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
-//        */
+        */
 
 
-//        driveTrain.setTarget(new DriveTrain.Direction(hori, vert, 0).speeds());
+        driveTrain.setTarget(new DriveTrain.Direction(hori, -vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveTrain.start(new DriveTrain.Square<Double>(0.8, 0.8, 0.8, 0.8));
 
         // do gyro adjustment in here |
         //                            v
-        while (driveTrain.isBusy()) {}
+        while (driveTrain.isBusy() && opMode.opModeIsActive()) {}
         //turn (-headingError(angle)) * gyroAdjust)
         driveTrain.start(new DriveTrain.Square<Double>(0.0, 0.0, 0.0, 0.0));
         driveTrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

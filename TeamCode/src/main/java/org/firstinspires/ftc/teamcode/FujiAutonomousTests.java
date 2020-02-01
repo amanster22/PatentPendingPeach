@@ -10,7 +10,7 @@ public final class FujiAutonomousTests extends FujiAutonomous {
     @Override
     public final void runOpMode() {
         // UNCOMMENT THIS WHEN ENCODER MOVE WORKS
-        robot = new Fuji(hardwareMap, telemetry);
+        robot = new Fuji(hardwareMap, telemetry, this);
         waitForStart();
         robot.playAutoSound();
 
@@ -25,13 +25,13 @@ public final class FujiAutonomousTests extends FujiAutonomous {
         sleep(1000);
 
         // zig zag, tests diagonal movement
-        robot.move(TILE_LENGTH, -TILE_LENGTH);
+        robot.move(-TILE_LENGTH, TILE_LENGTH);
         sleep(1000);
         robot.move(-TILE_LENGTH, -TILE_LENGTH);
         sleep(1000);
         robot.move(TILE_LENGTH, TILE_LENGTH);
         sleep(1000);
-        robot.move(-TILE_LENGTH, TILE_LENGTH);
+        robot.move(TILE_LENGTH, -TILE_LENGTH);
         sleep(1000);
 
         // turns, tests gyro sensor

@@ -17,9 +17,9 @@ import java.util.Vector;
 @TeleOp(name="FujiTele", group="PatentPending")
 public final class FujiTele extends OpMode {
 
-
     // robot
     private Fuji robot;
+    private boolean reverse = false;
     // field measurements
     private static final double stoneHeight = 4;
     // speeds
@@ -35,7 +35,7 @@ public final class FujiTele extends OpMode {
     @Override
     public final void init() {
         //initialize and set robot behavior
-        robot = new Fuji(hardwareMap, telemetry);
+        robot = new Fuji(hardwareMap, telemetry, null);
         robot.driveTrain.setZeroBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         stop();
     }
@@ -60,6 +60,9 @@ public final class FujiTele extends OpMode {
             robot.dropStone.start(0.7);
         }
 
+        if (gamepad1.x) {reverse = true;}
+        if (gamepad2.y) {reverse = false;}
+
 //        double[] vector = capAcceleration(hori, vert);
 //
 //        hori = vector[0];
@@ -74,7 +77,10 @@ public final class FujiTele extends OpMode {
 
         try {
             //output values for robot movement
-            robot.driveTrain.start(new DriveTrain.Vector(hori * driveSpeed, vert * driveSpeed, turn * driveSpeed).speeds());
+            robot.driveTrain.start(new DriveTrain.Vector(
+            hori * driveSpeed * (reverse ? -1 : 1),
+            vert * driveSpeed * (reverse ? -1 : 1),
+            turn * driveSpeed).speeds());
             robot.lift.start(liftSpeed(lift));
             if (hookUp) {robot.hook(0);}
             if (hookDown) {robot.hook(0.9);}
@@ -102,6 +108,7 @@ public final class FujiTele extends OpMode {
         robot.lift.start(0.0);
         robot.dropStone.start(0.5);
         robot.hook(robot.hook1.measure());
+        robot.pinch.start(0.0);
     }
 
     private final double liftSpeed(double speed) {
