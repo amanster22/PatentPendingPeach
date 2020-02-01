@@ -45,10 +45,10 @@ public final class Fuji {
         this.telemetry = telemetry;
         this.opMode = opMode;
 
-        soundAutonomous1 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking1", "raw", hardwareMap.appContext.getPackageName());
-        soundAutonomous2 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking2", "raw", hardwareMap.appContext.getPackageName());
-        soundAutonomous3 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking3", "raw", hardwareMap.appContext.getPackageName());
-        soundAutonomous4 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking4", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous1 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking1.m4a", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous2 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking2.m4a", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous3 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking3.m4a", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous4 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking4.m4a", "raw", hardwareMap.appContext.getPackageName());
 
         SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous1);
         SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous2);
