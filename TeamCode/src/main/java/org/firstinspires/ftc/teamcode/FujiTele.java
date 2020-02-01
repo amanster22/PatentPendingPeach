@@ -23,7 +23,7 @@ public final class FujiTele extends OpMode {
     // field measurements
     private static final double stoneHeight = 4;
     // speeds
-    private double driveSpeed = 0.7;
+    private double driveSpeed = 1;
     private static final double liftUpSpeed = 1;
     private static final double liftDownSpeed = 0.5;
     private double previousX = 0;
@@ -56,13 +56,11 @@ public final class FujiTele extends OpMode {
 
         // process input
 
-        if (gamepad2.right_trigger > 0) {
-            robot.dropStone.start(0.7);
-        }
+        if (gamepad2.right_trigger > 0) {robot.dropStone.start(0.7);}
+        if (gamepad2.left_trigger > 0) {robot.dropStone.start(0.5);}
 
         if (gamepad1.x) {reverse = true;}
-        if (gamepad2.y) {reverse = false;}
-
+        if (gamepad1.y) {reverse = false;}
         if (gamepad1.dpad_down) {driveSpeed = 0.5;}
         if(gamepad1.dpad_up) {driveSpeed = 1;}
 

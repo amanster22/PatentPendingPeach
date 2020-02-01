@@ -69,26 +69,12 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 		public final double hori;
 		public final double vert;
 		public final double turn;
-        public double divisor;
 
 		// initialize distances
 		public Direction(double hori, double vert, double turn) {
 			this.hori = hori;
 			this.vert = vert;
 			this.turn = turn;
-            if (this.hori != 0) {
-            	this.divisor += 1;
-			}
-            if (this.vert != 0) {
-				this.divisor += 1;
-			}
-            if (this.turn != 0) {
-				this.divisor += 1;
-			}
-            if (divisor == 0) {
-            	divisor = 1;
-			}
-
 		}
 
 		// get wheel distances
@@ -103,12 +89,17 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 
 	public static class Vector extends Direction {
 
+		public double divisor = 0;
+
 		// initialize speeds
 		public Vector(double hori, double vert, double turn) {
 			super(
 				Device.checkRange(hori, -1, 1, "hori"),
 				Device.checkRange(vert, -1, 1, "vert"),
 				Device.checkRange(turn, -1, 1, "turn"));
+			if (this.hori != 0 || this.vert != 0) {this.divisor += 1.5;}
+			if (this.turn != 0) {this.divisor += 1;}
+			if (divisor == 0) {divisor = 1;}
 		}
 
 		@Override

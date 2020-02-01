@@ -12,12 +12,14 @@ public final class FujiAutonomousTests extends FujiAutonomous {
     public final void runOpMode() {
         // UNCOMMENT THIS WHEN ENCODER MOVE WORKS
         robot = new Fuji(hardwareMap, telemetry, this);
+        int index = 0;
+        int[] times = {2000, 6000, 3000, 3000};
         waitForStart();
-        int index = 1;
-        while (opModeIsActive() && index < 5) {
+
+        while (opModeIsActive() && index < 4) {
             robot.playAutoSound(index);
+            sleep(times[index]);
             index +=1;
-            sleep(5000);
         }
 
 //        // square, tests linear movement
