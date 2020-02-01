@@ -62,7 +62,9 @@ public final class FujiTele extends OpMode {
         if (gamepad1.x) {reverse = true;}
         if (gamepad1.y) {reverse = false;}
         if (gamepad1.dpad_down) {driveSpeed = 0.5;}
-        if(gamepad1.dpad_up) {driveSpeed = 1;}
+        if (gamepad1.dpad_up) {
+            driveSpeed = 1;
+        }
 
 //        double[] vector = capAcceleration(hori, vert);
 //

@@ -28,7 +28,6 @@ public final class Fuji {
     public final ServoM hook1;
     public final ServoM hook2;
     public final Gyro gyro;
-//    public final Color tape;
     public final Color stone;
     public final Distance distance;
     boolean autoSoundFound = false;
@@ -45,23 +44,23 @@ public final class Fuji {
         this.telemetry = telemetry;
         this.opMode = opMode;
 
-        soundAutonomous1 = hardwareMap.appContext.getResources().getIdentifier("fujispeakinga", "raw", hardwareMap.appContext.getPackageName());
-        soundAutonomous2 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingb", "raw", hardwareMap.appContext.getPackageName());
-        soundAutonomous3 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingc", "raw", hardwareMap.appContext.getPackageName());
-        soundAutonomous4 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingd", "raw", hardwareMap.appContext.getPackageName());
-
-        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous1);
-        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous2);
-        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous3);
-        autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous4);
-        telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
-        telemetry.update();
-
         Motor rf = new Motor("rf", 1120, 1, 2.95, hardwareMap);
         Motor rb = new Motor("rb", 1120, 1, 2.95, hardwareMap);
         Motor lf = new Motor("lf", 1120, 1, 2.95, hardwareMap);
         Motor lb = new Motor("lb", 1120, 1, 2.95, hardwareMap);
         driveTrain = new DriveTrain(rf, rb, lf, lb);
+
+//        soundAutonomous1 = hardwareMap.appContext.getResources().getIdentifier("fujispeakinga", "raw", hardwareMap.appContext.getPackageName());
+//        soundAutonomous2 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingb", "raw", hardwareMap.appContext.getPackageName());
+//        soundAutonomous3 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingc", "raw", hardwareMap.appContext.getPackageName());
+//        soundAutonomous4 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingd", "raw", hardwareMap.appContext.getPackageName());
+//
+//        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous1);
+//        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous2);
+//        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous3);
+//        autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous4);
+//        telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
+//        telemetry.update();
 
 
         //CHECK THESE VALUES **************************************************
@@ -145,7 +144,7 @@ public final class Fuji {
         telemetry.addData("Color Sensor", "sensing block");
         Color.HSV color = stone.measure();
         telemetry.addData("Hue", color.h());
-        block = color.h() >= 60;
+        block = color.h() >= 0.1667; // 60 hue value divided by a hue range of 360
         telemetry.addData("Block", block);
         telemetry.update();
         return block;
