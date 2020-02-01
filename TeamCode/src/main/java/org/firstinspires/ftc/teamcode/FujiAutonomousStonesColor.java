@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
+@Autonomous(name = "FujiStones", group = "PatentPending")
 public class FujiAutonomousStonesColor extends FujiAutonomous {
     @Override
     public void runOpMode() {
@@ -18,7 +21,7 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
 //
 //        robot.move(0.5 * STONE_LENGTH, 0);
 
-        robot.move(0, 2 * TILE_LENGTH - ROBOT_EDGE_LENGTH);
+        robot.move(0, 1.75 * TILE_LENGTH - ROBOT_EDGE_LENGTH);
 
         //get the stone
         if (robot.isSkystone()) {

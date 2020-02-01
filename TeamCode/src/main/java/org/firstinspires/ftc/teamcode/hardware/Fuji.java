@@ -32,7 +32,10 @@ public final class Fuji {
     public final Color stone;
     public final Distance distance;
     boolean autoSoundFound = false;
-    int soundAutonomous;
+    int soundAutonomous1;
+    int soundAutonomous2;
+    int soundAutonomous3;
+    int soundAutonomous4;
     // robot constants
     private static final double gyroAdjust = 4;
 
@@ -42,9 +45,15 @@ public final class Fuji {
         this.telemetry = telemetry;
         this.opMode = opMode;
 
-        soundAutonomous = hardwareMap.appContext.getResources().getIdentifier("fujispeaking", "raw", hardwareMap.appContext.getPackageName());
-        if (soundAutonomous != 0)
-            autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous);
+        soundAutonomous1 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking1", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous2 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking2", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous3 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking3", "raw", hardwareMap.appContext.getPackageName());
+        soundAutonomous4 = hardwareMap.appContext.getResources().getIdentifier("fujispeaking4", "raw", hardwareMap.appContext.getPackageName());
+
+        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous1);
+        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous2);
+        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous3);
+        autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous4);
         telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
         telemetry.update();
 
@@ -150,9 +159,20 @@ public final class Fuji {
         return rawError;
     }
 
-    public void playAutoSound() {
+    public void playAutoSound(int index) {
         if (autoSoundFound) {
-            SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous);
+            if (index == 1) {
+                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous1);
+            }
+            if (index == 2) {
+                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous2);
+            }
+            if (index == 3) {
+                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous3);
+            }
+            if (index == 4) {
+                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous4);
+            }
             telemetry.addData("Sound", "auto");
             telemetry.update();
         }

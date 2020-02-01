@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
@@ -12,46 +13,51 @@ public final class FujiAutonomousTests extends FujiAutonomous {
         // UNCOMMENT THIS WHEN ENCODER MOVE WORKS
         robot = new Fuji(hardwareMap, telemetry, this);
         waitForStart();
-        robot.playAutoSound();
+        int index = 1;
+        while (opModeIsActive() && index < 5) {
+            robot.playAutoSound(index);
+            index +=1;
+            sleep(5000);
+        }
 
-        // square, tests linear movement
-        robot.move(TILE_LENGTH, 0);
-        sleep(1000);
-        robot.move(0, -TILE_LENGTH);
-        sleep(1000);
-        robot.move(-TILE_LENGTH, 0);
-        sleep(1000);
-        robot.move(0, TILE_LENGTH);
-        sleep(1000);
-
-        // zig zag, tests diagonal movement
-        robot.move(-TILE_LENGTH, TILE_LENGTH);
-        sleep(1000);
-        robot.move(-TILE_LENGTH, -TILE_LENGTH);
-        sleep(1000);
-        robot.move(TILE_LENGTH, TILE_LENGTH);
-        sleep(1000);
-        robot.move(TILE_LENGTH, -TILE_LENGTH);
-        sleep(1000);
-
-        // turns, tests gyro sensor
-        robot.turn(0.5);
-        sleep(1000);
-        robot.turn(.25);
-        sleep(1000);
-        robot.turn(0.5);
-        sleep(1000);
-        robot.turn(0);
-        sleep(1000);
-        robot.turn(0.5);
-        sleep(1000);
-        robot.turn(0.75);
-        sleep(1000);
-        robot.turn(0.5);
-        sleep(1000);
-        robot.turn(1);
-        sleep(1000);
-        robot.turn(0.5);
-        sleep(1000);
+//        // square, tests linear movement
+//        robot.move(TILE_LENGTH, 0);
+//        sleep(1000);
+//        robot.move(0, -TILE_LENGTH);
+//        sleep(1000);
+//        robot.move(-TILE_LENGTH, 0);
+//        sleep(1000);
+//        robot.move(0, TILE_LENGTH);
+//        sleep(1000);
+//
+//        // zig zag, tests diagonal movement
+//        robot.move(-TILE_LENGTH, TILE_LENGTH);
+//        sleep(1000);
+//        robot.move(-TILE_LENGTH, -TILE_LENGTH);
+//        sleep(1000);
+//        robot.move(TILE_LENGTH, TILE_LENGTH);
+//        sleep(1000);
+//        robot.move(TILE_LENGTH, -TILE_LENGTH);
+//        sleep(1000);
+//
+//        // turns, tests gyro sensor
+//        robot.turn(0.5);
+//        sleep(1000);
+//        robot.turn(.25);
+//        sleep(1000);
+//        robot.turn(0.5);
+//        sleep(1000);
+//        robot.turn(0);
+//        sleep(1000);
+//        robot.turn(0.5);
+//        sleep(1000);
+//        robot.turn(0.75);
+//        sleep(1000);
+//        robot.turn(0.5);
+//        sleep(1000);
+//        robot.turn(1);
+//        sleep(1000);
+//        robot.turn(0.5);
+//        sleep(1000);
     }
 }
