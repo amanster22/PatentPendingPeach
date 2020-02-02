@@ -115,6 +115,7 @@ public class DriveTrain implements Input<DriveTrain.Square<Double>>, Output<Driv
 					Math.abs(supers.lb)
 				)
 			);
+            divisor = Math.max(1.0, divisor);
 			return new Square<Double>(
                     supers.rf / divisor,
                     supers.rb /divisor,
