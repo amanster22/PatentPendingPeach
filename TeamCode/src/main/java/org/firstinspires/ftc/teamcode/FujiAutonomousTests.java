@@ -12,7 +12,7 @@ public final class FujiAutonomousTests extends FujiAutonomous {
     @Override
     public final void runOpMode() {
         // UNCOMMENT THIS IF SOUNDS ARE NEEDED
-//        robot = new Fuji(hardwareMap, telemetry, this);
+        robot = new Fuji(hardwareMap, telemetry, this);
 //        int index = 0;
 //        int[] times = {2000, 6000, 3000, 3000};
         waitForStart();
