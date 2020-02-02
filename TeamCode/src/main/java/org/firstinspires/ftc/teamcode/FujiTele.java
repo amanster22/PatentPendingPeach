@@ -112,7 +112,7 @@ public final class FujiTele extends OpMode {
         robot.lift.start(0.0);
         robot.dropStone.start(0.5);
         robot.hook(robot.hook1.measure());
-        robot.pinch.start(0.0);
+        robot.pinch.start(1.0);
     }
 
     private final double liftSpeed(double speed) {

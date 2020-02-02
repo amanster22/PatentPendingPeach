@@ -27,6 +27,8 @@ public class FujiAutonomousFoundationBlue extends FujiAutonomous {
         sleep(500);
         robot.move(FOUNDATION_LENGTH_INCH * 0.5, 0.0);
         robot.move(0.0, TILE_LENGTH * 0.1);
-        robot.move(TILE_LENGTH * 1.5, 0.0);
+        robot.move(TILE_LENGTH * 0.5, 0.0);
+        robot.move(0.0, -TILE_LENGTH * 0.1);
+        robot.move(TILE_LENGTH * 1.0, 0.0);
     }
 }

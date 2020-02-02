@@ -15,7 +15,7 @@ public final class FujiAutonomousTests extends FujiAutonomous {
 //        robot = new Fuji(hardwareMap, telemetry, this);
 //        int index = 0;
 //        int[] times = {2000, 6000, 3000, 3000};
-//        waitForStart();
+        waitForStart();
 //
 //        while (opModeIsActive() && index < 4) {
 //            robot.playAutoSound(index);
