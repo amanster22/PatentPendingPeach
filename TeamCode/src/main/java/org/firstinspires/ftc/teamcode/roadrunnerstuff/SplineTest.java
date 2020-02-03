@@ -25,7 +25,7 @@ public class SplineTest extends LinearOpMode {
 
         if (isStopRequested()) return;
         Trajectory test = drive.trajectoryBuilder()
-                .splineTo(new Pose2d(30, 30, 0), new LinearInterpolator(180, 180))
+                .splineTo(new Pose2d(30, 30, 0)) // add heading interpolator if a different driving/heading change is nessescary
                 .build();
         drive.followTrajectorySync(test);
 

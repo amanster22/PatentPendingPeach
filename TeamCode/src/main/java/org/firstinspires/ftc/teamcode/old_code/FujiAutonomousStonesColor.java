@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.old_code;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -12,7 +12,7 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
         double skystone;
         double current;
         current = 1; //robot always begins its plans thinking its on the first stone
-        robot = new Fuji(hardwareMap, telemetry, this);
+//        robot = new Fuji(hardwareMap, telemetry, this);
         robot.pinch.start(1.0);
         waitForStart();
 

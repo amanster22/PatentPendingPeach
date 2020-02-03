@@ -21,7 +21,7 @@ public class Motor extends Device<DcMotorEx> implements Input<Double>, Output<Do
 	public Motor(String name, double tpr, double gr, double d, HardwareMap map) {
 		super((DcMotorEx)map.dcMotor.get(name));
 		this.name = name;
-		device.setTargetPositionTolerance(20); // roughly 25 ticks = 1/5 inches of possible error
+        device.setTargetPositionTolerance(20); // (ticks / cpr) * (circumference * gear ratio) is inches of error from tick tolerance
 		this.tpr = tpr;
 		this.gr = gr;
 		c = d * Math.PI;

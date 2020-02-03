@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.ftccommon.SoundPlayer;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.FujiAutonomous;
+import org.firstinspires.ftc.teamcode.FujiAutonomousBase;
+import org.firstinspires.ftc.teamcode.old_code.FujiAutonomous;
 import org.firstinspires.ftc.teamcode.hardware.general.ServoM;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.general.Gyro;
 import org.firstinspires.ftc.teamcode.hardware.general.Color;
 import org.firstinspires.ftc.teamcode.hardware.general.Distance;
+import org.firstinspires.ftc.teamcode.roadrunnerstuff.RevSampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.roadrunnerstuff.SampleMecanumDriveBase;
 
 // robot
 public final class Fuji {
@@ -20,7 +22,7 @@ public final class Fuji {
     // OpMode members
     private final HardwareMap hardwareMap;
     private final Telemetry telemetry;
-    private final FujiAutonomous opMode;
+    private final FujiAutonomousBase opMode;
     public final DriveTrain driveTrain;
     public final Motor lift;
     public final ServoM dropStone;
@@ -30,16 +32,12 @@ public final class Fuji {
     public final Gyro gyro;
     public final Color stone;
     public final Distance distance;
-    boolean autoSoundFound = false;
-    int soundAutonomous1;
-    int soundAutonomous2;
-    int soundAutonomous3;
-    int soundAutonomous4;
+    public final SampleMecanumDriveBase RoadRunnerDT;
     // robot constants
     private static final double gyroAdjust = 4;
 
     // initialize robot
-    public Fuji(HardwareMap hardwareMap, Telemetry telemetry, FujiAutonomous opMode) {
+    public Fuji(HardwareMap hardwareMap, Telemetry telemetry, FujiAutonomousBase opMode) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
         this.opMode = opMode;
@@ -48,19 +46,10 @@ public final class Fuji {
         Motor rb = new Motor("rb", 1120, 1, 2.95, hardwareMap);
         Motor lf = new Motor("lf", 1120, 1, 2.95, hardwareMap);
         Motor lb = new Motor("lb", 1120, 1, 2.95, hardwareMap);
+
         driveTrain = new DriveTrain(rf, rb, lf, lb);
 
-//        soundAutonomous1 = hardwareMap.appContext.getResources().getIdentifier("fujispeakinga", "raw", hardwareMap.appContext.getPackageName());
-//        soundAutonomous2 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingb", "raw", hardwareMap.appContext.getPackageName());
-//        soundAutonomous3 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingc", "raw", hardwareMap.appContext.getPackageName());
-//        soundAutonomous4 = hardwareMap.appContext.getResources().getIdentifier("fujispeakingd", "raw", hardwareMap.appContext.getPackageName());
-//
-//        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous1);
-//        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous2);
-//        SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous3);
-//        autoSoundFound = SoundPlayer.getInstance().preload(hardwareMap.appContext, soundAutonomous4);
-//        telemetry.addData("auto resource", autoSoundFound ? "Found" : "NOT found\n Add autonomous.wav to /src/main/res/raw");
-//        telemetry.update();
+        RoadRunnerDT = new RevSampleMecanumDrive(hardwareMap);
 
 
         //CHECK THESE VALUES **************************************************
@@ -70,7 +59,6 @@ public final class Fuji {
         hook2 = new ServoM("hook2", hardwareMap);
         gyro = new Gyro("imu", hardwareMap);
         dropStone = new ServoM("drop", hardwareMap);
-//        tape = new Color("colorDown", hardwareMap);
         stone = new Color("colorFor", hardwareMap);
         distance = new Distance("distance", hardwareMap);
     }
@@ -107,24 +95,6 @@ public final class Fuji {
         telemetry.addData("Vertical", vert);
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        /*
-        double length = Math.hypot(vert, hori);
-        double angle = Math.atan2(vert, hori) - Math.PI/4;
-        if (length == 0) {
-            return;
-        }
-        telemetry.addData("operation", "length: %.8f, angle: %.8f", length, angle + Math.PI/4);
-
-        double lf = length * -Math.cos(angle);
-        double lb = length * -Math.sin(angle);
-        double rf = length * Math.sin(angle);
-        double rb = length * Math.cos(angle);
-
-        telemetry.addData("drives", "lf: %.8f, lb: %.8f, rf: %.8f, rb: %.8f", lf, lb, rf, rb);
-        telemetry.update();
-        driveTrain.setTarget(new DriveTrain.Square<Double>(rf, rb, lf, lb));
-        */
-
 
         driveTrain.setTarget(new DriveTrain.Direction(hori, -vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -156,25 +126,6 @@ public final class Fuji {
         if (rawError < -0.5) {rawError += 1;}
         if (rawError > 0.5) {rawError -= 1;}
         return rawError;
-    }
-
-    public void playAutoSound(int index) {
-        if (autoSoundFound) {
-            if (index == 1) {
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous1);
-            }
-            if (index == 2) {
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous2);
-            }
-            if (index == 3) {
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous3);
-            }
-            if (index == 4) {
-                SoundPlayer.getInstance().startPlaying(hardwareMap.appContext, soundAutonomous4);
-            }
-            telemetry.addData("Sound", "auto");
-            telemetry.update();
-        }
     }
 
     public void hook(double target) {

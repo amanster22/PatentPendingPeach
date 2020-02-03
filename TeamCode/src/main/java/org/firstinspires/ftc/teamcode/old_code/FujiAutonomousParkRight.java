@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.old_code;
 
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "FujiFoundationParkRight", group = "PatentPending")
-public class FujiAutonomousParkRight extends FujiAutonomous{
+public class FujiAutonomousParkRight extends FujiAutonomous {
     @Override
     public void runOpMode() throws InterruptedException {
-        Fuji robot = new Fuji(hardwareMap, telemetry, this);
+//        Fuji robot = new Fuji(hardwareMap, telemetry, this);
         robot.dropStone.start(0.5);
         waitForStart();
         robot.move(-TILE_LENGTH, 0);

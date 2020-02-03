@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.old_code;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -9,7 +9,7 @@ public class FujiAutonomousFoundationBlue extends FujiAutonomous {
 
     @Override
     public void runOpMode() {
-        robot = new Fuji(hardwareMap, telemetry, this);
+//        robot = new Fuji(hardwareMap, telemetry, this);
         robot.dropStone.start(0.5);
         waitForStart();
 

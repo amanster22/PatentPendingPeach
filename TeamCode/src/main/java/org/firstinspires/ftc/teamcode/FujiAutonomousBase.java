@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
-public abstract class FujiAutonomous extends LinearOpMode {
+public abstract class FujiAutonomousBase extends LinearOpMode {
 
     // robot
     public Fuji robot;
