@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.kinematics.Kinematics;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.Fuji;
+
 
 public class FujiTeleTracked extends OpMode {
     private Fuji robot;
@@ -42,12 +45,15 @@ public class FujiTeleTracked extends OpMode {
         } else {
             vel = baseVel;
         }
+        Pose2d poseEstimate = robot.RoadRunnerDT.getPoseEstimate();
+
+//      vel = Kinematics.fieldToRobotVelocity(poseEstimate, vel); // use field centric driving when you choose too, just uncomment
+
+
 
         robot.RoadRunnerDT.setDrivePower(vel);
 
         robot.RoadRunnerDT.update();
-
-        Pose2d poseEstimate = robot.RoadRunnerDT.getPoseEstimate();
         telemetry.addData("x", poseEstimate.getX());
         telemetry.addData("y", poseEstimate.getY());
         telemetry.addData("heading", poseEstimate.getHeading());

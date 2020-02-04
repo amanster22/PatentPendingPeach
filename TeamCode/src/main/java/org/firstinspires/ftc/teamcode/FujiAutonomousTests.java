@@ -34,11 +34,11 @@ public final class FujiAutonomousTests extends FujiAutonomousBase {
         robot.RoadRunnerDT.followTrajectorySync(test);
 
 
-        // turns, gyro sensor
-        while (opModeIsActive()) {
-            telemetry.addData("gyro reading", robot.gyro.measure());
-            telemetry.update();
-        }
+//        // turns, gyro sensor
+//        while (opModeIsActive()) {
+//            telemetry.addData("gyro reading", robot.gyro.measure());
+//            telemetry.update();
+//        }
 
 
     }
