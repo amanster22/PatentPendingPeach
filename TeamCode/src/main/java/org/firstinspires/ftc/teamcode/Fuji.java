@@ -1,20 +1,19 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.FujiAutonomousBase;
-import org.firstinspires.ftc.teamcode.old_code.FujiAutonomous;
+import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
 import org.firstinspires.ftc.teamcode.hardware.general.ServoM;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.general.Gyro;
 import org.firstinspires.ftc.teamcode.hardware.general.Color;
 import org.firstinspires.ftc.teamcode.hardware.general.Distance;
-import org.firstinspires.ftc.teamcode.roadrunnerstuff.RevSampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.roadrunnerstuff.SampleMecanumDriveBase;
+import org.firstinspires.ftc.teamcode.roadrun.RevSampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.roadrun.SampleMecanumDriveBase;
 
 // robot
 public final class Fuji {
@@ -52,7 +51,6 @@ public final class Fuji {
         RoadRunnerDT = new RevSampleMecanumDrive(hardwareMap);
 
 
-        //CHECK THESE VALUES **************************************************
         lift = new Motor("lift", 1120, 1, 2, hardwareMap);
         pinch = new ServoM("pinch", hardwareMap);
         hook1 = new ServoM("hook1", hardwareMap);
@@ -93,11 +91,13 @@ public final class Fuji {
         telemetry.addData("Encoders", "moving");
         telemetry.addData("Horizontal", hori);
         telemetry.addData("Vertical", vert);
+        telemetry.update();
         driveTrain.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         driveTrain.setTarget(new DriveTrain.Direction(hori, -vert, 0).speeds());
         driveTrain.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         driveTrain.start(new DriveTrain.Square<Double>(0.8, 0.8, 0.8, 0.8));
 
         // do gyro adjustment in here |
@@ -106,18 +106,6 @@ public final class Fuji {
         //turn (-headingError(angle)) * gyroAdjust)
         driveTrain.start(new DriveTrain.Square<Double>(0.0, 0.0, 0.0, 0.0));
         driveTrain.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    // if the color sensor sees a skystone
-    public boolean isSkystone() {
-        boolean block;
-        telemetry.addData("Color Sensor", "sensing block");
-        Color.HSV color = stone.measure();
-        telemetry.addData("Hue", color.h());
-        block = color.h() >= 0.1667; // 60 hue value divided by a hue range of 360
-        telemetry.addData("Block", block);
-        telemetry.update();
-        return block;
     }
 
     // get current offset from target orientation

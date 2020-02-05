@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.old_code;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.hardware.Fuji;
-
 @Autonomous(name = "FujiFoundation", group = "PatentPending")
 public class FujiAutonomousFoundationBlue extends FujiAutonomous {
 
@@ -18,12 +16,12 @@ public class FujiAutonomousFoundationBlue extends FujiAutonomous {
 
         robot.move(-FOUNDATION_LENGTH_INCH / 2, TILE_LENGTH * 2.1 - ROBOT_EDGE_LENGTH);
 //        robot.turn(0.50);
-        robot.hook(1);  //lower servo holders
+//        robot.hook(1);  //lower servo holders
         sleep(500);
 
         //move it to the correct position with gyro/distance
         robot.move(0, -TILE_LENGTH * 1.5);
-        robot.hook(0);
+//        robot.hook(0);
         sleep(500);
         robot.move(FOUNDATION_LENGTH_INCH * 0.5, 0.0);
         robot.move(0.0, TILE_LENGTH * 0.1);

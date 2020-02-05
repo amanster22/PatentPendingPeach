@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.roadrunnerstuff;
+package org.firstinspires.ftc.teamcode.roadrun;
 
 import android.support.annotation.NonNull;
 
@@ -10,21 +10,18 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-import com.qualcomm.robotcore.hardware.configuration.LynxConstants;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.teamcode.roadrunnerstuff.LynxModuleUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.roadrunnerstuff.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.roadrunnerstuff.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.roadrunnerstuff.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.roadrunnerstuff.DriveConstants.getMotorVelocityF;
+import static org.firstinspires.ftc.teamcode.roadrun.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.roadrun.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.roadrun.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.roadrun.DriveConstants.getMotorVelocityF;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware. If your hardware configuration

@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.old_code;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.hardware.Fuji;
-
 @Autonomous(name = "FujiStones", group = "PatentPending")
 public class FujiAutonomousStonesColor extends FujiAutonomous {
+    // *******************DO NOT RUN THIS PROGRAM EVER IN ITS CURRENT FORM, THIS IS JUST FOR REFERENCE *********************
     @Override
     public void runOpMode() {
         //don't put claw movements in yet, just test color sensor and movements
@@ -24,17 +23,18 @@ public class FujiAutonomousStonesColor extends FujiAutonomous {
         robot.move(0, 1.75 * TILE_LENGTH - ROBOT_EDGE_LENGTH);
 
         //get the stone
-        if (robot.isSkystone()) {
-            skystone = 1;
-        } else {
-            robot.move(STONE_LENGTH, 0);
-            current = 2;
-            if (robot.isSkystone()) {
-                skystone = 2;
-            } else {
-                skystone = 3;
-            }
-        }
+        skystone = 100000000; // DO NOT RUN THIS PROGRAM EVER IN ITS CURRENT FORM, THIS IS JUST FOR REFERENCE
+//        if (robot.isSkystone()) {
+//            skystone = 1;
+//        } else {
+//            robot.move(STONE_LENGTH, 0);
+//            current = 2;
+//            if (robot.isSkystone()) {
+//                skystone = 2;
+//            } else {
+//                skystone = 3;
+//            }
+//        }
         robot.move(((skystone) * STONE_LENGTH) - ((current) * STONE_LENGTH), 5); //final minus initial
         //bring down the claw and pick up stone
         robot.pinch.start(0.0);

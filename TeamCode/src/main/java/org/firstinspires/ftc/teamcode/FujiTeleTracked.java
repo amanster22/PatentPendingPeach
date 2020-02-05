@@ -1,17 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.kinematics.Kinematics;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardware.DriveTrain;
-import org.firstinspires.ftc.teamcode.hardware.Fuji;
 
 
 public class FujiTeleTracked extends OpMode {
     private Fuji robot;
+
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
@@ -47,7 +46,7 @@ public class FujiTeleTracked extends OpMode {
         }
         Pose2d poseEstimate = robot.RoadRunnerDT.getPoseEstimate();
 
-//      vel = Kinematics.fieldToRobotVelocity(poseEstimate, vel); // use field centric driving when you choose too, just uncomment
+        vel = Kinematics.fieldToRobotVelocity(poseEstimate, vel); // use field centric driving when you choose too, just uncomment
 
 
 

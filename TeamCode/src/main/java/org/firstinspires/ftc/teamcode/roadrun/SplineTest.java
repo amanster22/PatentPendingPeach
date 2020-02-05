@@ -1,16 +1,9 @@
-package org.firstinspires.ftc.teamcode.roadrunnerstuff;
+package org.firstinspires.ftc.teamcode.roadrun;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.path.heading.LinearInterpolator;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.acmerobotics.roadrunner.trajectory.TrajectoryLoader;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.teamcode.roadrunnerstuff.SampleMecanumDriveBase;
-import org.firstinspires.ftc.teamcode.roadrunnerstuff.RevSampleMecanumDrive;
-
-import java.io.File;
 
 /*
  * This is an example of a more complex path to really test the tuning.

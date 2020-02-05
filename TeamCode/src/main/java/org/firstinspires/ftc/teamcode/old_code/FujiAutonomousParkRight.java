@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.old_code;
 
-import org.firstinspires.ftc.teamcode.hardware.Fuji;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "FujiFoundationParkRight", group = "PatentPending")

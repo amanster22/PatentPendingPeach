@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware.general.Motor;
 import org.firstinspires.ftc.teamcode.hardware.type.Device;
 import org.firstinspires.ftc.teamcode.hardware.type.Input;

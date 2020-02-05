@@ -3,11 +3,9 @@ package org.firstinspires.ftc.teamcode.old_code;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.hardware.Fuji;
+import org.firstinspires.ftc.teamcode.Fuji;
 
 public abstract class FujiAutonomous extends LinearOpMode {
 
