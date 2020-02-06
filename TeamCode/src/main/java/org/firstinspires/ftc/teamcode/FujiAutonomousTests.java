@@ -33,10 +33,10 @@ public final class FujiAutonomousTests extends FujiAutonomousBase {
 
         initCV();
         startCV();
-        telemetry.addData("contours", pipeline.getNumContoursFound());
-        telemetry.update();
+        while (opModeIsActive()) {
+            idle();
+        }
         stopCV();
-
 
 //        // turns, gyro sensor
 //        while (opModeIsActive()) {
