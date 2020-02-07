@@ -50,7 +50,6 @@ public final class Fuji {
 
         RoadRunnerDT = new RevSampleMecanumDrive(hardwareMap);
 
-
         lift = new Motor("lift", 1120, 1, 2, hardwareMap);
         pinch = new ServoM("pinch", hardwareMap);
         hook1 = new ServoM("hook1", hardwareMap);

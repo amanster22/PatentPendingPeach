@@ -5,6 +5,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.CascadeClassifier;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;

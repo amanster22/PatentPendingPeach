@@ -44,13 +44,13 @@ public class FujiTeleTracked extends OpMode {
         } else {
             vel = baseVel;
         }
-        Pose2d poseEstimate = robot.RoadRunnerDT.getPoseEstimate();
 
-        vel = Kinematics.fieldToRobotVelocity(poseEstimate, vel); // use field centric driving when you choose too, just uncomment
-
+//        vel = Kinematics.fieldToRobotVelocity(poseEstimate, vel); // use field centric driving when you choose too, just uncomment
 
 
         robot.RoadRunnerDT.setDrivePower(vel);
+
+        Pose2d poseEstimate = robot.RoadRunnerDT.getPoseEstimate();
 
         robot.RoadRunnerDT.update();
         telemetry.addData("x", poseEstimate.getX());

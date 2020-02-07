@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode.hardware.type;
 public class Device<T> {
 
 	// component object
-	protected final T device;
+    public final T device;
 
 	// initialize component
 	public Device(T device) {this.device = device;}
