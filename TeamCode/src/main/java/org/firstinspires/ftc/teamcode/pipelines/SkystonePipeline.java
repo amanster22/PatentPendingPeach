@@ -28,23 +28,23 @@ public class SkystonePipeline extends OpenCvPipeline {
     private Stage stageToRenderToViewport = Stage.HSVMAT;
     private Stage[] stages = Stage.values();
 
-    @Override
-    public void onViewportTapped() {
-        /*
-         * Note that this method is invoked from the UI thread
-         * so whatever we do here, we must do quickly.
-         */
-
-        int currentStageNum = stageToRenderToViewport.ordinal();
-
-        int nextStageNum = currentStageNum + 1;
-
-        if (nextStageNum >= stages.length) {
-            nextStageNum = 0;
-        }
-
-        stageToRenderToViewport = stages[nextStageNum];
-    }
+//    @Override
+//    public void onViewportTapped() {
+//        /*
+//         * Note that this method is invoked from the UI thread
+//         * so whatever we do here, we must do quickly.
+//         */
+//
+//        int currentStageNum = stageToRenderToViewport.ordinal();
+//
+//        int nextStageNum = currentStageNum + 1;
+//
+//        if (nextStageNum >= stages.length) {
+//            nextStageNum = 0;
+//        }
+//
+//        stageToRenderToViewport = stages[nextStageNum];
+//    }
 
     @Override
     public Mat processFrame(Mat input) {
@@ -54,6 +54,7 @@ public class SkystonePipeline extends OpenCvPipeline {
          * This pipeline finds the contours of yellow blobs such as the Gold Mineral
          * from the Rover Ruckus game.
          */
+
 //        Imgproc.cvtColor(input, yCbCrChan2Mat, Imgproc.COLOR_RGB2YCrCb);
 //        Core.extractChannel(yCbCrChan2Mat, yCbCrChan2Mat, 2);
 //        Imgproc.threshold(yCbCrChan2Mat, thresholdMat, 102, 255, Imgproc.THRESH_BINARY_INV);

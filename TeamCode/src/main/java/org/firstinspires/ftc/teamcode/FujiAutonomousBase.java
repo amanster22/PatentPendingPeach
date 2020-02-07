@@ -50,7 +50,4 @@ public abstract class FujiAutonomousBase extends LinearOpMode {
             webcam.pauseViewport();
         }
     }
-
-
-
 }
