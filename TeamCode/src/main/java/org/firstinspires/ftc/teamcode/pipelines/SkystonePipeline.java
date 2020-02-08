@@ -64,8 +64,8 @@ public class SkystonePipeline extends OpenCvPipeline {
 //        Imgproc.drawContours(contoursOnFrameMat, contoursList, -1, new Scalar(0, 0, 255), 3, 8);
 //
         Imgproc.cvtColor(input, HSVmat, Imgproc.COLOR_RGB2HSV);
-        Core.extractChannel(HSVmat, HSVmat, 1);
+        Core.extractChannel(HSVmat, HSVmat, 2);
 
-        return input;
+        return HSVmat;
     }
 }
