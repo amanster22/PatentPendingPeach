@@ -11,7 +11,8 @@ public class FujiAutonomousCV extends FujiAutonomousBase {
         waitForStart();
         startCV();
         while (opModeIsActive()) {
-            idle();
+            telemetry.addData("average", pipeline.average());
+            telemetry.update();
         }
         stopCV();
     }
