@@ -17,38 +17,38 @@ public abstract class FujiAutonomousBase extends LinearOpMode {
     // field constants.
     public static final double TILE_LENGTH = 23;
 
-    OpenCvCamera webcam;
+    OpenCvCamera cam;
     SkystonePipeline pipeline = new SkystonePipeline(); // set pipeline here, after creating it in pipelines folder
 
 
     public void initCV() {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        cam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
         // OR...  Do Not Activate the Camera Monitor View
-        //webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
+        //cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(camName.class, "cam 1"));
 
-        webcam.openCameraDevice();
+        cam.openCameraDevice();
 
         /*
          * Specify the image processing pipeline we wish to invoke upon receipt
          * of a frame from the camera. Note that switching pipelines on-the-fly
          * (while a streaming session is in flight) *IS* supported.
          */
-        webcam.setPipeline(pipeline);
+        cam.setPipeline(pipeline);
     }
 
     public void startCV() {
-        if (webcam != null) {
-            webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-            webcam.resumeViewport();
+        if (cam != null) {
+            cam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+            cam.resumeViewport();
         }
     }
 
     public void stopCV() {
-        if (webcam != null) {
-            webcam.stopStreaming();
-            webcam.pauseViewport();
+        if (cam != null) {
+            cam.stopStreaming();
+            cam.pauseViewport();
         }
     }
 }
