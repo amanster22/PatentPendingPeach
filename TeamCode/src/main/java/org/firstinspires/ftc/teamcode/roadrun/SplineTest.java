@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.roadrun;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -20,6 +21,7 @@ public class SplineTest extends LinearOpMode {
         Trajectory test = drive.trajectoryBuilder()
                 .splineTo(new Pose2d(30, 30, 0)) // add heading interpolator if a different driving/heading change is nessescary
                 .build();
+        TrajectoryBuilder relative = drive.relativetrajectoryBuilder(new Pose2d());
         drive.followTrajectorySync(test);
 
         sleep(2000);
