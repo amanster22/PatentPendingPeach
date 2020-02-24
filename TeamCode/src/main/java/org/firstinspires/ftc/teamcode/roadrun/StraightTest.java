@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Config
 @Autonomous(group = "drive")
 public class StraightTest extends LinearOpMode {
-    public static double DISTANCE = 40;
+    public static double DISTANCE = 23; //one tile
 
     @Override
     public void runOpMode() throws InterruptedException {

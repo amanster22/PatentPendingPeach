@@ -19,7 +19,7 @@ public class SplineTest extends LinearOpMode {
 
         if (isStopRequested()) return;
         Trajectory test = drive.trajectoryBuilder()
-                .splineTo(new Pose2d(30, 30, 0)) // add heading interpolator if a different driving/heading change is nessescary
+                .splineTo(new Pose2d(30, 30, 0)) // (Tangent default) add heading interpolator if a different driving/heading change is nessescary
                 .build();
         TrajectoryBuilder relative = drive.relativetrajectoryBuilder(new Pose2d());
         drive.followTrajectorySync(test);
