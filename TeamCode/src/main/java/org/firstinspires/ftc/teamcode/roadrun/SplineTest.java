@@ -17,19 +17,22 @@ public class SplineTest extends LinearOpMode {
 
         waitForStart();
 
+        /**
+         * rr coordinates are rotated 90 degress ccw, and so its angles and coordinates are based off this different coordinate system
+         * so, you can either work in this weird coordinate environment or create a function to map our coordinates to rr coordinates
+         * and our angles to rr angles. This just tests the spline function and subsequent turning
+         **/
         if (isStopRequested()) return;
         Trajectory test = drive.trajectoryBuilder()
-                .splineTo(new Pose2d(30, 30, 0)) // (Tangent default) add heading interpolator if a different driving/heading change is nessescary
+                .splineToSplineHeading(new Pose2d(30, 30, 0), 0)
                 .build();
-        TrajectoryBuilder relative = drive.relativetrajectoryBuilder(new Pose2d());
         drive.followTrajectorySync(test);
 
         sleep(2000);
 
         drive.followTrajectorySync(
                 drive.trajectoryBuilder()
-                        .reverse()
-                        .splineTo(new Pose2d(0, 0, 180))
+                        .splineToSplineHeading(new Pose2d(0, 0, 180), 0)
                         .build()
         );
     }

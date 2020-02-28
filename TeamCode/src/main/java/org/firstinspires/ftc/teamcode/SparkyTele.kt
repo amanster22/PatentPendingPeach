@@ -18,8 +18,6 @@ class SparkyTele : OpMode() {
 //    private val stoneHeight = 4.0
 //    private val liftUpSpeed = 1.0
 //    private val liftDownSpeed = 0.5
-
-    private val maxAcceleration = 0.75
     private val timer = ElapsedTime()
 
     override fun init() {
